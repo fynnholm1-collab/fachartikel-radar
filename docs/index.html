@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Fachartikel-Radar</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Neue Artikel aus Japanologie und Geschichtswissenschaft">
+  <meta name="theme-color" content="#1f3a5f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Radar">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>Fachartikel-Radar</h1>
+      <span id="stand" class="muted"></span>
+    </div>
+    <div class="actions">
+      <input id="suche" type="search" placeholder="Suchen in Titel, Autor, Journal" aria-label="Suchen">
+      <button id="btn-einstellungen" class="ghost" title="Einstellungen">Einstellungen</button>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+
+  <section class="toolbar">
+    <label class="toggle"><input type="checkbox" id="nur-neue" checked> nur ungesichtete</label>
+    <span id="anzahl" class="muted"></span>
+    <button id="alle-gesehen" class="ghost">Alle hier als gesichtet markieren</button>
+  </section>
+
+  <main id="liste" aria-live="polite"></main>
+
+  <dialog id="dlg-einstellungen">
+    <form method="dialog" class="dialog">
+      <h2>Einstellungen</h2>
+      <p class="muted">Die Zotero-Daten bleiben nur auf diesem Gerät gespeichert. Auf Computer und iPad je einmal eintragen.</p>
+      <label>Zotero-Nutzer-ID <input id="z-uid" inputmode="numeric" autocomplete="off"></label>
+      <label>Zotero-API-Schlüssel (mit Schreibrecht) <input id="z-key" type="password" autocomplete="off"></label>
+      <p class="muted small">Beides unter zotero.org → Settings → Security. Die Nutzer-ID steht dort als „Your user ID for use in API calls“.</p>
+      <div class="row">
+        <button type="button" id="z-test">Verbindung testen</button>
+        <span id="z-status" class="muted"></span>
+      </div>
+      <hr>
+      <h3>Sichtungsstand übertragen</h3>
+      <p class="muted small">Gesichtet, gemerkt und Kommentare werden pro Gerät gespeichert. Zum Übertragen hier exportieren und auf dem anderen Gerät importieren.</p>
+      <div class="row">
+        <button type="button" id="export">Exportieren</button>
+        <label class="file">Importieren <input type="file" id="import" accept="application/json"></label>
+      </div>
+      <hr>
+      <h3>Journals</h3>
+      <div id="journal-status" class="small"></div>
+      <div class="row end"><button value="close">Schließen</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-speichern">
+    <form method="dialog" class="dialog">
+      <h2 id="sp-titel">In Zotero speichern</h2>
+      <p id="sp-artikel" class="muted"></p>
+      <label>Ihr Kommentar <textarea id="sp-kommentar" rows="5" placeholder="Warum ist der Artikel wichtig? Wofür könnte er nützlich sein?"></textarea></label>
+      <label id="sp-ordner-wrap">Zotero-Ordner <select id="sp-ordner"></select></label>
+      <p id="sp-status" class="muted small"></p>
+      <div class="row end">
+        <button value="cancel" class="ghost">Abbrechen</button>
+        <button id="sp-nur-merken" value="merken" class="ghost">Nur im Radar merken</button>
+        <button id="sp-ok" value="default" class="primary">In Zotero speichern</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="tpl-karte">
+    <article class="karte">
+      <div class="kopf">
+        <span class="journal"></span>
+        <span class="datum muted"></span>
+      </div>
+      <h3 class="titel"><a target="_blank" rel="noopener"></a></h3>
+      <p class="autoren muted"></p>
+      <div class="badges"></div>
+      <details class="abstract"><summary>Abstract</summary><p></p></details>
+      <p class="hinweis muted small"></p>
+      <p class="kommentar small"></p>
+      <div class="knoepfe">
+        <a class="btn oeffnen" target="_blank" rel="noopener">Öffnen</a>
+        <button class="wichtig">Wichtig</button>
+        <button class="spaeter ghost">Später</button>
+        <button class="ignorieren ghost">Ignorieren</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="zotero.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

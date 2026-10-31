@@ -1,0 +1,24 @@
+name: Wochenmail
+
+on:
+  schedule:
+    - cron: "0 6 * * 5"   # freitags 6:00 UTC
+  workflow_dispatch:
+
+jobs:
+  mail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Highlights verschicken
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          APP_URL: ${{ vars.APP_URL }}
+        run: python -m radar.digest
