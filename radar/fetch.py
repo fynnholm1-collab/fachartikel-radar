@@ -145,7 +145,13 @@ def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len
         "prioritaet": j.get("prioritaet", "mittel"),
         "thema": j.get("thema", ""),
         "hinweis": j.get("hinweis", ""),
-        "rezension": filters.is_review(a.get("title", "")),
+        "rezension": (rez := filters.is_review(a.get("title", ""), a.get("abstract", ""))),
+        "buch": catalog.book_key(a.get("title", "")) if rez else "",
+        "buchtitel": catalog.book_query_from_title(a.get("title", "")) if rez else "",
+        "kategorie": filters.category(a, j),
+        "band": a.get("band", ""),
+        "heft": a.get("heft", ""),
+        "seite": a.get("seite", ""),
         "hervorheben": highlight(a, j),
         "themen": d.themes,
         "treffer": d.matched,
@@ -153,7 +159,7 @@ def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len
     }
 
 
-def merge(existing: list[dict], new: list[dict], keep_days: int, today: date) -> list[dict]:
+def merge(existing: list[dict], new: list[dict], keep_days: int, today: date, oldest: str = "") -> list[dict]:
     by_id = {a["id"]: a for a in existing}
     for a in new:
         if a["id"] in by_id:
@@ -163,9 +169,23 @@ def merge(existing: list[dict], new: list[dict], keep_days: int, today: date) ->
                 a["katalog"] = old["katalog"]
         by_id[a["id"]] = a
     cutoff = (today - timedelta(days=keep_days)).isoformat()
-    items = [a for a in by_id.values() if a.get("added", "") >= cutoff]
-    items.sort(key=lambda a: (a.get("added", ""), a.get("published", "")), reverse=True)
+
+    def keep(a: dict) -> bool:
+        if a.get("published"):
+            return a["published"] >= oldest
+        return a.get("added", "") >= cutoff
+
+    items = [a for a in by_id.values() if keep(a)]
+    items.sort(key=lambda a: (a.get("published", ""), a.get("added", "")), reverse=True)
     return items
+
+
+def split_recent(items: list[dict], today: date, months: int) -> tuple[list[dict], list[dict]]:
+    """Posteingang (letzte Monate) und Backlog (älter). Backlog nur mit echten Artikeln."""
+    border = (today - timedelta(days=round(months * 30.44))).isoformat()
+    recent = [a for a in items if (a.get("published") or a.get("added", "")) >= border]
+    older = [a for a in items if (a.get("published") or a.get("added", "")) < border and not a.get("rezension")]
+    return recent, older
 
 
 def main() -> int:
@@ -173,16 +193,25 @@ def main() -> int:
     journals, searches, filters, settings, resolved = load_config()
     today = date.today()
     path = DATA / "articles.json"
-    first_run = not path.exists() or path.read_text().strip() in ("", "[]")
-    days = int(settings.get("erster_abruf_tage", 180) if first_run else settings.get("rueckblick_tage", 60))
-    since = today - timedelta(days=days)
-    print(f"Abruf seit {since.isoformat()} ({'erster Abruf' if first_run else 'täglich'})")
+    backlog_path = DATA / "backlog.json"
+    meta_path = DATA / "meta.json"
+    old_meta = json.loads(meta_path.read_text()) if meta_path.exists() and meta_path.read_text().strip() else {}
+    oldest = str(settings.get("backlog_ab", "2023-01-01"))
+    backfill = (old_meta.get("abruf_ab") or "9999") > oldest
+    if backfill:
+        since = date.fromisoformat(oldest)
+    else:
+        since = today - timedelta(days=int(settings.get("rueckblick_tage", 60)))
+    print(f"Abruf seit {since.isoformat()} ({'Nachholen bis ' + oldest if backfill else 'täglich'})")
     pairs, status = collect(journals, searches, resolved, since)
 
     records, dropped = [], Counter()
     seen: set[str] = set()
     for a, j in pairs:
         if not a.get("id") or not a.get("title") or a["id"] in seen:
+            continue
+        if a.get("published") and a["published"] < oldest:
+            dropped[f"vor {oldest}"] += 1
             continue
         d = decide(a, j, filters)
         if not d.keep:
@@ -192,28 +221,53 @@ def main() -> int:
         records.append(build_record(a, j, d, filters, today.isoformat(), int(settings.get("abstract_laenge", 1500))))
 
     DATA.mkdir(parents=True, exist_ok=True)
-    existing = json.loads(path.read_text()) if path.exists() else []
-    items = merge(existing, records, int(settings.get("aufbewahren_tage", 400)), today)
+    existing = []
+    for p in (path, backlog_path):
+        if p.exists() and p.read_text().strip():
+            existing += json.loads(p.read_text())
+    items = merge(existing, records, int(settings.get("aufbewahren_tage", 400)), today, oldest)
+    # Ältere Einträge mit den aktuellen Regeln neu einordnen (z. B. neue Rezensionsmuster).
+    for a in items:
+        j = {"name": a["journal"], "bereich": a.get("bereich"), "thema": a.get("thema")}
+        if filters.is_junk(a.get("title", ""), a["journal"]):
+            a["_weg"] = True
+            continue
+        a["rezension"] = filters.is_review(a.get("title", ""), a.get("abstract", ""))
+        a["buch"] = catalog.book_key(a["title"]) if a["rezension"] else ""
+        a["buchtitel"] = catalog.book_query_from_title(a["title"]) if a["rezension"] else ""
+        a["kategorie"] = filters.category(a, j)
+    items = [a for a in items if not a.pop("_weg", False)]
+    recent, older = split_recent(items, today, int(settings.get("posteingang_monate", 6)))
+    # Backlog schlank halten (wird auf dem iPad geladen): Abstracts kürzen.
+    for a in older:
+        if len(a.get("abstract", "")) > 600:
+            a["abstract"] = a["abstract"][:600].rsplit(" ", 1)[0] + " …"
 
     kat = settings.get("katalog", {})
     checked = 0
-    for a in items:
+    for a in recent:
         if a.get("rezension") and "katalog" not in a and checked < 60:
             a["katalog"] = catalog.check(a["title"], a.get("abstract", ""), kat)
             checked += 1
 
-    path.write_text(json.dumps(items, ensure_ascii=False, indent=1) + "\n")
+    path.write_text(json.dumps(recent, ensure_ascii=False, indent=1) + "\n")
+    backlog_path.write_text(json.dumps(older, ensure_ascii=False, separators=(",", ":")) + "\n")
     meta = {
         "stand": datetime.now(timezone.utc).isoformat(timespec="minutes"),
-        "artikel": len(items),
+        "abruf_ab": oldest if backfill else old_meta.get("abruf_ab", oldest),
+        "posteingang_monate": int(settings.get("posteingang_monate", 6)),
+        "artikel": len(recent),
+        "backlog": len(older),
         "neu_heute": sum(1 for a in items if a["added"] == today.isoformat()),
         "verworfen": dict(dropped),
+        "reihenfolge": [j["name"] for j in journals],
+        "kategorien": filters.categories + ["Weitere Geschichte"],
         "journals": status,
         "katalog": {k: v for k, v in kat.items()},
         "zotero": settings.get("zotero", {}),
     }
-    (DATA / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
-    print(f"{len(items)} Artikel gespeichert, {meta['neu_heute']} neu, verworfen: {dict(dropped)}")
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
+    print(f"{len(recent)} im Posteingang, {len(older)} im Backlog, {meta['neu_heute']} neu, verworfen: {dict(dropped)}")
     samples: dict[str, list[str]] = {}
     for a in records:
         samples.setdefault(a["journal"], [])

@@ -112,12 +112,15 @@ def _oa_to_article(w: dict) -> dict:
         "journal_name": src.get("display_name", ""),
         "source_id": (src.get("id") or "").rsplit("/", 1)[-1],
         "openalex_type": w.get("type", ""),
+        "band": str((w.get("biblio") or {}).get("volume") or ""),
+        "heft": str((w.get("biblio") or {}).get("issue") or ""),
+        "seite": str((w.get("biblio") or {}).get("first_page") or ""),
         "oa_url": (w.get("best_oa_location") or {}).get("pdf_url") or "",
         "source": "openalex",
     }
 
 
-def openalex_works(source_ids: list[str], since: date, *, max_pages: int = 10, chunk: int = 25) -> list[dict]:
+def openalex_works(source_ids: list[str], since: date, *, max_pages: int = 60, chunk: int = 10) -> list[dict]:
     """Neue Arbeiten aus mehreren Journals.
 
     Seitenweise mit "page" statt "cursor" (Cursor-Paging verlangt inzwischen einen API-Schlüssel).
@@ -159,34 +162,41 @@ def openalex_search(query: str, since: date, *, subfield: str = "1202", limit: i
 
 # ---------------------------------------------------------------- Crossref
 
-def crossref_works(issn: str, since: date, rows: int = 100) -> list[dict]:
-    params = {
-        "filter": f"from-pub-date:{since.isoformat()}",
-        "rows": rows,
-        "select": "DOI,title,subtitle,author,abstract,published,container-title,URL,type",
-    }
-    if CONTACT:
-        params["mailto"] = CONTACT
-    items = _get(f"{CROSSREF}/journals/{issn}/works", params).json().get("message", {}).get("items", [])
+def crossref_works(issn: str, since: date, rows: int = 200, max_pages: int = 10) -> list[dict]:
     out = []
-    for it in items:
-        parts = (it.get("published") or {}).get("date-parts") or [[]]
-        published = "-".join(f"{p:02d}" for p in parts[0]) if parts[0] else ""
-        doi = _doi(it.get("DOI"))
-        title = " ".join(it.get("title") or [])
-        if it.get("subtitle"):
-            title += ": " + " ".join(it["subtitle"])
-        out.append({
-            "id": doi,
-            "doi": doi,
-            "title": _clean(title),
-            "authors": [" ".join(filter(None, [a.get("given"), a.get("family")])) for a in it.get("author", [])][:12],
-            "abstract": _clean(it.get("abstract")),
-            "url": f"https://doi.org/{doi}",
-            "published": published,
-            "journal_name": " ".join(it.get("container-title") or []),
-            "source": "crossref",
-        })
+    for page in range(max_pages):
+        params = {
+            "filter": f"from-pub-date:{since.isoformat()}",
+            "rows": rows,
+            "offset": page * rows,
+            "select": "DOI,title,subtitle,author,abstract,published,container-title,URL,type,volume,issue,page",
+        }
+        if CONTACT:
+            params["mailto"] = CONTACT
+        items = _get(f"{CROSSREF}/journals/{issn}/works", params).json().get("message", {}).get("items", [])
+        for it in items:
+            parts = (it.get("published") or {}).get("date-parts") or [[]]
+            published = "-".join(f"{p:02d}" for p in parts[0]) if parts[0] else ""
+            doi = _doi(it.get("DOI"))
+            title = " ".join(it.get("title") or [])
+            if it.get("subtitle"):
+                title += ": " + " ".join(it["subtitle"])
+            out.append({
+                "id": doi,
+                "doi": doi,
+                "title": _clean(title),
+                "authors": [" ".join(filter(None, [a.get("given"), a.get("family")])) for a in it.get("author", [])][:12],
+                "abstract": _clean(it.get("abstract")),
+                "url": f"https://doi.org/{doi}",
+                "published": published,
+                "journal_name": " ".join(it.get("container-title") or []),
+                "band": str(it.get("volume") or ""),
+                "heft": str(it.get("issue") or ""),
+                "seite": str(it.get("page") or "").split("-")[0],
+                "source": "crossref",
+            })
+        if len(items) < rows:
+            break
     return out
 
 
@@ -218,7 +228,7 @@ def rss_items(url: str) -> list[dict]:
 
 # ---------------------------------------------------------------- CiNii Research
 
-def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str | None = None) -> list[dict]:
+def cinii_articles(journal_title: str, since: date, count: int = 200, issn: str | None = None, max_pages: int = 10) -> list[dict]:
     """Neue Aufsätze eines japanischen Journals über CiNii Research (OpenSearch).
 
     CiNii sucht im Zeitschriftentitel unscharf; deshalb werden nur Treffer behalten,
@@ -236,10 +246,18 @@ def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str 
         params["publicationTitle"] = journal_title
     if CINII_APPID:
         params["appid"] = CINII_APPID
-    data = _get(CINII, params).json()
+    raw: list[dict] = []
+    data: dict = {}
+    for page in range(max_pages):
+        params["start"] = page * count + 1
+        data = _get(CINII, params).json()
+        batch = data.get("items", []) or []
+        raw += batch
+        if len(batch) < count:
+            break
     want = re.sub(r"\s+", "", journal_title).lower()
     out, other_names = [], set()
-    for it in data.get("items", []):
+    for it in raw:
         name = it.get("prism:publicationName", "") or ""
         if not issn and not re.sub(r"\s+", "", name).lower().startswith(want):
             other_names.add(name)
@@ -262,12 +280,15 @@ def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str 
             "url": f"https://doi.org/{doi}" if doi else (link or it.get("@id", "")),
             "published": it.get("prism:publicationDate", ""),
             "journal_name": name or journal_title,
+            "band": str(it.get("prism:volume") or ""),
+            "heft": str(it.get("prism:number") or ""),
+            "seite": str(it.get("prism:startingPage") or ""),
             "source": "cinii",
         })
     if not out and other_names:
         log.info("CiNii %s: %s Treffer mit anderem Zeitschriftentitel, z. B. %s",
                  journal_title, len(other_names), sorted(other_names)[:5])
-    elif not data.get("items"):
+    elif not raw:
         log.info("CiNii %s: keine Treffer seit %s (Gesamt laut CiNii: %s)",
                  journal_title, since.strftime("%Y-%m"), data.get("opensearch:totalResults"))
     return out

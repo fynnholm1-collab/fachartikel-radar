@@ -5,10 +5,14 @@
 # der Radar ihn zum ersten Mal sieht.
 rueckblick_tage: 60
 
-# Beim allerersten Abruf weiter zurückschauen, damit die App nicht leer startet.
-erster_abruf_tage: 180
+# Posteingang: Artikel der letzten Monate (nach Erscheinungsdatum). Ältere landen im Backlog.
+posteingang_monate: 6
 
-# Wie lange Artikel in der App bleiben (danach nur noch in Zotero, falls gespeichert).
+# Backlog reicht bis zu diesem Datum zurück; ältere Artikel werden nicht gespeichert.
+# Wird das Datum geändert, holt der nächste Abruf die fehlenden Jahrgänge nach.
+backlog_ab: "2023-01-01"
+
+# Einträge ohne Erscheinungsdatum bleiben so viele Tage nach dem ersten Auftauchen.
 aufbewahren_tage: 400
 
 # Maximale Länge der gespeicherten Abstracts (Zeichen).

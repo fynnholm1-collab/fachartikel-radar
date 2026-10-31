@@ -30,10 +30,13 @@
 
   <section class="toolbar">
     <label class="toggle"><input type="checkbox" id="nur-neue" checked> nur ungesichtete</label>
+    <select id="kategorie" aria-label="Kategorie"><option value="">Alle Kategorien</option></select>
+    <button id="alle-auf" class="ghost">Alle auf-/zuklappen</button>
     <span id="anzahl" class="muted"></span>
     <button id="alle-gesehen" class="ghost">Alle hier als gesichtet markieren</button>
   </section>
 
+  <p id="hilfe" class="muted small hilfe"></p>
   <main id="liste" aria-live="polite"></main>
 
   <dialog id="dlg-einstellungen">
@@ -65,6 +68,7 @@
     <form method="dialog" class="dialog">
       <h2 id="sp-titel">In Zotero speichern</h2>
       <p id="sp-artikel" class="muted"></p>
+      <p class="muted small">Der Kommentar wird in Zotero als Notiz am Eintrag gespeichert. „Nur im Radar merken“ behält ihn hier unter „Gemerkt“, ohne Zotero.</p>
       <label>Ihr Kommentar <textarea id="sp-kommentar" rows="5" placeholder="Warum ist der Artikel wichtig? Wofür könnte er nützlich sein?"></textarea></label>
       <label id="sp-ordner-wrap">Zotero-Ordner <select id="sp-ordner"></select></label>
       <p id="sp-status" class="muted small"></p>
@@ -90,7 +94,7 @@
       <p class="kommentar small"></p>
       <div class="knoepfe">
         <a class="btn oeffnen" target="_blank" rel="noopener">Öffnen</a>
-        <button class="wichtig">Wichtig</button>
+        <button class="wichtig">Kommentieren &amp; speichern</button>
         <button class="spaeter ghost">Später</button>
         <button class="ignorieren ghost">Ignorieren</button>
       </div>

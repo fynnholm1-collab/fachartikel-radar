@@ -27,6 +27,9 @@ def _compile_term(term: str) -> re.Pattern:
     return re.compile(rf"(?<![\w]){body}{suffix}(?![\w])")
 
 
+BY_AUTHOR = re.compile(r"\s(?:[Ee]dited |[Tt]ranslated )?[Bb]y\s+(?:[A-Z][\w.'’\-]*|de|van|von|du)(?:\s+(?:[A-Z][\w.'’\-]*|de|van|von|du|and|&|,))+\s*(?:\(review\))?\s*$")
+
+
 @dataclass
 class TermSet:
     terms: list[str]
@@ -56,6 +59,8 @@ class Filters:
         self.themes = {k: TermSet(v) for k, v in config.get("themen", {}).items()}
         self.review_patterns = [re.compile(p, re.I) for p in config.get("rezension_muster", [])]
         self.junk_patterns = [re.compile(rf"^\s*(?:{p})\s*[.:]?\s*$", re.I) for p in config.get("ausschliessen", [])]
+        self.junk_types = set(config.get("ausschliessen_typen", []))
+        self.categories = list(config.get("kategorien", []))
 
     def set_matches(self, name: str, text: str) -> list[str]:
         if name in self.combined:
@@ -79,8 +84,29 @@ class Filters:
             return True
         return any(p.match(t) for p in self.junk_patterns)
 
-    def is_review(self, title: str) -> bool:
-        return any(p.search(title or "") for p in self.review_patterns)
+    def is_review(self, title: str, abstract: str = "") -> bool:
+        title = title or ""
+        if any(p.search(title) for p in self.review_patterns):
+            return True
+        # "Buchtitel by Vorname Nachname" ohne Abstract (Cambridge, MUSE, Wiley)
+        return not (abstract or "").strip() and bool(BY_AUTHOR.search(title))
+
+    def is_history(self, text: str, journal_name: str = "") -> bool:
+        if self.set_matches("geschichte", text) or self.pre_edo.matches(text) or self.edo_on.matches(text):
+            return True
+        if re.search(r"\b1[5-9]\d\d\b", text):
+            return True
+        return bool(re.search(r"histor|geschicht|史", journal_name, re.I))
+
+    def category(self, article: dict, journal: dict) -> str:
+        """Japanische Geschichte, Japan allgemein oder das Thema der Zeitschrift."""
+        text = " ".join(filter(None, [article.get("title"), article.get("abstract")]))
+        japan = journal.get("bereich") == "japan" or journal.get("thema") == "Japan" or bool(self.set_matches("japan", text))
+        if japan:
+            history = self.is_history(text, journal.get("name", "")) or journal.get("bereich") == "fach"
+            return "Japanische Geschichte" if history else "Japan allgemein"
+        thema = journal.get("thema") or ""
+        return thema if thema in self.categories else "Weitere Geschichte"
 
 
 @dataclass
@@ -100,7 +126,7 @@ def decide(article: dict, journal: dict, filters: Filters) -> Decision:
        -> erscheint nur, wenn zusätzlich ein Thema getroffen wird.
     Rezensionen werden nicht gefiltert, sondern nur markiert (siehe fetch).
     """
-    if filters.is_junk(article.get("title", ""), journal.get("name", "")):
+    if filters.is_junk(article.get("title", ""), journal.get("name", "")) or article.get("openalex_type") in filters.junk_types:
         return Decision(False, "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)", [], [])
     text = " ".join(filter(None, [article.get("title"), article.get("abstract")]))
     matched: list[str] = []

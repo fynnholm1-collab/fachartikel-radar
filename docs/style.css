@@ -139,3 +139,20 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
   #suche { max-width: none; }
   #alle-gesehen { margin-left: 0; }
 }
+
+/* Gruppen nach Zeitschrift/Heft und Buch */
+.hilfe { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+.hilfe:empty { display: none; }
+details.block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin: 8px 0; }
+details.block > summary { display: flex; align-items: center; gap: 10px; padding: 12px 14px; cursor: pointer; list-style: none; }
+details.block > summary::-webkit-details-marker { display: none; }
+details.block > summary::before { content: "▸"; color: var(--muted); transition: transform .15s; }
+details.block[open] > summary::before { transform: rotate(90deg); }
+details.block[open] > summary { border-bottom: 1px solid var(--border); }
+.block-titel { flex: 1; font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+details.block > :not(summary) { margin-left: 12px; margin-right: 12px; }
+details.block > .karte:last-child { margin-bottom: 12px; }
+.heft { font-size: 0.85rem; color: var(--muted); margin: 16px 12px 6px; font-weight: 600; }
+button.klein { padding: 4px 8px; font-size: 0.8rem; }
+#kategorie { max-width: 220px; }
+.block .zahl { font-size: 0.8rem; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
