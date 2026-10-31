@@ -117,22 +117,31 @@ def _oa_to_article(w: dict) -> dict:
     }
 
 
-def openalex_works(source_ids: list[str], since: date, *, max_pages: int = 10) -> list[dict]:
-    """Neue Arbeiten aus mehreren Journals (bis zu 50 IDs pro Anfrage)."""
+def openalex_works(source_ids: list[str], since: date, *, max_pages: int = 10, chunk: int = 25) -> list[dict]:
+    """Neue Arbeiten aus mehreren Journals.
+
+    Seitenweise mit "page" statt "cursor" (Cursor-Paging verlangt inzwischen einen API-Schlüssel).
+    Scheitert eine Folgeseite, bleiben die bereits geholten Seiten erhalten.
+    """
     out: list[dict] = []
-    for i in range(0, len(source_ids), 50):
-        chunk = [s.rsplit("/", 1)[-1] for s in source_ids[i:i + 50]]
-        cursor = "*"
-        for _ in range(max_pages):
+    for i in range(0, len(source_ids), chunk):
+        ids = [s.rsplit("/", 1)[-1] for s in source_ids[i:i + chunk]]
+        for page in range(1, max_pages + 1):
             params = _oa_params({
-                "filter": f"primary_location.source.id:{'|'.join(chunk)},from_publication_date:{since.isoformat()}",
+                "filter": f"primary_location.source.id:{'|'.join(ids)},from_publication_date:{since.isoformat()}",
                 "per-page": 200,
-                "cursor": cursor,
+                "page": page,
             })
-            data = _get(f"{OPENALEX}/works", params).json()
-            out += [_oa_to_article(w) for w in data.get("results", [])]
-            cursor = data.get("meta", {}).get("next_cursor")
-            if not cursor or not data.get("results"):
+            try:
+                data = _get(f"{OPENALEX}/works", params).json()
+            except requests.RequestException as exc:
+                if page == 1:
+                    raise
+                log.warning("OpenAlex Seite %s abgebrochen (%s); %s Artikel bis hierher behalten", page, exc, len(out))
+                break
+            results = data.get("results", [])
+            out += [_oa_to_article(w) for w in results]
+            if len(results) < 200:
                 break
     return out
 
@@ -209,20 +218,31 @@ def rss_items(url: str) -> list[dict]:
 
 # ---------------------------------------------------------------- CiNii Research
 
-def cinii_articles(journal_title: str, since: date, count: int = 50) -> list[dict]:
-    """Neue Aufsätze eines japanischen Journals über CiNii Research (OpenSearch)."""
+def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str | None = None) -> list[dict]:
+    """Neue Aufsätze eines japanischen Journals über CiNii Research (OpenSearch).
+
+    CiNii sucht im Zeitschriftentitel unscharf; deshalb werden nur Treffer behalten,
+    deren Zeitschriftentitel genau passt.
+    """
     params = {
-        "journal": journal_title,
         "from": since.strftime("%Y%m"),
         "count": count,
         "sortorder": 0,
         "format": "json",
     }
+    if issn:
+        params["issn"] = issn
+    else:
+        params["publicationTitle"] = journal_title
     if CINII_APPID:
         params["appid"] = CINII_APPID
     data = _get(CINII, params).json()
+    want = re.sub(r"\s+", "", journal_title)
     out = []
     for it in data.get("items", []):
+        name = it.get("prism:publicationName", "") or ""
+        if not issn and re.sub(r"\s+", "", name) != want:
+            continue
         doi = ""
         for ident in it.get("dc:identifier", []) or []:
             if isinstance(ident, dict) and ident.get("@type") == "DOI":
@@ -230,15 +250,17 @@ def cinii_articles(journal_title: str, since: date, count: int = 50) -> list[dic
         authors = it.get("dc:creator") or []
         if isinstance(authors, str):
             authors = [authors]
+        link = it.get("link")
+        link = link.get("@id", "") if isinstance(link, dict) else (link or "")
         out.append({
             "id": doi or it.get("@id", ""),
             "doi": doi,
             "title": _clean(it.get("title")),
             "authors": [a if isinstance(a, str) else a.get("@value", "") for a in authors][:12],
             "abstract": _clean(it.get("description")),
-            "url": f"https://doi.org/{doi}" if doi else it.get("link", {}).get("@id", it.get("@id", "")),
+            "url": f"https://doi.org/{doi}" if doi else (link or it.get("@id", "")),
             "published": it.get("prism:publicationDate", ""),
-            "journal_name": it.get("prism:publicationName", journal_title),
+            "journal_name": name or journal_title,
             "source": "cinii",
         })
     return out

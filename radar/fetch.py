@@ -47,6 +47,9 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
     by_source_id: dict[str, dict] = {}
     for j in journals:
         quelle = j.get("quelle", "openalex")
+        if quelle == "keine":
+            status[j["name"]] = "nicht automatisch abrufbar"
+            continue
         if quelle == "openalex":
             r = resolved.get(j["name"])
             if r:
@@ -73,7 +76,7 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
                 status[j["name"]] = f"Fehler RSS: {exc}"
         elif quelle == "cinii":
             try:
-                items = sources.cinii_articles(j["name"], since)
+                items = sources.cinii_articles(j["name"], since, issn=j.get("issn"))
                 pairs += [(a, j) for a in items]
                 status[j["name"]] = f"{len(items)} über CiNii"
             except Exception as exc:  # noqa: BLE001
@@ -191,8 +194,15 @@ def main() -> int:
     }
     (DATA / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
     print(f"{len(items)} Artikel gespeichert, {meta['neu_heute']} neu, verworfen: {dict(dropped)}")
+    samples: dict[str, list[str]] = {}
+    for a in records:
+        samples.setdefault(a["journal"], [])
+        if len(samples[a["journal"]]) < 2:
+            samples[a["journal"]].append(a["title"][:90])
     for name, s in sorted(status.items()):
         print(f"  {name}: {s}")
+        for t in samples.get(name, []):
+            print(f"      · {t}")
     return 0
 
 

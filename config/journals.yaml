@@ -11,7 +11,7 @@
 #   thema      Zotero-Unterordner, in den "wichtig"-Artikel vorgeschlagen werden
 #   issn       optional; sonst wird das Journal per Name in OpenAlex gesucht
 #   rss        optional; Feed-Adresse, falls OpenAlex/Crossref das Journal nicht abdecken
-#   quelle     optional: openalex (Standard) | crossref | rss | cinii
+#   quelle     optional: openalex (Standard) | crossref | rss | cinii | keine
 #   hinweis    freier Text, wird in der App angezeigt
 #   hervorheben optional: Liste von Wörtern, bei denen ein Artikel markiert wird
 
@@ -19,18 +19,18 @@ journals:
   # ---------------- Japan: Kern-Journals (alle Artikel, Epochenregel) ----------------
   - {name: Monumenta Nipponica, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Journal of Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: Japan Review, bereich: japan, prioritaet: hoch, thema: Japan}
+  - {name: Japan Review, issn: 0915-0986, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japanese Journal of Religious Studies, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Harvard Journal of Asiatic Studies, bereich: japan, prioritaet: hoch, thema: Japan, filter: japan}
   - {name: Japan Forum, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Social Science Japan Journal, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: Early Modern Japan, bereich: japan, prioritaet: hoch, thema: Japan}
+  - {name: Early Modern Japan, bereich: japan, prioritaet: hoch, thema: Japan, quelle: keine, hinweis: kein automatischer Abruf möglich}
   - {name: Review of Japanese Culture and Society, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: "The Asia-Pacific Journal: Japan Focus", bereich: japan, prioritaet: hoch, thema: Japan}
+  - {name: "The Asia-Pacific Journal: Japan Focus", issn: 1557-4660, quelle: crossref, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Journal of Asian Studies, bereich: japan, prioritaet: hoch, thema: Japan, filter: japan}
-  - {name: Japonica Humboldtiana, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: Nachrichten der Gesellschaft für Natur- und Völkerkunde Ostasiens, bereich: japan, prioritaet: hoch, thema: Japan, hinweis: NOAG}
+  - {name: Japonica Humboldtiana, bereich: japan, prioritaet: hoch, thema: Japan, quelle: keine, hinweis: kein automatischer Abruf möglich}
+  - {name: Nachrichten der Gesellschaft für Natur- und Völkerkunde Ostasiens, bereich: japan, prioritaet: hoch, thema: Japan, quelle: keine, hinweis: NOAG; kein automatischer Abruf möglich}
   - {name: Asiatische Studien, bereich: japan, prioritaet: hoch, thema: Japan, filter: japan}
   - {name: Ebisu, bereich: japan, prioritaet: hoch, thema: Japan}
   # Japanischsprachig (Quelle CiNii; Anbindung wird getestet)
@@ -56,7 +56,7 @@ journals:
   - {name: Historische Zeitschrift, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre}
   - {name: Rethinking History, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre}
   - {name: Journal of the Philosophy of History, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre}
-  - {name: History of Historiography, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre, hinweis: Storia della Storiografia}
+  - {name: Storia della Storiografia, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre, hinweis: History of Historiography}
   - {name: Current Research in Digital History, bereich: fach, prioritaet: mittel, thema: Digitale Geschichte}
   - {name: Public History Weekly, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre}
   - {name: The History Teacher, bereich: fach, prioritaet: mittel, thema: Theorie und Lehre}
@@ -78,7 +78,7 @@ journals:
   - {name: "Cross-Currents: East Asian History and Culture Review", bereich: rand, prioritaet: filter, filter: japan, thema: Japan}
   - {name: Journal of Korean Studies, bereich: rand, prioritaet: filter, filter: japan, thema: Japan}
   - {name: Late Imperial China, bereich: rand, prioritaet: filter, filter: japan, thema: Japan}
-  - {name: Sino-Japanese Studies, bereich: rand, prioritaet: filter, filter: japan, thema: Japan}
+  - {name: Sino-Japanese Studies, bereich: rand, prioritaet: filter, filter: japan, thema: Japan, quelle: keine}
   - {name: Itinerario, bereich: rand, prioritaet: filter, filter: japan, thema: Globalgeschichte}
   - {name: Journal of the Economic and Social History of the Orient, bereich: rand, prioritaet: filter, filter: japan, thema: Globalgeschichte}
   - {name: History of Religions, bereich: rand, prioritaet: filter, filter: japan, thema: Japan}
