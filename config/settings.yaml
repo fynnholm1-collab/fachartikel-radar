@@ -12,6 +12,9 @@ posteingang_monate: 6
 # Wird das Datum geändert, holt der nächste Abruf die fehlenden Jahrgänge nach.
 backlog_ab: "2023-01-01"
 
+# Wird diese Zahl erhöht, ruft der nächste Lauf alles ab backlog_ab neu ab (nach Regeländerungen).
+datenstand: 2
+
 # Einträge ohne Erscheinungsdatum bleiben so viele Tage nach dem ersten Auftauchen.
 aufbewahren_tage: 400
 
@@ -27,6 +30,8 @@ katalog:
   iln: 
   # Link zur Suche in "Katalog plus" der UB Tübingen; {q} wird durch den Suchbegriff ersetzt.
   katalog_link: https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor={q}&type=allfields
+  # Höchstzahl der Titelabgleiche pro Lauf (erkennt Rezensionen, deren Titel ein Buchtitel ist).
+  titelabgleich_max: 250
   # Formular für Anschaffungsvorschläge der UB.
   anschaffungsvorschlag: http://www-ub.ub.uni-tuebingen.de/dienste/cgi-bin/avorschlag.cgi
 
