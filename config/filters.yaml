@@ -42,6 +42,13 @@ sets:
     - past
     - century
     - centuries
+    - 歴史
+    - 史料
+    - 近世
+    - 近代
+    - 中世
+    - 江戸
+    - 明治
 
   environmental_humanities:
     - more-than-human
@@ -109,13 +116,22 @@ themen:
   Theorie: [historiograph*, theory, theories, method*, metahistory]
   Lehre: [teaching, pedagog*, curriculum, classroom, students, education]
 
-# Titelmuster, an denen Buchbesprechungen erkannt werden.
+# Titelmuster, an denen Buchbesprechungen erkannt werden. Zusätzlich gilt ein Titel
+# ohne Abstract, der auf "by Vorname Nachname" endet, als Rezension.
 rezension_muster:
   - '^book reviews?\b'
   - '^reviews?\b'
   - '^review of\b'
   - '^rezension'
   - '^compte[- ]rendu'
+  - '^a review of\b'
+  - '\(review\)\s*$'
+  - '^書評'
+  - '書評と紹介'
+  - '^(新刊)?紹介\s'
+  - '^\S{1,30}(著|編|編著|監修)?\s*『[^』]+』\s*$'    # nur "Autor『Buchtitel』"
+  - '\bverlag\b.*\b(19|20)\d\d\b'
+  - '\b\d{2,4}\s?S\.\s*(,|$)'
   - '\bisbn\b'
   - '\bpp\.\s*[ivxlc\d]'
   - '\b(university|univ\.) press\b'
@@ -136,3 +152,21 @@ ausschliessen:
   - 'list of contributors'
   - "editor'?s'? (note|introduction)"
   - 'call for papers.*'
+  - '(in memoriam|obituary|obituaries|nachruf)\b.*'
+  - '(preface|foreword|vorwort|acknowledge?ments?)'
+  - '(annual )?index( to volume.*)?'
+  - 'announcements?'
+  - '.*anniversary message'
+  - '(a )?(letter|note|message) from the editors?.*'
+  - 'from the editors?'
+  - '(thank you to |list of )?(our )?(peer )?reviewers?( \d{4}| for .*| of .*)?'
+  - '特集にあたって'
+  - '史学文献目録.*'
+  - '編集後記'
+  - '(会告|彙報|正誤表|総目次|訂正).*'
+
+# OpenAlex-Typen, die keine Artikel sind.
+ausschliessen_typen: [paratext, editorial, erratum, letter, retraction, other]
+
+# Reihenfolge der Kategorien (Rezensionen und Gruppierung).
+kategorien: [Japanische Geschichte, Japan allgemein, Globalgeschichte, Umwelt- und Tiergeschichte, Digitale Geschichte, Theorie und Lehre]

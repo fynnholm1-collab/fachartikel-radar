@@ -38,11 +38,25 @@ def _valid_isbn(isbn: str) -> bool:
 
 
 def book_query_from_title(title: str) -> str:
-    """Grober Suchbegriff aus einem Rezensionstitel (ohne KI, daher unsicher)."""
-    t = re.sub(r"^(book reviews?|reviews?( of)?|rezension( zu)?|compte[- ]rendu( de)?)[:\s]+", "", title or "", flags=re.I)
+    """Grober Buchtitel aus einem Rezensionstitel (ohne KI, daher unsicher)."""
+    title = title or ""
+    m = re.search(r"『([^』]+)』", title)
+    if m:
+        return m.group(1).split(" : ")[0].strip()
+    t = re.sub(r"^(book reviews?|reviews?( of)?|a review of|rezension( zu)?|compte[- ]rendu( de)?)[:\s]+", "", title, flags=re.I)
+    t = re.sub(r"\s*\(review\)\s*$", "", t)
+    t = re.split(r"\s(?:[Ee]dited |[Tt]ranslated )?[Bb]y\s+[A-Z]", t)[0]  # "Titel by Autor"
     t = re.split(r"\.\s+(?:[A-Z][a-z]+(?:,| \w+)*:|\(|Pp\.|pp\.)", t)[0]  # bis zu Verlagsort/Seitenangabe
     t = re.sub(r"[\"“”'‘’]", "", t)
     return " ".join(t.split()[:12])
+
+
+def book_key(title: str) -> str:
+    """Schlüssel, unter dem Rezensionen desselben Buches zusammengefasst werden."""
+    t = book_query_from_title(title).lower()
+    t = t.split(":")[0] if len(t.split(":")[0]) >= 12 else t
+    words = re.findall(r"\w+", t)
+    return " ".join(words[:8])
 
 
 def sru_search(base_url: str, cql: str, max_records: int = 5, timeout: int = 20) -> tuple[int, str]:

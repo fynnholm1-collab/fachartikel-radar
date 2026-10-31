@@ -4,7 +4,9 @@ const $ = (sel) => document.querySelector(sel);
 const STORE = "radar-status";
 
 let articles = [];
+let backlog = null; // wird erst beim Öffnen des Reiters geladen
 let meta = {};
+let offen = new Set(JSON.parse(localStorageGet("radar-offen") || "[]"));
 let status = loadStatus();
 let tab = localStorageGet("radar-tab") || "eingang";
 
@@ -16,13 +18,18 @@ function st(id) { return status[id] || {}; }
 function setSt(id, patch) { status[id] = { ...st(id), ...patch, t: new Date().toISOString() }; saveStatus(); }
 
 const TABS = [
-  { id: "eingang", label: "Posteingang", filter: (a) => !a.rezension && (a.bereich === "japan" || (a.bereich === "fach" && a.prioritaet === "hoch")), sichtung: true },
-  { id: "fach", label: "Fach", filter: (a) => !a.rezension && a.bereich === "fach" && a.prioritaet !== "hoch", sichtung: true },
-  { id: "rand", label: "Rand mit Japan-Bezug", filter: (a) => !a.rezension && a.bereich === "rand", sichtung: true },
-  { id: "rezensionen", label: "Rezensionen", filter: (a) => a.rezension, sichtung: true },
-  { id: "gemerkt", label: "Gemerkt", filter: (a) => ["wichtig", "spaeter"].includes(st(a.id).s) },
-  { id: "buecher", label: "Bücher bestellen", filter: (a) => st(a.id).b },
+  { id: "eingang", label: "Posteingang", quelle: "neu", filter: (a) => !a.rezension, sichtung: true, gruppen: "heft" },
+  { id: "backlog", label: "Backlog", quelle: "alt", filter: (a) => !a.rezension, sichtung: true, gruppen: "heft" },
+  { id: "rezensionen", label: "Rezensionen", quelle: "neu", filter: (a) => a.rezension, sichtung: true, gruppen: "buch" },
+  { id: "gemerkt", label: "Gemerkt", quelle: "alle", filter: (a) => ["wichtig", "spaeter"].includes(st(a.id).s) },
+  { id: "buecher", label: "Bücher bestellen", quelle: "alle", filter: (a) => st(a.id).b },
 ];
+
+function pool(t) {
+  if (t.quelle === "neu") return articles;
+  if (t.quelle === "alt") return backlog || [];
+  return backlog ? articles.concat(backlog) : articles;
+}
 
 const KATALOG = {
   vorhanden: ["ok", "in der UB vorhanden"],
@@ -51,8 +58,10 @@ function visible() {
   const t = TABS.find((x) => x.id === tab) || TABS[0];
   const q = $("#suche").value.trim().toLowerCase();
   const nurNeue = $("#nur-neue").checked && t.sichtung;
-  return articles.filter((a) => {
+  const kat = $("#kategorie").value;
+  return pool(t).filter((a) => {
     if (!t.filter(a)) return false;
+    if (kat && t.sichtung && a.kategorie !== kat) return false;
     const s = st(a.id).s;
     if (t.sichtung && s === "ignoriert") return false;
     if (nurNeue && s) return false;
@@ -72,14 +81,14 @@ function renderTabs() {
     b.setAttribute("role", "tab");
     b.setAttribute("aria-selected", String(t.id === tab));
     b.textContent = t.label;
-    const n = articles.filter((a) => t.filter(a) && (!t.sichtung || !st(a.id).s)).length;
+    const n = t.quelle === "alt" && !backlog ? (meta.backlog || 0) : pool(t).filter((a) => t.filter(a) && (!t.sichtung || !st(a.id).s)).length;
     if (n) {
       const z = document.createElement("span");
       z.className = "zahl";
       z.textContent = n;
       b.append(z);
     }
-    b.onclick = () => { tab = t.id; localStorageSet("radar-tab", tab); render(); };
+    b.onclick = () => { tab = t.id; localStorageSet("radar-tab", tab); show(); };
     nav.append(b);
   }
 }
@@ -92,6 +101,7 @@ function card(a) {
   node.classList.toggle("gesehen", !!s.s && s.s !== "wichtig");
   node.querySelector(".journal").textContent = a.journal;
   node.querySelector(".datum").textContent = fmtDate(a.published);
+  if (a.rezension && a.buch) node.querySelector(".journal").textContent = `Rezension in ${a.journal}`;
   const link = node.querySelector(".titel a");
   link.textContent = a.title;
   link.href = a.url;
@@ -121,7 +131,7 @@ function card(a) {
 
   const wichtig = node.querySelector(".wichtig");
   wichtig.onclick = () => openSave(a, "artikel");
-  if (s.s === "wichtig") wichtig.textContent = "Kommentar ändern";
+  wichtig.textContent = s.s === "wichtig" ? "Kommentar ändern" : "Kommentieren & speichern";
 
   const later = node.querySelector(".spaeter");
   later.textContent = s.s === "spaeter" ? "Nicht mehr merken" : "Später";
@@ -147,15 +157,136 @@ function card(a) {
   return node;
 }
 
+function heftLabel(a) {
+  const teile = [];
+  if (a.band) teile.push(`Bd. ${a.band}`);
+  if (a.heft) teile.push(`Heft ${a.heft}`);
+  const jahr = (a.published || "").slice(0, 4);
+  if (teile.length) return `${teile.join(", ")}${jahr ? ` (${jahr})` : ""}`;
+  return a.published ? `ohne Heftangabe, ${fmtDate(a.published.slice(0, 7))}` : "ohne Heftangabe";
+}
+
+function seiteNum(a) { const n = parseInt(a.seite, 10); return Number.isFinite(n) ? n : 1e9; }
+
+function journalRank(name) {
+  const order = meta.reihenfolge || [];
+  const i = order.indexOf(name);
+  return i < 0 ? order.length : i;
+}
+
+function groupBy(items, keyFn) {
+  const m = new Map();
+  for (const a of items) {
+    const k = keyFn(a);
+    if (!m.has(k)) m.set(k, []);
+    m.get(k).push(a);
+  }
+  return m;
+}
+
+function gruppe(id, titel, items, inhalt) {
+  const d = document.createElement("details");
+  d.className = "block";
+  d.open = offen.has(id);
+  d.ontoggle = () => {
+    if (d.open) offen.add(id); else offen.delete(id);
+    localStorageSet("radar-offen", JSON.stringify([...offen]));
+    if (d.open && !d.dataset.gefuellt) { d.dataset.gefuellt = "1"; inhalt(d); }
+  };
+  const sum = document.createElement("summary");
+  const h = document.createElement("span");
+  h.className = "block-titel";
+  h.textContent = titel;
+  const n = items.filter((a) => !st(a.id).s).length;
+  const z = document.createElement("span");
+  z.className = "zahl";
+  z.textContent = n ? `${n} neu` : `${items.length}`;
+  sum.append(h, z);
+  if (n) {
+    const btn = document.createElement("button");
+    btn.className = "ghost klein";
+    btn.textContent = "alle gesichtet";
+    btn.onclick = (e) => { e.preventDefault(); markSeen(items); };
+    sum.append(btn);
+  }
+  d.append(sum);
+  if (d.open) { d.dataset.gefuellt = "1"; inhalt(d); }
+  return d;
+}
+
+function renderHefte(list, items) {
+  const byJournal = groupBy(items, (a) => a.journal);
+  const journals = [...byJournal.keys()].sort((x, y) => journalRank(x) - journalRank(y) || x.localeCompare(y));
+  for (const j of journals) {
+    const arts = byJournal.get(j);
+    list.append(gruppe(`j:${tab}:${j}`, j, arts, (box) => {
+      const hefte = groupBy(arts, heftLabel);
+      const keys = [...hefte.keys()].sort((x, y) => {
+        const px = hefte.get(x)[0].published || "", py = hefte.get(y)[0].published || "";
+        return py.localeCompare(px);
+      });
+      for (const k of keys) {
+        const h = document.createElement("h3");
+        h.className = "heft";
+        h.textContent = k;
+        box.append(h);
+        for (const a of hefte.get(k).sort((x, y) => seiteNum(x) - seiteNum(y) || x.title.localeCompare(y.title))) box.append(card(a));
+      }
+    }));
+  }
+}
+
+function renderBuecher(list, items) {
+  const kats = meta.kategorien || [];
+  const byKat = groupBy(items, (a) => a.kategorie || "Weitere Geschichte");
+  const order = [...byKat.keys()].sort((x, y) => (kats.indexOf(x) + 1 || 99) - (kats.indexOf(y) + 1 || 99));
+  for (const k of order) {
+    const h = document.createElement("h2");
+    h.className = "gruppe";
+    h.textContent = k;
+    list.append(h);
+    const byBook = groupBy(byKat.get(k), (a) => a.buch || a.id);
+    const books = [...byBook.entries()].sort((x, y) => y[1].length - x[1].length || (y[1][0].published || "").localeCompare(x[1][0].published || ""));
+    for (const [key, revs] of books) {
+      const titel = revs[0].buchtitel || (revs[0].katalog && revs[0].katalog.buchtitel) || revs[0].title;
+      const label = revs.length > 1 ? `${titel} · ${revs.length} Rezensionen` : titel;
+      list.append(gruppe(`b:${key}`, label, revs, (box) => { for (const a of revs) box.append(card(a)); }));
+    }
+  }
+}
+
+function markSeen(items) {
+  const now = new Date().toISOString();
+  for (const a of items) if (!st(a.id).s) status[a.id] = { s: "gesehen", t: now };
+  saveStatus();
+  render();
+}
+
+async function show() {
+  const t = TABS.find((x) => x.id === tab) || TABS[0];
+  if (t.quelle !== "neu" && backlog === null && (t.quelle === "alt" || meta.backlog)) {
+    $("#liste").innerHTML = '<p class="leer">Backlog wird geladen …</p>';
+    try { backlog = await fetch("data/backlog.json", { cache: "no-cache" }).then((r) => r.json()); } catch { backlog = []; }
+  }
+  render();
+}
+
 function render() {
   renderTabs();
   const list = $("#liste");
   list.innerHTML = "";
   const items = visible();
-  const t = TABS.find((x) => x.id === tab);
+  const t = TABS.find((x) => x.id === tab) || TABS[0];
   $("#anzahl").textContent = `${items.length} ${items.length === 1 ? "Eintrag" : "Einträge"}`;
   $("#alle-gesehen").hidden = !t.sichtung || !items.some((a) => !st(a.id).s);
   $("#nur-neue").parentElement.hidden = !t.sichtung;
+  $("#kategorie").hidden = !t.sichtung;
+  $("#alle-auf").hidden = !t.gruppen;
+  $("#hilfe").textContent = {
+    eingang: `Artikel der letzten ${meta.posteingang_monate || 6} Monate, nach Zeitschrift und Heft. Rezensionen und Editorials stehen nicht hier.`,
+    backlog: `Ältere Artikel seit ${fmtDate(meta.abruf_ab || "2023-01-01")}, nach Zeitschrift und Heft.`,
+    rezensionen: "Rezensionen nach Buch, mehrere Rezensionen zum selben Buch stehen zusammen.",
+  }[tab] || "";
 
   if (tab === "buecher") list.append(bookToolbar(items));
   if (!items.length) {
@@ -165,18 +296,10 @@ function render() {
     list.append(p);
     return;
   }
-  let last = null;
-  const sorted = t.sichtung ? items : [...items].sort((x, y) => (st(y.id).t || "").localeCompare(st(x.id).t || ""));
-  for (const a of sorted) {
-    if (t.sichtung && a.added !== last) {
-      last = a.added;
-      const h = document.createElement("h2");
-      h.className = "gruppe";
-      h.textContent = dayLabel(a.added);
-      list.append(h);
-    }
-    list.append(card(a));
-  }
+  if (t.gruppen === "heft") return renderHefte(list, items);
+  if (t.gruppen === "buch") return renderBuecher(list, items);
+  const sorted = [...items].sort((x, y) => (st(y.id).t || "").localeCompare(st(x.id).t || ""));
+  for (const a of sorted) list.append(card(a));
 }
 
 function bookToolbar(items) {
@@ -328,10 +451,12 @@ $("#import").onchange = async (e) => {
 
 $("#suche").addEventListener("input", render);
 $("#nur-neue").addEventListener("change", render);
-$("#alle-gesehen").onclick = () => {
-  for (const a of visible()) if (!st(a.id).s) status[a.id] = { s: "gesehen", t: new Date().toISOString() };
-  saveStatus();
-  render();
+$("#kategorie").addEventListener("change", () => { localStorageSet("radar-kat", $("#kategorie").value); render(); });
+$("#alle-gesehen").onclick = () => markSeen(visible());
+$("#alle-auf").onclick = () => {
+  const blocks = [...document.querySelectorAll("#liste details.block")];
+  const auf = blocks.some((d) => !d.open);
+  for (const d of blocks) d.open = auf;
 };
 
 async function load() {
@@ -342,11 +467,14 @@ async function load() {
     ]);
     articles = arts;
     meta = m;
+    const sel = $("#kategorie");
+    for (const k of meta.kategorien || []) { const o = document.createElement("option"); o.value = k; o.textContent = k; sel.append(o); }
+    sel.value = localStorageGet("radar-kat") || "";
     if (meta.stand) $("#stand").textContent = `Stand ${new Date(meta.stand).toLocaleString("de-DE", { dateStyle: "short", timeStyle: "short" })}`;
   } catch {
     $("#liste").innerHTML = '<p class="leer">Noch keine Daten. Der erste Abruf läuft täglich morgens.</p>';
     return;
   }
-  render();
+  show();
 }
 load();

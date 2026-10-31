@@ -141,3 +141,41 @@ def test_crossref_fallback_when_openalex_empty(monkeypatch):
     pairs, status = fetch.collect([j], [], resolved, date(2026, 5, 1))
     assert calls == ["0027-0741", "1880-1390"]
     assert len(pairs) == 1 and "Crossref" in status["Monumenta Nipponica"]
+
+
+def test_more_review_forms():
+    assert F.is_review("Strange Tales from Edo: Rewriting Chinese Fiction in Early Modern Japan by William D. Fleming")
+    assert F.is_review("Unsilent Strangers: Music, Minorities, Coexistence, Japan Edited by Hugh de Ferranti , Mason Smith")
+    assert not F.is_review("Strange Tales from Edo by William D. Fleming", "This article argues …")
+    assert not F.is_review("Stories Told by Women")
+    assert F.is_review("書評と紹介 日比嘉高著『帝国の書店』")
+    assert F.is_review("アニカ・Ａ・カルヴァー『鳥類の大日本帝国 : 貴族、アングロ・アメリカ人』")
+    assert not F.is_review("『古事記』の成立と天武朝")
+
+
+def test_more_junk():
+    for t in ["Eightieth Anniversary Message", "特集にあたって", "史学文献目録 : 日本史(4)", "In Memoriam: John Doe"]:
+        assert F.is_junk(t), t
+    assert not decide({"id": "x", "title": "Merchant houses", "openalex_type": "paratext"}, JAPAN, F).keep
+
+
+def test_categories():
+    assert F.category(art("Merchant houses in Edo"), JAPAN) == "Japanische Geschichte"
+    assert F.category(art("Robots and care work today"), {"name": "Contemporary Japan", "bereich": "rand", "thema": "Japan"}) == "Japan allgemein"
+    assert F.category(art("Japanese settlers in Truk"), FACH) == "Japanische Geschichte"
+    assert F.category(art("Silver flows"), {"name": "Journal of Global History", "bereich": "fach", "thema": "Globalgeschichte"}) == "Globalgeschichte"
+
+
+def test_book_key_groups_reviews_of_same_book():
+    a = catalog.book_key("Strange Tales from Edo: Rewriting Chinese Fiction in Early Modern Japan by William D. Fleming")
+    b = catalog.book_key("Book Review: Strange Tales from Edo: Rewriting Chinese Fiction in Early Modern Japan")
+    assert a == b
+    assert catalog.book_query_from_title("書評と紹介 日比嘉高著『帝国の書店 : 書物が編んだ近代日本』") == "帝国の書店"
+
+
+def test_split_recent_and_backlog():
+    from radar.fetch import split_recent
+    items = [{"id": "1", "published": "2026-09-01"}, {"id": "2", "published": "2025-01-01"},
+             {"id": "3", "published": "2025-01-01", "rezension": True}]
+    recent, older = split_recent(items, date(2026, 10, 31), 6)
+    assert [a["id"] for a in recent] == ["1"] and [a["id"] for a in older] == ["2"]
