@@ -45,25 +45,56 @@ def book_query_from_title(title: str) -> str:
     return " ".join(t.split()[:12])
 
 
-def sru_count(base_url: str, cql: str, timeout: int = 20) -> int:
+def sru_search(base_url: str, cql: str, max_records: int = 5, timeout: int = 20) -> tuple[int, str]:
+    """Gibt (Trefferzahl, Roh-XML im PICA-Format) zurück."""
     params = {
         "version": "1.1",
         "operation": "searchRetrieve",
         "query": cql,
-        "maximumRecords": "0",
+        "maximumRecords": str(max_records),
+        "recordSchema": "picaxml",
     }
     r = requests.get(base_url, params=params, timeout=timeout)
     r.raise_for_status()
     m = re.search(r"<(?:\w+:)?numberOfRecords>(\d+)<", r.text)
     if not m:
         raise ValueError("Antwort ohne numberOfRecords")
-    return int(m.group(1))
+    return int(m.group(1)), r.text
+
+
+def held_locally(xml: str, cfg: dict) -> bool | None:
+    """True/False, wenn der Bestand der eigenen Bibliothek erkennbar ist, sonst None.
+
+    Erkannt wird über die ISIL (z. B. DE-21) oder die ILN der Bibliothek in den
+    Exemplardaten (Feld 101@ $a). Ohne beides lässt sich nur "im Verbund" sagen.
+    """
+    isil, iln = cfg.get("isil"), cfg.get("iln")
+    if iln:
+        ilns = re.findall(r'tag="101@".*?code="a">(\d+)<', xml, flags=re.S)
+        return str(iln) in ilns
+    if isil:
+        return f">{isil}<" in xml or None
+    return None
+
+
+_diagnosed = False
+
+
+def _diagnose(xml: str) -> None:
+    """Einmal pro Lauf zeigen, welche Bestandsangaben K10plus liefert (zum Einrichten)."""
+    global _diagnosed
+    if _diagnosed:
+        return
+    _diagnosed = True
+    ilns = sorted(set(re.findall(r'tag="101@".*?code="a">(\d+)<', xml, flags=re.S)))
+    isils = sorted(set(re.findall(r">(DE-[\w-]+)<", xml)))
+    log.info("K10plus-Diagnose: ILN im Treffer %s, ISIL %s", ilns[:40], isils[:40])
 
 
 def check(title: str, abstract: str, cfg: dict) -> dict:
     """Ergebnis: {status, isbn, suche, link}.
 
-    status = vorhanden | nicht_gefunden (beides nur per ISBN) | wahrscheinlich | unsicher | fehler
+    status = vorhanden | nicht_gefunden | im_verbund (beides nur per ISBN) | wahrscheinlich | unsicher | fehler
     """
     link_tpl = cfg.get("katalog_link", "")
     isbns = find_isbns(f"{title} {abstract}")
@@ -75,12 +106,17 @@ def check(title: str, abstract: str, cfg: dict) -> dict:
         return {**result, "status": "unsicher"}
     try:
         if isbns:
-            n = sum(sru_count(base, f"pica.isb={i}") for i in isbns[:2])
-            return {**result, "status": "vorhanden" if n else "nicht_gefunden"}
+            n, xml = sru_search(base, " or ".join(f"pica.isb={i}" for i in isbns[:2]))
+            if not n:
+                return {**result, "status": "nicht_gefunden"}
+            _diagnose(xml)
+            local = held_locally(xml, cfg)
+            status = {True: "vorhanden", False: "nicht_gefunden", None: "im_verbund"}[local]
+            return {**result, "status": status}
         words = [w for w in re.findall(r"\w+", query) if len(w) > 3][:6]
         if not words:
             return {**result, "status": "unsicher"}
-        n = sru_count(base, " and ".join(f"pica.tit={w}" for w in words))
+        n, _ = sru_search(base, " and ".join(f"pica.all={w}" for w in words), max_records=1)
         # Titelsuche ist ohne KI ungenau: Treffer = "wahrscheinlich", kein Treffer = "unsicher".
         return {**result, "status": "wahrscheinlich" if n else "unsicher"}
     except Exception as exc:  # noqa: BLE001

@@ -110,3 +110,17 @@ def test_digest_render():
     ]
     subject, body = digest.render(digest.week_items(items, date(2026, 10, 31)), "https://example.org")
     assert "2 Highlights" in subject and "Edo fires" in body and "Hervorgehoben" in body
+
+
+def test_junk_entries_are_dropped():
+    for t in ["Editorial", "Issue Information", "Front Matter", "Erratum: wrong table", "Ebisu"]:
+        assert not decide(art(t), {"name": "Ebisu", "bereich": "japan", "prioritaet": "hoch"}, F).keep, t
+    assert decide(art("Editorial practices in Meiji newspapers"), JAPAN, F).keep
+
+
+def test_catalog_holdings_detection():
+    xml = '<record><datafield tag="101@"><subfield code="a">21</subfield></datafield></record>'
+    assert catalog.held_locally(xml, {"iln": 21}) is True
+    assert catalog.held_locally(xml, {"iln": 99}) is False
+    assert catalog.held_locally("<x>DE-21</x>", {"isil": "DE-21"}) is True
+    assert catalog.held_locally("<x/>", {"isil": "DE-21"}) is None

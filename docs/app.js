@@ -27,6 +27,7 @@ const TABS = [
 const KATALOG = {
   vorhanden: ["ok", "in der UB vorhanden"],
   nicht_gefunden: ["warn", "nicht in der UB"],
+  im_verbund: ["", "im Verbund K10plus, Tübingen bitte prüfen"],
   wahrscheinlich: ["", "wahrscheinlich vorhanden, bitte prüfen"],
   unsicher: ["", "Bestand unklar, bitte prüfen"],
   fehler: ["", "Katalog nicht erreichbar"],

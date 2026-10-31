@@ -120,3 +120,19 @@ rezension_muster:
   - '\bpp\.\s*[ivxlc\d]'
   - '\b(university|univ\.) press\b'
   - '\bpress,\s*(19|20)\d\d\b'
+
+# Einträge, die keine Artikel sind (Titel passt vollständig auf eines der Muster).
+ausschliessen:
+  - 'editorial( board)?'
+  - 'issue information'
+  - '(front|back|end) ?matter'
+  - '(table of )?contents'
+  - 'masthead'
+  - 'cover( and front matter)?'
+  - 'erratum.*'
+  - 'corrigend(um|a).*'
+  - 'books? received'
+  - 'notes on contributors'
+  - 'list of contributors'
+  - "editor'?s'? (note|introduction)"
+  - 'call for papers.*'

@@ -237,11 +237,12 @@ def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str 
     if CINII_APPID:
         params["appid"] = CINII_APPID
     data = _get(CINII, params).json()
-    want = re.sub(r"\s+", "", journal_title)
-    out = []
+    want = re.sub(r"\s+", "", journal_title).lower()
+    out, other_names = [], set()
     for it in data.get("items", []):
         name = it.get("prism:publicationName", "") or ""
-        if not issn and re.sub(r"\s+", "", name) != want:
+        if not issn and not re.sub(r"\s+", "", name).lower().startswith(want):
+            other_names.add(name)
             continue
         doi = ""
         for ident in it.get("dc:identifier", []) or []:
@@ -263,6 +264,12 @@ def cinii_articles(journal_title: str, since: date, count: int = 100, issn: str 
             "journal_name": name or journal_title,
             "source": "cinii",
         })
+    if not out and other_names:
+        log.info("CiNii %s: %s Treffer mit anderem Zeitschriftentitel, z. B. %s",
+                 journal_title, len(other_names), sorted(other_names)[:5])
+    elif not data.get("items"):
+        log.info("CiNii %s: keine Treffer seit %s (Gesamt laut CiNii: %s)",
+                 journal_title, since.strftime("%Y-%m"), data.get("opensearch:totalResults"))
     return out
 
 

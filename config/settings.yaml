@@ -5,6 +5,9 @@
 # der Radar ihn zum ersten Mal sieht.
 rueckblick_tage: 60
 
+# Beim allerersten Abruf weiter zurückschauen, damit die App nicht leer startet.
+erster_abruf_tage: 180
+
 # Wie lange Artikel in der App bleiben (danach nur noch in Zotero, falls gespeichert).
 aufbewahren_tage: 400
 
@@ -12,8 +15,12 @@ aufbewahren_tage: 400
 abstract_laenge: 1500
 
 katalog:
-  # SRU-Schnittstelle des Verbundkatalogs K10plus, Bestand der UB Tübingen (ISIL DE-21).
-  sru_url: https://sru.k10plus.de/opac-de-21
+  # SRU-Schnittstelle des Verbundkatalogs K10plus (Gesamtkatalog).
+  sru_url: https://sru.k10plus.de/opac-de-627
+  # Woran der Bestand der UB Tübingen in den Exemplardaten erkannt wird.
+  # Ist keines von beiden bekannt, zeigt die App "im Verbund vorhanden, bitte prüfen".
+  isil: DE-21
+  iln: 
   # Link zur Suche in "Katalog plus" der UB Tübingen; {q} wird durch den Suchbegriff ersetzt.
   katalog_link: https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor={q}&type=allfields
   # Formular für Anschaffungsvorschläge der UB.

@@ -19,7 +19,7 @@ journals:
   # ---------------- Japan: Kern-Journals (alle Artikel, Epochenregel) ----------------
   - {name: Monumenta Nipponica, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Journal of Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: Japan Review, issn: 0915-0986, bereich: japan, prioritaet: hoch, thema: Japan}
+  - {name: Japan Review, quelle: cinii, bereich: japan, prioritaet: hoch, thema: Japan, hinweis: Nichibunken}
   - {name: Japanese Journal of Religious Studies, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Harvard Journal of Asiatic Studies, bereich: japan, prioritaet: hoch, thema: Japan, filter: japan}
   - {name: Japan Forum, bereich: japan, prioritaet: hoch, thema: Japan}

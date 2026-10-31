@@ -155,7 +155,11 @@ def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     journals, searches, filters, settings, resolved = load_config()
     today = date.today()
-    since = today - timedelta(days=int(settings.get("rueckblick_tage", 60)))
+    path = DATA / "articles.json"
+    first_run = not path.exists() or path.read_text().strip() in ("", "[]")
+    days = int(settings.get("erster_abruf_tage", 180) if first_run else settings.get("rueckblick_tage", 60))
+    since = today - timedelta(days=days)
+    print(f"Abruf seit {since.isoformat()} ({'erster Abruf' if first_run else 'täglich'})")
     pairs, status = collect(journals, searches, resolved, since)
 
     records, dropped = [], Counter()
@@ -171,7 +175,6 @@ def main() -> int:
         records.append(build_record(a, j, d, filters, today.isoformat(), int(settings.get("abstract_laenge", 1500))))
 
     DATA.mkdir(parents=True, exist_ok=True)
-    path = DATA / "articles.json"
     existing = json.loads(path.read_text()) if path.exists() else []
     items = merge(existing, records, int(settings.get("aufbewahren_tage", 400)), today)
 
