@@ -30,6 +30,9 @@ def _compile_term(term: str) -> re.Pattern:
 BY_AUTHOR = re.compile(r"\s(?:[Ee]dited |[Tt]ranslated )?[Bb]y\s+(?:[A-Z][\w.'’\-]*|de|van|von|du)(?:\s+(?:[A-Z][\w.'’\-]*|de|van|von|du|and|&|,))+\s*(?:\(review\))?\s*$")
 
 
+SPECIAL_FILTERS = {"japan_oder_thema", "japan_und_geschichte_oder_thema", "ab_edo_oder_thema"}
+
+
 @dataclass
 class TermSet:
     terms: list[str]
@@ -60,6 +63,7 @@ class Filters:
         self.review_patterns = [re.compile(p, re.I) for p in config.get("rezension_muster", [])]
         self.junk_patterns = [re.compile(rf"^\s*(?:{p})\s*[.:]?\s*$", re.I) for p in config.get("ausschliessen", [])]
         self.junk_types = set(config.get("ausschliessen_typen", []))
+        self.languages = set(config.get("sprachen", []))
         self.categories = list(config.get("kategorien", []))
 
     def set_matches(self, name: str, text: str) -> list[str]:
@@ -84,17 +88,49 @@ class Filters:
             return True
         return any(p.match(t) for p in self.junk_patterns)
 
-    def is_review(self, title: str, abstract: str = "") -> bool:
-        title = title or ""
+    def review_reason(self, article: dict) -> str:
+        """Grund, warum ein Eintrag als Rezension gilt, sonst "".
+
+        Merkmale: Titelmuster; "Titel by Autor" ohne Abstract; höchstens 4 Seiten
+        ohne Abstract; im Katalog gibt es ein Buch mit genau diesem Titel.
+        """
+        title = article.get("title") or ""
+        no_abstract = not (article.get("abstract") or "").strip()
         if any(p.search(title) for p in self.review_patterns):
-            return True
-        # "Buchtitel by Vorname Nachname" ohne Abstract (Cambridge, MUSE, Wiley)
-        return not (abstract or "").strip() and bool(BY_AUTHOR.search(title))
+            return "Titelmuster"
+        if no_abstract and BY_AUTHOR.search(title):
+            return "Titel mit Autor"
+        pages = article.get("seiten")
+        if no_abstract and isinstance(pages, int) and 0 < pages <= 4:
+            return "kurz ohne Abstract"
+        if article.get("katalog_buch"):
+            return "Buch im Katalog"
+        return ""
+
+    def is_review(self, title: str, abstract: str = "", **extra) -> bool:
+        return bool(self.review_reason({"title": title, "abstract": abstract, **extra}))
+
+    def filter_hits(self, name: str, text: str) -> list[str]:
+        """Treffer für ein Stichwort-Set oder eine der zusammengesetzten Regeln."""
+        if name == "japan_oder_thema":
+            return self.set_matches("japan", text) + self.theme_hits(text)
+        if name == "japan_und_geschichte_oder_thema":
+            japan = self.set_matches("japan", text)
+            if not japan:
+                return []
+            extra = self.theme_hits(text) or (["Geschichte"] if self.is_history(text) else [])
+            return japan + extra if extra else []
+        if name == "ab_edo_oder_thema":
+            return self.edo_on.matches(text) + self.theme_hits(text)
+        return self.set_matches(name, text)
+
+    def known_filter(self, name: str) -> bool:
+        return name in SPECIAL_FILTERS or name in self.sets or name in self.combined
 
     def is_history(self, text: str, journal_name: str = "") -> bool:
         if self.set_matches("geschichte", text) or self.pre_edo.matches(text) or self.edo_on.matches(text):
             return True
-        if re.search(r"\b1[5-9]\d\d\b", text):
+        if re.search(r"(?<!\d)1[5-9]\d\d(?!\d)", text):
             return True
         return bool(re.search(r"histor|geschicht|史", journal_name, re.I))
 
@@ -128,13 +164,16 @@ def decide(article: dict, journal: dict, filters: Filters) -> Decision:
     """
     if filters.is_junk(article.get("title", ""), journal.get("name", "")) or article.get("openalex_type") in filters.junk_types:
         return Decision(False, "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)", [], [])
+    lang = (article.get("language") or "").lower()
+    if lang and filters.languages and lang not in filters.languages:
+        return Decision(False, f"Sprache {lang}", [], [])
     text = " ".join(filter(None, [article.get("title"), article.get("abstract")]))
     matched: list[str] = []
     set_name = journal.get("filter")
     if set_name:
-        matched = filters.set_matches(set_name, text)
+        matched = filters.filter_hits(set_name, text)
         if not matched:
-            return Decision(False, f"kein Treffer im Set '{set_name}'", [], [])
+            return Decision(False, f"Filter '{set_name}' nicht erfüllt", [], [])
 
     themes = filters.theme_hits(text)
     japan_related = journal.get("bereich") == "japan" or bool(filters.set_matches("japan", text))

@@ -57,6 +57,15 @@ def _clean(text: str | None) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def _pages(first, last) -> int | None:
+    """Seitenzahl aus erster/letzter Seite (nur bei reinen Zahlen)."""
+    try:
+        a, b = int(str(first).strip()), int(str(last).strip())
+    except (TypeError, ValueError):
+        return None
+    return b - a + 1 if 0 <= b - a < 500 else None
+
+
 def _doi(value: str | None) -> str:
     if not value:
         return ""
@@ -112,6 +121,8 @@ def _oa_to_article(w: dict) -> dict:
         "journal_name": src.get("display_name", ""),
         "source_id": (src.get("id") or "").rsplit("/", 1)[-1],
         "openalex_type": w.get("type", ""),
+        "language": w.get("language") or "",
+        "seiten": _pages((w.get("biblio") or {}).get("first_page"), (w.get("biblio") or {}).get("last_page")),
         "band": str((w.get("biblio") or {}).get("volume") or ""),
         "heft": str((w.get("biblio") or {}).get("issue") or ""),
         "seite": str((w.get("biblio") or {}).get("first_page") or ""),
@@ -193,6 +204,7 @@ def crossref_works(issn: str, since: date, rows: int = 200, max_pages: int = 10)
                 "band": str(it.get("volume") or ""),
                 "heft": str(it.get("issue") or ""),
                 "seite": str(it.get("page") or "").split("-")[0],
+                "seiten": _pages(*(str(it.get("page") or "").split("-") + [None])[:2]),
                 "source": "crossref",
             })
         if len(items) < rows:
@@ -283,6 +295,7 @@ def cinii_articles(journal_title: str, since: date, count: int = 200, issn: str 
             "band": str(it.get("prism:volume") or ""),
             "heft": str(it.get("prism:number") or ""),
             "seite": str(it.get("prism:startingPage") or ""),
+            "seiten": _pages(it.get("prism:startingPage"), it.get("prism:endingPage")),
             "source": "cinii",
         })
     if not out and other_names:

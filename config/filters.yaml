@@ -83,6 +83,15 @@ epochen:
     - early japan*
     - classical japan*
     - premodern japan*
+    - 古代
+    - 中世
+    - 平安
+    - 鎌倉
+    - 室町
+    - 戦国
+    - 奈良時代
+    - 律令
+    - 荘園
   ab_edo:
     - edo
     - tokugawa
@@ -107,14 +116,33 @@ epochen:
     - nineteenth
     - twentieth
     - twenty-first
+    - 近世
+    - 近代
+    - 現代
+    - 江戸
+    - 幕末
+    - 維新
+    - 明治
+    - 大正
+    - 昭和
+    - 平成
+    - 令和
+    - 戦前
+    - 戦時
+    - 戦後
+    - 徳川
+    - 藩
 
 themen:
-  Tiergeschichte: [animal*, more-than-human, multispecies, nonhuman, non-human, livestock, horse*, whale*, whaling, dog*, cat*, bird*, fish*, insect*, wildlife, hunting, zoo*]
-  Umweltgeschichte: [environment*, ecolog*, climate, forest*, river*, mountain*, ocean*, sea, coast*, disaster*, earthquake*, famine*, landscape*, agricultur*, water]
-  Globalgeschichte: [global, transnational, world, connected, exchange, trade, empire*, imperial*, colonial*, maritime]
-  Digitale Geschichte: [digital, computational, database*, gis, text mining, data]
-  Theorie: [historiograph*, theory, theories, method*, metahistory]
-  Lehre: [teaching, pedagog*, curriculum, classroom, students, education]
+  Tiergeschichte: [animal*, more-than-human, multispecies, nonhuman, non-human, human-animal, livestock, horses, whales, whaling, wildlife, hunting, zoo, zoos, 動物, 鯨, 狩猟]
+  Umweltgeschichte: [environment*, ecolog*, climate, forest*, disaster*, earthquake*, famine*, landscape*, pollution, anthropocene, 環境, 災害, 地震, 飢饉, 山林]
+  Globalgeschichte: [global, globali*, transnational, world history, connected histor*, entangle*, maritime, transimperial, グローバル]
+  Digitale Geschichte: [digital, computational, gis, text mining, machine learning, distant reading, デジタル]
+  Theorie: [historiograph*, theory of history, philosophy of history, metahistory, 歴史学方法, 史学史]
+  Lehre: [teaching, pedagog*, curriculum, classroom, 歴史教育]
+
+# Nur Artikel in diesen Sprachen (OpenAlex-Sprachangabe; ohne Angabe bleibt ein Artikel drin).
+sprachen: [en, de, ja]
 
 # Titelmuster, an denen Buchbesprechungen erkannt werden. Zusätzlich gilt ein Titel
 # ohne Abstract, der auf "by Vorname Nachname" endet, als Rezension.

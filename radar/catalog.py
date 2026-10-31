@@ -91,6 +91,49 @@ def held_locally(xml: str, cfg: dict) -> bool | None:
     return None
 
 
+def _norm(t: str) -> str:
+    return " ".join(re.findall(r"\w+", (t or "").lower()))
+
+
+def _records(xml: str) -> list[str]:
+    return re.findall(r"<(?:\w+:)?record\b.*?</(?:\w+:)?record>", xml, flags=re.S)
+
+
+def _subfield(rec: str, tag: str, code: str) -> str:
+    m = re.search(rf'tag="{re.escape(tag)}"[^>]*>(.*?)</datafield>', rec, flags=re.S)
+    if not m:
+        return ""
+    s = re.search(rf'code="{code}">([^<]*)<', m.group(1))
+    return s.group(1) if s else ""
+
+
+def is_book_title(title: str, cfg: dict) -> bool | None:
+    """Gibt es im Katalog eine Monografie mit genau diesem Titel? (Hinweis auf eine Rezension)
+
+    None, wenn die Abfrage nicht möglich war.
+    """
+    base = cfg.get("sru_url")
+    main = re.split(r"\s*[:.?]\s+", title or "")[0]
+    words = [w for w in re.findall(r"\w+", main) if len(w) > 2][:6]
+    if not base or len(words) < 2 or re.search(r"[぀-ヿ一-鿿]", title or ""):
+        return None
+    try:
+        n, xml = sru_search(base, " and ".join(f"pica.tit={w}" for w in words), max_records=10)
+    except Exception as exc:  # noqa: BLE001
+        log.info("Katalog-Titelabgleich fehlgeschlagen (%s): %s", main, exc)
+        return None
+    if not n:
+        return False
+    want = _norm(main)
+    for rec in _records(xml):
+        bbg = _subfield(rec, "002@", "0")
+        if len(bbg) < 2 or bbg[1] != "a":  # nur Monografien, keine Aufsätze
+            continue
+        if _norm(_subfield(rec, "021A", "a")) == want:
+            return True
+    return False
+
+
 _diagnosed = False
 
 

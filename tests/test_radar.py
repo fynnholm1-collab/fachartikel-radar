@@ -87,18 +87,17 @@ def test_merge_keeps_first_seen_date_and_prunes():
 
 
 def test_journal_config_is_consistent():
-    sets = set(yaml.safe_load((ROOT / "config" / "filters.yaml").read_text())["sets"])
     themes = set(yaml.safe_load((ROOT / "config" / "settings.yaml").read_text())["zotero"]["unterordner"])
     names = [j["name"] for j in JOURNALS]
     assert len(names) == len(set(names))
     for j in JOURNALS:
         assert j["bereich"] in {"japan", "fach", "rand"}, j
-        assert j["prioritaet"] in {"hoch", "mittel", "filter"}, j
+        assert j["prioritaet"] in {"hoch", "filter"}, j
         assert j.get("thema") in themes, j
         if j["prioritaet"] == "filter":
-            assert j.get("filter") in sets, j
+            assert j.get("filter"), j
         if j.get("filter"):
-            assert j["filter"] in sets, j
+            assert F.known_filter(j["filter"]), j
 
 
 def test_digest_render():
@@ -179,3 +178,35 @@ def test_split_recent_and_backlog():
              {"id": "3", "published": "2025-01-01", "rezension": True}]
     recent, older = split_recent(items, date(2026, 10, 31), 6)
     assert [a["id"] for a in recent] == ["1"] and [a["id"] for a in older] == ["2"]
+
+
+def test_composite_filters():
+    assert F.filter_hits("japan_oder_thema", "Whaling and the state in Norway")  # Thema
+    assert F.filter_hits("japan_oder_thema", "Meiji constitution")  # Japan
+    assert not F.filter_hits("japan_oder_thema", "Parliament in Victorian Britain")
+    assert F.filter_hits("japan_und_geschichte_oder_thema", "Japanese settlers in Truk in the 1890s")
+    assert not F.filter_hits("japan_und_geschichte_oder_thema", "Japan's defense policy under Kishida")
+    assert F.filter_hits("ab_edo_oder_thema", "江戸幕府の対外政策")
+    assert not F.filter_hits("ab_edo_oder_thema", "鎌倉幕府地頭制の成立")
+    assert not F.theme_hits("A category of catholic thought")  # keine Teilwort-Treffer mehr
+
+
+def test_language_filter():
+    assert not decide({"id": "x", "title": "Le Japon moderne", "language": "fr"}, JAPAN, F).keep
+    assert decide({"id": "y", "title": "Merchant houses in Edo", "language": "en"}, JAPAN, F).keep
+
+
+def test_review_signals():
+    assert F.review_reason({"title": "Dissecting the Danchi", "abstract": "", "seiten": 3}) == "kurz ohne Abstract"
+    assert F.review_reason({"title": "Dissecting the Danchi", "abstract": "We argue …", "seiten": 3}) == ""
+    assert F.review_reason({"title": "Dissecting the Danchi", "abstract": "", "seiten": 25}) == ""
+    assert F.review_reason({"title": "Dissecting the Danchi", "abstract": "", "katalog_buch": True}) == "Buch im Katalog"
+
+
+def test_catalog_book_title(monkeypatch):
+    rec = ('<record><datafield tag="002@"><subfield code="0">{bbg}</subfield></datafield>'
+           '<datafield tag="021A"><subfield code="a">Dissecting the @Danchi</subfield></datafield></record>')
+    monkeypatch.setattr(catalog, "sru_search", lambda base, cql, max_records=5: (1, rec.format(bbg="Aau")))
+    assert catalog.is_book_title("Dissecting the Danchi: Inside Japan's Largest Housing Experiment", {"sru_url": "x"}) is True
+    monkeypatch.setattr(catalog, "sru_search", lambda base, cql, max_records=5: (1, rec.format(bbg="Asu")))
+    assert catalog.is_book_title("Dissecting the Danchi", {"sru_url": "x"}) is False

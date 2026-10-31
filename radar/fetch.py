@@ -119,7 +119,9 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
             items = sources.openalex_search(s["suche"], since)
             pseudo = {"name": "", "bereich": "fach", "prioritaet": "filter", "thema": s["thema"],
                       "hinweis": f"Themensuche: {s['suche']}"}
-            pairs += [(a, {**pseudo, "name": a.get("journal_name") or "unbekannt"}) for a in items]
+            pairs += [(a, {**pseudo, "name": "Themensuche",
+                           "hinweis": f"Themensuche {s['suche']}, erschienen in {a.get('journal_name') or 'unbekannt'}"})
+                      for a in items]
             status[f"Themensuche {s['suche']}"] = f"{len(items)} über OpenAlex"
         except Exception as exc:  # noqa: BLE001
             status[f"Themensuche {s['suche']}"] = f"Fehler: {exc}"
@@ -145,7 +147,10 @@ def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len
         "prioritaet": j.get("prioritaet", "mittel"),
         "thema": j.get("thema", ""),
         "hinweis": j.get("hinweis", ""),
-        "rezension": (rez := filters.is_review(a.get("title", ""), a.get("abstract", ""))),
+        "seiten": a.get("seiten"),
+        "sprache": a.get("language", ""),
+        "rez_grund": (grund := filters.review_reason(a)),
+        "rezension": (rez := bool(grund)),
         "buch": catalog.book_key(a.get("title", "")) if rez else "",
         "buchtitel": catalog.book_query_from_title(a.get("title", "")) if rez else "",
         "kategorie": filters.category(a, j),
@@ -167,6 +172,8 @@ def merge(existing: list[dict], new: list[dict], keep_days: int, today: date, ol
             a["added"] = old.get("added", a["added"])
             if old.get("katalog"):
                 a["katalog"] = old["katalog"]
+            if "katalog_buch" in old and "katalog_buch" not in a:
+                a["katalog_buch"] = old["katalog_buch"]
         by_id[a["id"]] = a
     cutoff = (today - timedelta(days=keep_days)).isoformat()
 
@@ -197,7 +204,9 @@ def main() -> int:
     meta_path = DATA / "meta.json"
     old_meta = json.loads(meta_path.read_text()) if meta_path.exists() and meta_path.read_text().strip() else {}
     oldest = str(settings.get("backlog_ab", "2023-01-01"))
-    backfill = (old_meta.get("abruf_ab") or "9999") > oldest
+    stand = int(settings.get("datenstand", 1))
+    # Neu nachholen, wenn backlog_ab weiter zurückreicht oder sich die Regeln geändert haben (datenstand).
+    backfill = (old_meta.get("abruf_ab") or "9999") > oldest or int(old_meta.get("datenstand", 1)) < stand
     if backfill:
         since = date.fromisoformat(oldest)
     else:
@@ -225,14 +234,36 @@ def main() -> int:
     for p in (path, backlog_path):
         if p.exists() and p.read_text().strip():
             existing += json.loads(p.read_text())
+    if backfill:
+        # Vollständiger Neuabruf: alte Einträge nur behalten, wenn sie wieder geliefert wurden
+        # oder ihre Zeitschrift diesmal nicht erreichbar war.
+        new_ids = {a["id"] for a in records}
+        failed = {n for n, st in status.items() if st.startswith("Fehler")}
+        existing = [a for a in existing if a["id"] in new_ids or a.get("journal") in failed]
+    names = {j["name"] for j in journals} | {"Themensuche"}
+    existing = [a for a in existing if a.get("journal") in names]
     items = merge(existing, records, int(settings.get("aufbewahren_tage", 400)), today, oldest)
+
+    # Katalogabgleich: Kandidaten ohne Abstract, deren Titel einem Buch entsprechen könnte.
+    kat = settings.get("katalog", {})
+    border = (today - timedelta(days=round(int(settings.get("posteingang_monate", 6)) * 30.44))).isoformat()
+    probed = 0
+    for a in items:
+        if probed >= int(kat.get("titelabgleich_max", 250)):
+            break
+        if ("katalog_buch" in a or (a.get("abstract") or "").strip() or a.get("rezension")
+                or (a.get("published") or "") < border or (a.get("seiten") or 0) > 12):
+            continue
+        a["katalog_buch"] = catalog.is_book_title(a["title"], kat)
+        probed += 1
     # Ältere Einträge mit den aktuellen Regeln neu einordnen (z. B. neue Rezensionsmuster).
     for a in items:
         j = {"name": a["journal"], "bereich": a.get("bereich"), "thema": a.get("thema")}
         if filters.is_junk(a.get("title", ""), a["journal"]):
             a["_weg"] = True
             continue
-        a["rezension"] = filters.is_review(a.get("title", ""), a.get("abstract", ""))
+        a["rez_grund"] = filters.review_reason(a)
+        a["rezension"] = bool(a["rez_grund"])
         a["buch"] = catalog.book_key(a["title"]) if a["rezension"] else ""
         a["buchtitel"] = catalog.book_query_from_title(a["title"]) if a["rezension"] else ""
         a["kategorie"] = filters.category(a, j)
@@ -243,7 +274,6 @@ def main() -> int:
         if len(a.get("abstract", "")) > 600:
             a["abstract"] = a["abstract"][:600].rsplit(" ", 1)[0] + " …"
 
-    kat = settings.get("katalog", {})
     checked = 0
     for a in recent:
         if a.get("rezension") and "katalog" not in a and checked < 60:
@@ -255,18 +285,21 @@ def main() -> int:
     meta = {
         "stand": datetime.now(timezone.utc).isoformat(timespec="minutes"),
         "abruf_ab": oldest if backfill else old_meta.get("abruf_ab", oldest),
+        "datenstand": stand,
+        "rezensionen_nach_grund": dict(Counter(a.get("rez_grund") or "keine" for a in recent)),
         "posteingang_monate": int(settings.get("posteingang_monate", 6)),
         "artikel": len(recent),
         "backlog": len(older),
         "neu_heute": sum(1 for a in items if a["added"] == today.isoformat()),
         "verworfen": dict(dropped),
-        "reihenfolge": [j["name"] for j in journals],
+        "reihenfolge": [j["name"] for j in journals] + ["Themensuche"],
         "kategorien": filters.categories + ["Weitere Geschichte"],
         "journals": status,
         "katalog": {k: v for k, v in kat.items()},
         "zotero": settings.get("zotero", {}),
     }
     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")
+    print(f"Titelabgleich im Katalog: {probed}; Rezensionen im Posteingang nach Grund: {meta['rezensionen_nach_grund']}")
     print(f"{len(recent)} im Posteingang, {len(older)} im Backlog, {meta['neu_heute']} neu, verworfen: {dict(dropped)}")
     samples: dict[str, list[str]] = {}
     for a in records:
