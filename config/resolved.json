@@ -1,0 +1,718 @@
+{
+  "American Historical Review": {
+    "display_name": "The American Historical Review",
+    "issn": [
+      "0002-8762",
+      "1937-5239"
+    ],
+    "issn_l": "0002-8762",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S197437610",
+    "publisher": "Oxford University Press",
+    "works_count": 132936
+  },
+  "Arts and Humanities in Higher Education": {
+    "display_name": "Arts and Humanities in Higher Education",
+    "issn": [
+      "1474-0222",
+      "1741-265X"
+    ],
+    "issn_l": "1474-0222",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S97967959",
+    "publisher": "SAGE Publishing",
+    "works_count": 713
+  },
+  "Asia Major": {
+    "display_name": "Asia major",
+    "issn": [
+      "0004-4482"
+    ],
+    "issn_l": "0004-4482",
+    "issn_wanted": null,
+    "letztes_jahr": null,
+    "openalex_id": "S4393911305",
+    "publisher": null,
+    "works_count": 0
+  },
+  "Asian Studies Review": {
+    "display_name": "Asian Studies Review",
+    "issn": [
+      "1035-7823",
+      "1467-8403"
+    ],
+    "issn_l": "1035-7823",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S80367638",
+    "publisher": "Routledge",
+    "works_count": 2578
+  },
+  "Asiatische Studien": {
+    "display_name": "Asiatische Studien – Études Asiatiques",
+    "issn": [
+      "0004-4717",
+      "2235-5871"
+    ],
+    "issn_l": "0004-4717",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210182469",
+    "publisher": "De Gruyter",
+    "works_count": 685
+  },
+  "Comparative Studies in Society and History": {
+    "display_name": "Comparative Studies in Society and History",
+    "issn": [
+      "0010-4175",
+      "1475-2999"
+    ],
+    "issn_l": "0010-4175",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S21304105",
+    "publisher": "Cambridge University Press",
+    "works_count": 3558
+  },
+  "Contemporary Japan": {
+    "display_name": "Contemporary Japan",
+    "issn": [
+      "1869-2729",
+      "1869-2737"
+    ],
+    "issn_l": "1869-2729",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210207764",
+    "publisher": "Taylor & Francis",
+    "works_count": 347
+  },
+  "Cross-Currents: East Asian History and Culture Review": {
+    "display_name": "Cross-currents",
+    "issn": [
+      "2158-9666",
+      "2158-9674"
+    ],
+    "issn_l": "2158-9666",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S2739179003",
+    "publisher": "University of Hawaii Press",
+    "works_count": 228
+  },
+  "Current Research in Digital History": {
+    "display_name": "Current Research in Digital History",
+    "issn": [
+      "2637-5923"
+    ],
+    "issn_l": "2637-5923",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210211880",
+    "publisher": null,
+    "works_count": 53
+  },
+  "Digital Humanities Quarterly": {
+    "display_name": "Digital humanities quarterly",
+    "issn": [
+      "1938-4122"
+    ],
+    "issn_l": "1938-4122",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S166472302",
+    "publisher": "Alliance of Digital Humanities Organizations",
+    "works_count": 874
+  },
+  "Digital Scholarship in the Humanities": {
+    "display_name": "Digital Scholarship in the Humanities",
+    "issn": [
+      "2055-7671",
+      "2055-768X"
+    ],
+    "issn_l": "2055-7671",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S2734814886",
+    "publisher": "Oxford University Press",
+    "works_count": 1284
+  },
+  "Diplomatic History": {
+    "display_name": "Diplomatic History",
+    "issn": [
+      "0145-2096",
+      "1467-7709"
+    ],
+    "issn_l": "0145-2096",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S154084123",
+    "publisher": "Oxford University Press",
+    "works_count": 3193
+  },
+  "East Asian Science, Technology and Society": {
+    "display_name": "East Asian Science Technology and Society An International Journal",
+    "issn": [
+      "1875-2152",
+      "1875-2160"
+    ],
+    "issn_l": "1875-2152",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S104981805",
+    "publisher": "Duke University Press",
+    "works_count": 1108
+  },
+  "Ebisu": {
+    "display_name": "Ebisu",
+    "issn": [
+      "1340-3656",
+      "2189-1893"
+    ],
+    "issn_l": "1340-3656",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210189210",
+    "publisher": "Fondation Maison franco-japonaise",
+    "works_count": 643
+  },
+  "Environment and History": {
+    "display_name": "Environment and History",
+    "issn": [
+      "0967-3407",
+      "1752-7023"
+    ],
+    "issn_l": "0967-3407",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S134321629",
+    "publisher": null,
+    "works_count": 1257
+  },
+  "Environmental History": {
+    "display_name": "Environmental History",
+    "issn": [
+      "1084-5453",
+      "1930-8892"
+    ],
+    "issn_l": "1084-5453",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S76796937",
+    "publisher": "Oxford University Press",
+    "works_count": 3658
+  },
+  "Environmental Humanities": {
+    "display_name": "Environmental Humanities",
+    "issn": [
+      "2201-1919"
+    ],
+    "issn_l": "2201-1919",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S2764702281",
+    "publisher": "Duke University Press",
+    "works_count": 506
+  },
+  "Geschichte und Gesellschaft": {
+    "display_name": "Geschichte und Gesellschaft",
+    "issn": [
+      "0340-613X",
+      "2196-9000"
+    ],
+    "issn_l": "0340-613X",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S123416243",
+    "publisher": "Vandenhoeck & Ruprecht",
+    "works_count": 654
+  },
+  "Global Environment": {
+    "display_name": "Global Environment",
+    "issn": [
+      "1973-3739",
+      "2053-7352"
+    ],
+    "issn_l": "1973-3739",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210188446",
+    "publisher": null,
+    "works_count": 471
+  },
+  "Harvard Journal of Asiatic Studies": {
+    "display_name": "Harvard Journal of Asiatic Studies",
+    "issn": [
+      "0073-0548",
+      "1944-6454"
+    ],
+    "issn_l": "0073-0548",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S98062933",
+    "publisher": "Harvard–Yenching Institute",
+    "works_count": 2154
+  },
+  "Historiography East and West": {
+    "display_name": "Historiography East and West",
+    "issn": [
+      "1570-1867"
+    ],
+    "issn_l": "1570-1867",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S102297886",
+    "publisher": "Brill",
+    "works_count": 24
+  },
+  "Historische Zeitschrift": {
+    "display_name": "Historische Zeitschrift",
+    "issn": [
+      "0018-2613",
+      "2196-680X"
+    ],
+    "issn_l": "0018-2613",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S162713455",
+    "publisher": "R. Oldenbourg Verlag",
+    "works_count": 14237
+  },
+  "History and Theory": {
+    "display_name": "History and Theory",
+    "issn": [
+      "0018-2656",
+      "1468-2303"
+    ],
+    "issn_l": "0018-2656",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S92608454",
+    "publisher": "Wiley",
+    "works_count": 2444
+  },
+  "History of Religions": {
+    "display_name": "History of Religions",
+    "issn": [
+      "0018-2710",
+      "1545-6935"
+    ],
+    "issn_l": "0018-2710",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S99675065",
+    "publisher": "University of Chicago Press",
+    "works_count": 2597
+  },
+  "Humanimalia": {
+    "display_name": "Humanimalia",
+    "issn": [
+      "2151-8645"
+    ],
+    "issn_l": "2151-8645",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210192507",
+    "publisher": "Utrecht University",
+    "works_count": 424
+  },
+  "International Journal of Asian Studies": {
+    "display_name": "International Journal of Asian Studies",
+    "issn": [
+      "1479-5914",
+      "1479-5922"
+    ],
+    "issn_l": "1479-5914",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S9023684",
+    "publisher": "Cambridge University Press",
+    "works_count": 948
+  },
+  "Itinerario": {
+    "display_name": "Itinerario",
+    "issn": [
+      "0165-1153",
+      "2041-2827"
+    ],
+    "issn_l": "0165-1153",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S87235519",
+    "publisher": "Cambridge University Press",
+    "works_count": 3571
+  },
+  "Japan Forum": {
+    "display_name": "Japan Forum",
+    "issn": [
+      "0955-5803",
+      "1469-932X"
+    ],
+    "issn_l": "0955-5803",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S12843035",
+    "publisher": "Routledge",
+    "works_count": 1221
+  },
+  "Japanese Journal of Religious Studies": {
+    "display_name": "Japanese Journal of Religious Studies",
+    "issn": [
+      "0304-1042"
+    ],
+    "issn_l": "0304-1042",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S120086578",
+    "publisher": "Nanzan Institute for Religion and Culture",
+    "works_count": 1540
+  },
+  "Japanese Studies": {
+    "display_name": "Japanese Studies",
+    "issn": [
+      "1037-1397",
+      "1469-9338"
+    ],
+    "issn_l": "1037-1397",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S21365710",
+    "publisher": "Taylor & Francis",
+    "works_count": 1525
+  },
+  "Journal for the History of Environment and Society": {
+    "display_name": "Journal for the History of Environment and Society",
+    "issn": [
+      "2506-6730",
+      "2506-6749"
+    ],
+    "issn_l": "2506-6730",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210202696",
+    "publisher": "Brepols",
+    "works_count": 78
+  },
+  "Journal of Asian History": {
+    "display_name": "Journal of Asian History",
+    "issn": [
+      "0021-910X",
+      "2747-4267"
+    ],
+    "issn_l": "0021-910X",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S5416984",
+    "publisher": "Harrassowitz Publishing House",
+    "works_count": 267
+  },
+  "Journal of Asian Studies": {
+    "display_name": "The Journal of Asian Studies",
+    "issn": [
+      "0021-9118",
+      "1752-0401"
+    ],
+    "issn_l": "0021-9118",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S114691300",
+    "publisher": "Cambridge University Press",
+    "works_count": 22534
+  },
+  "Journal of Contemporary History": {
+    "display_name": "Journal of Contemporary History",
+    "issn": [
+      "0022-0094",
+      "1461-7250"
+    ],
+    "issn_l": "0022-0094",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S161550498",
+    "publisher": "SAGE Publishing",
+    "works_count": 3083
+  },
+  "Journal of Digital History": {
+    "display_name": "Journal of Digital History",
+    "issn": [
+      "2747-5271"
+    ],
+    "issn_l": "2747-5271",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4387279631",
+    "publisher": "Walter de Gruyter",
+    "works_count": 38
+  },
+  "Journal of Global History": {
+    "display_name": "Journal of Global History",
+    "issn": [
+      "1740-0228",
+      "1740-0236"
+    ],
+    "issn_l": "1740-0228",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S171627239",
+    "publisher": "Cambridge University Press",
+    "works_count": 883
+  },
+  "Journal of Japanese Studies": {
+    "display_name": "Journal of Japanese Studies",
+    "issn": [
+      "0095-6848",
+      "1549-4721"
+    ],
+    "issn_l": "0095-6848",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S94327247",
+    "publisher": "Cambridge University Press",
+    "works_count": 3046
+  },
+  "Journal of Korean Studies": {
+    "display_name": "The journal of Korean studies",
+    "issn": [
+      "0731-1613",
+      "2158-1665"
+    ],
+    "issn_l": "0731-1613",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S945374760",
+    "publisher": "Rowman & Littlefield",
+    "works_count": 588
+  },
+  "Journal of Religion in Japan": {
+    "display_name": "Journal of Religion in Japan",
+    "issn": [
+      "2211-8330",
+      "2211-8349"
+    ],
+    "issn_l": "2211-8330",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210232350",
+    "publisher": "Brill",
+    "works_count": 243
+  },
+  "Journal of World History": {
+    "display_name": "Journal of world history",
+    "issn": [
+      "1045-6007",
+      "1527-8050"
+    ],
+    "issn_l": "1045-6007",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S52423121",
+    "publisher": "World History Association",
+    "works_count": 1868
+  },
+  "Journal of the Economic and Social History of the Orient": {
+    "display_name": "Journal of the Economic and Social History of the Orient",
+    "issn": [
+      "0022-4995",
+      "1568-5209"
+    ],
+    "issn_l": "0022-4995",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S160669930",
+    "publisher": "Brill",
+    "works_count": 2519
+  },
+  "Journal of the Philosophy of History": {
+    "display_name": "Journal of the Philosophy of History",
+    "issn": [
+      "1872-261X",
+      "1872-2636"
+    ],
+    "issn_l": "1872-261X",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S36278917",
+    "publisher": "Brill",
+    "works_count": 476
+  },
+  "Late Imperial China": {
+    "display_name": "Late imperial China",
+    "issn": [
+      "0884-3236",
+      "1086-3257"
+    ],
+    "issn_l": "0884-3236",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S144953016",
+    "publisher": "Johns Hopkins University Press",
+    "works_count": 452
+  },
+  "Modern Asian Studies": {
+    "display_name": "Modern Asian Studies",
+    "issn": [
+      "0026-749X",
+      "1469-8099"
+    ],
+    "issn_l": "0026-749X",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S188415705",
+    "publisher": "Cambridge University Press",
+    "works_count": 3297
+  },
+  "Monumenta Nipponica": {
+    "display_name": "Monumenta Nipponica",
+    "issn": [
+      "0027-0741",
+      "1880-1390"
+    ],
+    "issn_l": "0027-0741",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S150866770",
+    "publisher": "Sophia University",
+    "works_count": 4242
+  },
+  "Oriens Extremus": {
+    "display_name": "Oriens Extremus",
+    "issn": [
+      "0030-5197",
+      "2940-438X"
+    ],
+    "issn_l": "0030-5197",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4393912101",
+    "publisher": "Harrassowitz Publishing House",
+    "works_count": 140
+  },
+  "Pacific Affairs": {
+    "display_name": "Pacific Affairs",
+    "issn": [
+      "0030-851X",
+      "1715-3379"
+    ],
+    "issn_l": "0030-851X",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S22496335",
+    "publisher": "University of British Columbia",
+    "works_count": 17808
+  },
+  "Past & Present": {
+    "display_name": "Past & Present",
+    "issn": [
+      "0031-2746",
+      "1477-464X"
+    ],
+    "issn_l": "0031-2746",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S42922845",
+    "publisher": "Oxford University Press",
+    "works_count": 2618
+  },
+  "Positions: Asia Critique": {
+    "display_name": "positions asia critique",
+    "issn": [
+      "1067-9847",
+      "1527-8271"
+    ],
+    "issn_l": "1067-9847",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S4210212391",
+    "publisher": "Duke University Press",
+    "works_count": 1248
+  },
+  "Public History Weekly": {
+    "display_name": "Public History Weekly",
+    "issn": [
+      "2197-6376"
+    ],
+    "issn_l": "2197-6376",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S2764911636",
+    "publisher": "De Gruyter",
+    "works_count": 556
+  },
+  "Rethinking History": {
+    "display_name": "Rethinking History",
+    "issn": [
+      "1364-2529",
+      "1470-1154"
+    ],
+    "issn_l": "1364-2529",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S38956679",
+    "publisher": "Taylor & Francis",
+    "works_count": 1200
+  },
+  "Review of Japanese Culture and Society": {
+    "display_name": "Review of Japanese culture and society",
+    "issn": [
+      "0913-4700",
+      "2329-9770"
+    ],
+    "issn_l": "0913-4700",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S2764689566",
+    "publisher": null,
+    "works_count": 492
+  },
+  "Social Science Japan Journal": {
+    "display_name": "Social Science Japan Journal",
+    "issn": [
+      "1369-1465",
+      "1468-2680"
+    ],
+    "issn_l": "1369-1465",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S156748156",
+    "publisher": "Oxford University Press",
+    "works_count": 1286
+  },
+  "Society & Animals": {
+    "display_name": "Society and Animals",
+    "issn": [
+      "1063-1119",
+      "1568-5306"
+    ],
+    "issn_l": "1063-1119",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S147846519",
+    "publisher": "Brill",
+    "works_count": 1336
+  },
+  "Storia della Storiografia": {
+    "display_name": "Rivista internazionale di storia della storiografia",
+    "issn": [],
+    "issn_l": null,
+    "issn_wanted": null,
+    "letztes_jahr": 2025,
+    "openalex_id": "S4306528664",
+    "publisher": null,
+    "works_count": 168
+  },
+  "The History Teacher": {
+    "display_name": "The History Teacher",
+    "issn": [
+      "0018-2745",
+      "1945-2292"
+    ],
+    "issn_l": "0018-2745",
+    "issn_wanted": null,
+    "letztes_jahr": 2026,
+    "openalex_id": "S5750412",
+    "publisher": "Society for History Education",
+    "works_count": 4553
+  }
+}
