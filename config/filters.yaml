@@ -1,0 +1,122 @@
+# Stichwort-Sets. Groß-/Kleinschreibung und Längenstriche (ō/o) werden ignoriert.
+# Ein Stichwort trifft nur ganze Wörter; "edo" trifft also nicht "credo".
+# Ein * am Ende erlaubt Wortendungen: "animal*" trifft animal, animals.
+
+sets:
+  japan:
+    - japan*
+    - japon*
+    - 日本
+    - tokugawa
+    - edo
+    - meiji
+    - taisho
+    - showa
+    - heisei
+    - reiwa
+    - samurai
+    - daimyo*
+    - shogun*
+    - bakufu
+    - ryukyu*
+    - okinawa*
+    - ainu
+    - ezo
+    - hokkaido
+    - nagasaki
+    - dejima
+    - manchukuo
+    - manchuria
+    - kyoto
+    - tokyo
+    - osaka
+    - kamakura
+    - heian
+    - muromachi
+    - sengoku
+
+  geschichte:
+    - histor*
+    - historiograph*
+    - archiv*
+    - past
+    - century
+    - centuries
+
+  environmental_humanities:
+    - more-than-human
+    - agency
+    - japan*
+    - mountain*
+    - animal*
+    - ocean*
+
+  geschichte_oder_japan: [geschichte, japan]   # Kombination zweier Sets
+
+# Epochenregel (gilt für Artikel mit Japan-Bezug):
+# Trifft ein Artikel ein Wort aus "vor_edo", aber keines aus "ab_edo",
+# erscheint er nur, wenn er zusätzlich mindestens ein Thema aus "themen" trifft.
+epochen:
+  vor_edo:
+    - nara period
+    - heian
+    - kamakura
+    - muromachi
+    - sengoku
+    - ashikaga
+    - azuchi
+    - momoyama
+    - jomon
+    - yayoi
+    - kofun
+    - asuka
+    - ritsuryo
+    - ancient japan*
+    - medieval japan*
+    - early japan*
+    - classical japan*
+    - premodern japan*
+  ab_edo:
+    - edo
+    - tokugawa
+    - early modern
+    - meiji
+    - taisho
+    - showa
+    - heisei
+    - reiwa
+    - modern
+    - contemporary
+    - postwar
+    - prewar
+    - wartime
+    - 17th
+    - 18th
+    - 19th
+    - 20th
+    - 21st
+    - seventeenth
+    - eighteenth
+    - nineteenth
+    - twentieth
+    - twenty-first
+
+themen:
+  Tiergeschichte: [animal*, more-than-human, multispecies, nonhuman, non-human, livestock, horse*, whale*, whaling, dog*, cat*, bird*, fish*, insect*, wildlife, hunting, zoo*]
+  Umweltgeschichte: [environment*, ecolog*, climate, forest*, river*, mountain*, ocean*, sea, coast*, disaster*, earthquake*, famine*, landscape*, agricultur*, water]
+  Globalgeschichte: [global, transnational, world, connected, exchange, trade, empire*, imperial*, colonial*, maritime]
+  Digitale Geschichte: [digital, computational, database*, gis, text mining, data]
+  Theorie: [historiograph*, theory, theories, method*, metahistory]
+  Lehre: [teaching, pedagog*, curriculum, classroom, students, education]
+
+# Titelmuster, an denen Buchbesprechungen erkannt werden.
+rezension_muster:
+  - '^book reviews?\b'
+  - '^reviews?\b'
+  - '^review of\b'
+  - '^rezension'
+  - '^compte[- ]rendu'
+  - '\bisbn\b'
+  - '\bpp\.\s*[ivxlc\d]'
+  - '\b(university|univ\.) press\b'
+  - '\bpress,\s*(19|20)\d\d\b'
