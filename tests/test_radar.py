@@ -124,3 +124,20 @@ def test_catalog_holdings_detection():
     assert catalog.held_locally(xml, {"iln": 99}) is False
     assert catalog.held_locally("<x>DE-21</x>", {"isil": "DE-21"}) is True
     assert catalog.held_locally("<x/>", {"isil": "DE-21"}) is None
+
+
+def test_crossref_fallback_when_openalex_empty(monkeypatch):
+    from radar import fetch, sources
+    j = {"name": "Monumenta Nipponica", "bereich": "japan", "prioritaet": "hoch"}
+    resolved = {"Monumenta Nipponica": {"openalex_id": "S1", "issn_l": "0027-0741", "issn": ["0027-0741", "1880-1390"]}}
+    monkeypatch.setattr(sources, "openalex_works", lambda ids, since: [])
+    calls = []
+
+    def fake_crossref(issn, since):
+        calls.append(issn)
+        return [{"id": "10.1/x", "title": "Edo fires"}] if issn == "1880-1390" else []
+
+    monkeypatch.setattr(sources, "crossref_works", fake_crossref)
+    pairs, status = fetch.collect([j], [], resolved, date(2026, 5, 1))
+    assert calls == ["0027-0741", "1880-1390"]
+    assert len(pairs) == 1 and "Crossref" in status["Monumenta Nipponica"]

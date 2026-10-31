@@ -94,8 +94,25 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
             for j in by_source_id.values():
                 status[j["name"]] = f"{counts[j['name']]} über OpenAlex"
         except Exception as exc:  # noqa: BLE001
+            counts = Counter()
             for j in by_source_id.values():
                 status[j["name"]] = f"Fehler OpenAlex: {exc}"
+        # OpenAlex kennt manche Zeitschriften, indexiert neue Hefte aber verspätet.
+        # Dann direkt bei Crossref über die ISSN nachfragen.
+        for j in by_source_id.values():
+            if counts[j["name"]]:
+                continue
+            r = resolved.get(j["name"], {})
+            issns = [j.get("issn"), r.get("issn_l"), *(r.get("issn") or [])]
+            for issn in dict.fromkeys(i for i in issns if i):
+                try:
+                    items = sources.crossref_works(issn, since)
+                except Exception:  # noqa: BLE001
+                    continue
+                if items:
+                    pairs += [(a, j) for a in items]
+                    status[j["name"]] = f"{len(items)} über Crossref (OpenAlex leer)"
+                    break
 
     for s in searches:
         try:

@@ -89,6 +89,10 @@ def _diagnose(xml: str) -> None:
     ilns = sorted(set(re.findall(r'tag="101@".*?code="a">(\d+)<', xml, flags=re.S)))
     isils = sorted(set(re.findall(r">(DE-[\w-]+)<", xml)))
     log.info("K10plus-Diagnose: ILN im Treffer %s, ISIL %s", ilns[:40], isils[:40])
+    # Vollständige 101@-Felder (ILN plus weitere Unterfelder), um die Tübinger Kennung zu finden.
+    for field in re.findall(r'<datafield tag="101@">(.*?)</datafield>', xml, flags=re.S)[:12]:
+        subs = re.findall(r'code="(\w)">([^<]*)<', field)
+        log.info("K10plus-Diagnose 101@: %s", " ".join(f"${c} {v}" for c, v in subs))
 
 
 def check(title: str, abstract: str, cfg: dict) -> dict:
