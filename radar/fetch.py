@@ -238,6 +238,10 @@ def main() -> int:
         a["kategorie"] = filters.category(a, j)
     items = [a for a in items if not a.pop("_weg", False)]
     recent, older = split_recent(items, today, int(settings.get("posteingang_monate", 6)))
+    # Backlog schlank halten (wird auf dem iPad geladen): Abstracts kürzen.
+    for a in older:
+        if len(a.get("abstract", "")) > 600:
+            a["abstract"] = a["abstract"][:600].rsplit(" ", 1)[0] + " …"
 
     kat = settings.get("katalog", {})
     checked = 0
