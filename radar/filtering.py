@@ -167,6 +167,8 @@ def decide(article: dict, journal: dict, filters: Filters) -> Decision:
     lang = (article.get("language") or "").lower()
     if lang and filters.languages and lang not in filters.languages:
         return Decision(False, f"Sprache {lang}", [], [])
+    if journal.get("nur_open_access") and not (article.get("oa") or article.get("oa_url")):
+        return Decision(False, "kein Open Access (kein Uni-Zugang)", [], [])
     text = " ".join(filter(None, [article.get("title"), article.get("abstract")]))
     matched: list[str] = []
     set_name = journal.get("filter")

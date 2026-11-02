@@ -77,8 +77,11 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
         elif quelle == "cinii":
             try:
                 items = sources.cinii_articles(j["name"], since, issn=j.get("issn"))
+                note = ""
+                if j.get("jstage"):
+                    note = jstage_redirect(items, j["jstage"], since)
                 pairs += [(a, j) for a in items]
-                status[j["name"]] = f"{len(items)} über CiNii"
+                status[j["name"]] = f"{len(items)} über CiNii{note}"
             except Exception as exc:  # noqa: BLE001
                 status[j["name"]] = f"Fehler CiNii: {exc}"
 
@@ -129,6 +132,26 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
     return pairs, status
 
 
+def jstage_redirect(items: list[dict], cdjournal: str, since: date) -> str:
+    """Links von CiNii auf J-STAGE umstellen (Zugang über J-STAGE statt Repositorium)."""
+    browse = f"https://www.jstage.jst.go.jp/browse/{cdjournal}/-char/en"
+    try:
+        links = sources.jstage_links(cdjournal, since)
+    except Exception as exc:  # noqa: BLE001
+        links = {}
+        log.warning("J-STAGE %s: %s", cdjournal, exc)
+    hits = 0
+    for a in items:
+        hit = links.get(sources._norm_title(a.get("title", "")))
+        if hit:
+            hits += 1
+            a["url"] = hit["url"]
+            a["doi"] = a.get("doi") or hit["doi"]
+        elif not a.get("doi"):
+            a["url"] = browse
+    return f", davon {hits} mit J-STAGE-Link (J-STAGE kennt {len(links)})"
+
+
 def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len: int) -> dict:
     abstract = a.get("abstract", "")
     if len(abstract) > abstract_len:
@@ -141,6 +164,7 @@ def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len
         "abstract": abstract,
         "url": a.get("url", ""),
         "oa_url": a.get("oa_url", ""),
+        "oa": bool(a.get("oa") or a.get("oa_url")),
         "published": a.get("published", ""),
         "added": today,
         "journal": j["name"],

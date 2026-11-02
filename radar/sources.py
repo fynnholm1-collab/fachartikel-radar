@@ -21,6 +21,7 @@ log = logging.getLogger(__name__)
 OPENALEX = "https://api.openalex.org"
 CROSSREF = "https://api.crossref.org"
 CINII = "https://cir.nii.ac.jp/opensearch/articles"
+JSTAGE = "https://api.jstage.jst.go.jp/searchapi/do"
 
 session = requests.Session()
 session.headers["User-Agent"] = "fachartikel-radar/1.0 (+https://github.com/fynnholm1-collab/fachartikel-radar)"
@@ -126,7 +127,10 @@ def _oa_to_article(w: dict) -> dict:
         "band": str((w.get("biblio") or {}).get("volume") or ""),
         "heft": str((w.get("biblio") or {}).get("issue") or ""),
         "seite": str((w.get("biblio") or {}).get("first_page") or ""),
-        "oa_url": (w.get("best_oa_location") or {}).get("pdf_url") or "",
+        "oa": bool((w.get("open_access") or {}).get("is_oa")),
+        "oa_url": (w.get("best_oa_location") or {}).get("pdf_url")
+        or ((w.get("best_oa_location") or {}).get("landing_page_url") if (w.get("open_access") or {}).get("is_oa") else "")
+        or "",
         "source": "openalex",
     }
 
@@ -314,3 +318,41 @@ def dedupe(articles: Iterable[dict]) -> list[dict]:
         if key and key not in seen:
             seen[key] = a
     return list(seen.values())
+
+
+def _norm_title(title: str) -> str:
+    return re.sub(r"[\W_]+", "", _clean(title).lower())
+
+
+def parse_jstage(xml_text: str) -> dict[str, dict]:
+    """J-STAGE-Suchergebnis (Atom) -> {normalisierter Titel: {"url", "doi"}}."""
+    import xml.etree.ElementTree as ET
+
+    def local(el) -> str:
+        return el.tag.rsplit("}", 1)[-1]
+
+    def child(el, name):
+        return next((c for c in el if local(c) == name), None)
+
+    def text_en(el) -> str:
+        if el is None:
+            return ""
+        en = child(el, "en")
+        return ((en.text if en is not None else None) or el.text or "").strip()
+
+    out: dict[str, dict] = {}
+    root = ET.fromstring(xml_text)
+    for entry in (e for e in root.iter() if local(e) == "entry"):
+        title = text_en(child(entry, "article_title"))
+        url = text_en(child(entry, "article_link"))
+        doi_el = child(entry, "doi")
+        doi = _doi(doi_el.text if doi_el is not None else "")
+        if title and url:
+            out[_norm_title(title)] = {"url": url, "doi": doi}
+    return out
+
+
+def jstage_links(cdjournal: str, since: date) -> dict[str, dict]:
+    """Artikel-Links einer Zeitschrift auf J-STAGE, nach Titel."""
+    params = {"service": 3, "cdjournal": cdjournal, "pubyearfrom": since.year, "count": 1000}
+    return parse_jstage(_get(JSTAGE, params).text)
