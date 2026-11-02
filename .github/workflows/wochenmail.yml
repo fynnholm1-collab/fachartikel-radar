@@ -2,7 +2,10 @@ name: Wochenmail
 
 on:
   schedule:
-    - cron: "0 6 * * 5"   # freitags 6:00 UTC
+    # Dienstag 6 Uhr deutscher Zeit: 4:00 UTC (Sommerzeit) bzw. 5:00 UTC (Winterzeit).
+    # Das Skript verschickt nur in dem Lauf, der gerade passt.
+    - cron: "0 4 * * 2"
+    - cron: "0 5 * * 2"
   workflow_dispatch:
 
 jobs:
@@ -21,4 +24,5 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
           APP_URL: ${{ vars.APP_URL }}
+          CRON: ${{ github.event.schedule }}
         run: python -m radar.digest

@@ -118,6 +118,7 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
         try:
             items = sources.openalex_search(s["suche"], since)
             pseudo = {"name": "", "bereich": "fach", "prioritaet": "filter", "thema": s["thema"],
+                      "filter": s.get("filter", "japan"),
                       "hinweis": f"Themensuche: {s['suche']}"}
             pairs += [(a, {**pseudo, "name": "Themensuche",
                            "hinweis": f"Themensuche {s['suche']}, erschienen in {a.get('journal_name') or 'unbekannt'}"})
@@ -286,6 +287,8 @@ def main() -> int:
         "stand": datetime.now(timezone.utc).isoformat(timespec="minutes"),
         "abruf_ab": oldest if backfill else old_meta.get("abruf_ab", oldest),
         "datenstand": stand,
+        # Tage mit vollständigem Neuabruf: was dort neu hinzukam, ist für die Wochenmail nicht "neu".
+        "neuabrufe": sorted(set(old_meta.get("neuabrufe", [])) | ({today.isoformat()} if backfill else set()))[-10:],
         "rezensionen_nach_grund": dict(Counter(a.get("rez_grund") or "keine" for a in recent)),
         "posteingang_monate": int(settings.get("posteingang_monate", 6)),
         "artikel": len(recent),

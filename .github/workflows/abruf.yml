@@ -2,7 +2,7 @@ name: Täglicher Abruf
 
 on:
   schedule:
-    - cron: "30 4 * * *"   # täglich 4:30 UTC (5:30 bzw. 6:30 Uhr in Deutschland)
+    - cron: "0 3 * * *"   # täglich 3:00 UTC (4 bzw. 5 Uhr in Deutschland), vor der Wochenmail
   workflow_dispatch:
   pull_request:            # Probelauf ohne Speichern, um Änderungen zu prüfen
 
