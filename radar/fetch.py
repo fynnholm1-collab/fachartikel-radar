@@ -133,23 +133,48 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
 
 
 def jstage_redirect(items: list[dict], cdjournal: str, since: date) -> str:
-    """Links von CiNii auf J-STAGE umstellen (Zugang über J-STAGE statt Repositorium)."""
+    """Links von CiNii auf den passenden J-STAGE-Artikel umstellen.
+
+    CiNii liefert manche Aufsätze doppelt (Repositorium mit Untertitel und Monatsdatum,
+    J-STAGE mit DOI und nur Jahr). Abgleich über den Haupttitel; Dubletten werden
+    zusammengeführt (DOI und J-STAGE-Link, genaueres Datum, längerer Titel/Abstract).
+    """
     browse = f"https://www.jstage.jst.go.jp/browse/{cdjournal}/-char/en"
     try:
         links = sources.jstage_links(cdjournal, since)
     except Exception as exc:  # noqa: BLE001
         links = {}
         log.warning("J-STAGE %s: %s", cdjournal, exc)
-    hits = 0
+    groups: dict[str, list[dict]] = {}
     for a in items:
-        hit = links.get(sources._norm_title(a.get("title", "")))
+        key = sources._norm_title(a.get("title", ""))
+        hit = links.get(key)
         if hit:
-            hits += 1
             a["url"] = hit["url"]
             a["doi"] = a.get("doi") or hit["doi"]
-        elif not a.get("doi"):
+        elif a.get("doi"):
+            a["url"] = f"https://doi.org/{a['doi']}"
+        groups.setdefault(a.get("doi") or f"ohne:{a.get('id')}", []).append(a)
+    merged, unmatched = [], []
+    for key, grp in groups.items():
+        if key.startswith("ohne:"):
+            a = grp[0]
             a["url"] = browse
-    return f", davon {hits} mit J-STAGE-Link (J-STAGE kennt {len(links)})"
+            unmatched.append(a)
+            merged.append(a)
+            continue
+        base = dict(max(grp, key=lambda x: len(x.get("published") or "")))
+        base["title"] = max((x.get("title", "") for x in grp), key=len)
+        base["abstract"] = max((x.get("abstract", "") for x in grp), key=len)
+        base["authors"] = max((x.get("authors", []) for x in grp), key=len)
+        base["doi"], base["id"], base["url"] = key, key, grp[0]["url"]
+        merged.append(base)
+    items[:] = merged
+    for a in unmatched[:15]:
+        log.info("J-STAGE ohne Treffer: %s | %s | %s | %s", a.get("published"), a.get("title", "")[:70],
+                 a.get("publisher"), a.get("issn"))
+    hits = len(merged) - len(unmatched)
+    return f", davon {hits} mit J-STAGE-Link, {len(unmatched)} ohne (J-STAGE kennt {len(links)})"
 
 
 def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len: int) -> dict:

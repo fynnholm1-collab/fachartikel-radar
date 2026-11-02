@@ -13,7 +13,7 @@ posteingang_monate: 6
 backlog_ab: "2023-01-01"
 
 # Wird diese Zahl erhöht, ruft der nächste Lauf alles ab backlog_ab neu ab (nach Regeländerungen).
-datenstand: 4
+datenstand: 5
 
 # Einträge ohne Erscheinungsdatum bleiben so viele Tage nach dem ersten Auftauchen.
 aufbewahren_tage: 400

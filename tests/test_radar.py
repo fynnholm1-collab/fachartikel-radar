@@ -253,16 +253,23 @@ def test_jstage_redirect(monkeypatch):
     xml = """<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/">
  <entry>
-  <article_title><en>The Nuclear Beautiful: The Ethics and Aesthetics of the Bomb</en><ja/></article_title>
-  <article_link><en>https://www.jstage.jst.go.jp/article/japanreview/40/0/40_1/_article/-char/en</en></article_link>
-  <prism:doi>10.15055/0002000001</prism:doi>
+  <article_title><en>Engineering Elites</en><ja/></article_title>
+  <article_link><en>https://www.jstage.jst.go.jp/article/japanreview/41/0/41_2026.NAGAHARA/_article</en></article_link>
+  <prism:doi>10.69307/japanreview.2026.nagahara</prism:doi>
  </entry>
 </feed>"""
     monkeypatch.setattr(sources, "jstage_links", lambda c, s: sources.parse_jstage(xml))
-    items = [{"title": "The Nuclear Beautiful : The Ethics and Aesthetics of the Bomb", "url": "https://cir.nii.ac.jp/crid/1", "doi": ""},
-             {"title": "Something else", "url": "https://cir.nii.ac.jp/crid/2", "doi": ""}]
+    items = [
+        {"id": "https://cir.nii.ac.jp/crid/1", "title": "Engineering Elites : The First Japanese MIT Students",
+         "url": "https://cir.nii.ac.jp/crid/1", "doi": "", "published": "2026-03", "abstract": "", "authors": ["A"]},
+        {"id": "10.69307/japanreview.2026.nagahara", "title": "Engineering Elites", "doi": "10.69307/japanreview.2026.nagahara",
+         "url": "https://doi.org/10.69307/japanreview.2026.nagahara", "published": "2026", "abstract": "Long abstract", "authors": ["A"]},
+        {"id": "https://cir.nii.ac.jp/crid/2", "title": "Something else", "url": "https://cir.nii.ac.jp/crid/2", "doi": ""},
+    ]
     note = fetch.jstage_redirect(items, "japanreview", date(2023, 1, 1))
-    assert items[0]["url"].startswith("https://www.jstage.jst.go.jp/article/japanreview/")
-    assert items[0]["doi"] == "10.15055/0002000001"
+    assert len(items) == 2
+    a = items[0]
+    assert a["url"].endswith("41_2026.NAGAHARA/_article") and a["id"] == "10.69307/japanreview.2026.nagahara"
+    assert a["published"] == "2026-03" and a["title"].startswith("Engineering Elites :") and a["abstract"] == "Long abstract"
     assert items[1]["url"] == "https://www.jstage.jst.go.jp/browse/japanreview/-char/en"
     assert "1 mit J-STAGE-Link" in note

@@ -300,6 +300,8 @@ def cinii_articles(journal_title: str, since: date, count: int = 200, issn: str 
             "heft": str(it.get("prism:number") or ""),
             "seite": str(it.get("prism:startingPage") or ""),
             "seiten": _pages(it.get("prism:startingPage"), it.get("prism:endingPage")),
+            "publisher": _clean(str(it.get("dc:publisher") or "")),
+            "issn": str(it.get("prism:issn") or ""),
             "source": "cinii",
         })
     if not out and other_names:
@@ -321,7 +323,9 @@ def dedupe(articles: Iterable[dict]) -> list[dict]:
 
 
 def _norm_title(title: str) -> str:
-    return re.sub(r"[\W_]+", "", _clean(title).lower())
+    """Haupttitel (vor dem ersten Doppelpunkt), klein und ohne Satzzeichen."""
+    main = re.split(r"\s*[:：]\s", _clean(title) + " ", maxsplit=1)[0]
+    return re.sub(r"[\W_]+", "", main.lower())
 
 
 def parse_jstage(xml_text: str) -> dict[str, dict]:
