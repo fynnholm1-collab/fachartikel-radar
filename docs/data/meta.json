@@ -1,7 +1,7 @@
 {
- "stand": "2026-11-02T15:32+00:00",
+ "stand": "2026-11-02T15:54+00:00",
  "abruf_ab": "2023-01-01",
- "datenstand": 4,
+ "datenstand": 5,
  "neuabrufe": [
   "2026-10-31",
   "2026-11-02"
@@ -15,10 +15,10 @@
  },
  "posteingang_monate": 6,
  "artikel": 433,
- "backlog": 3354,
- "neu_heute": 738,
+ "backlog": 3296,
+ "neu_heute": 758,
  "verworfen": {
-  "vor der Edo-Zeit ohne zusätzliches Thema": 28,
+  "vor der Edo-Zeit ohne zusätzliches Thema": 26,
   "Filter 'ab_edo_oder_thema' nicht erfüllt": 162,
   "vor 2023-01-01": 2,
   "kein Open Access (kein Uni-Zugang)": 1120,
@@ -106,7 +106,7 @@
   "Weitere Geschichte"
  ],
  "journals": {
-  "Japan Review": "152 über CiNii, davon 70 mit J-STAGE-Link (J-STAGE kennt 68)",
+  "Japan Review": "72 über CiNii, davon 64 mit J-STAGE-Link, 8 ohne (J-STAGE kennt 68)",
   "The Asia-Pacific Journal: Japan Focus": "183 über Crossref",
   "Monumenta Nipponica": "102 über OpenAlex",
   "Journal of Japanese Studies": "194 über OpenAlex",
