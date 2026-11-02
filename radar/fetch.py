@@ -144,8 +144,9 @@ def jstage_redirect(items: list[dict], cdjournal: str, since: date, publishers: 
     if publishers:
         # CiNii mischt gleichnamige Zeitschriften (z. B. "Japan Review" des JIIA) unter.
         wanted = [p.lower() for p in publishers]
-        items[:] = [a for a in items if not a.get("publisher")
-                    or any(w in a["publisher"].lower() for w in wanted)]
+        # Ohne Verlagsangabe nur Einträge mit DOI (die kommen von J-STAGE).
+        items[:] = [a for a in items if (a.get("doi") if not a.get("publisher")
+                                         else any(w in a["publisher"].lower() for w in wanted))]
     try:
         links = sources.jstage_links(cdjournal, since)
     except Exception as exc:  # noqa: BLE001
