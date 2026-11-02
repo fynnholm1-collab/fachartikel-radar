@@ -1,3 +1,4 @@
+import re
 from datetime import date
 from pathlib import Path
 
@@ -104,11 +105,40 @@ def test_digest_render():
     items = [
         {"id": "1", "title": "History Lab: Futures", "authors": ["A B"], "journal": "American Historical Review",
          "bereich": "fach", "prioritaet": "hoch", "hervorheben": True, "url": "https://doi.org/x", "added": "2026-10-30"},
-        {"id": "2", "title": "Edo fires", "authors": [], "journal": "Monumenta Nipponica",
+        {"id": "2", "title": "Edo fires", "authors": [], "journal": "Monumenta Nipponica", "kategorie": "Japanische Geschichte",
          "bereich": "japan", "prioritaet": "hoch", "url": "https://doi.org/y", "added": "2026-10-30"},
+        {"id": "3", "title": "Soil in Kansas", "authors": [], "journal": "Environmental History", "kategorie": "Umwelt- und Tiergeschichte",
+         "bereich": "fach", "prioritaet": "hoch", "url": "https://doi.org/z", "added": "2026-10-30"},
+        {"id": "4", "title": "Old item", "authors": [], "journal": "Monumenta Nipponica", "kategorie": "Japanische Geschichte",
+         "bereich": "japan", "prioritaet": "hoch", "url": "https://doi.org/w", "added": "2026-10-29"},
     ]
-    subject, body = digest.render(digest.week_items(items, date(2026, 10, 31)), "https://example.org")
+    week = digest.week_items(items, date(2026, 11, 3), ("2026-10-29",))
+    subject, body = digest.render(week)
     assert "2 Highlights" in subject and "Edo fires" in body and "Hervorgehoben" in body
+    assert "Soil in Kansas" not in body and "Old item" not in body and "1 weitere" in body
+    assert "fachartikel-radar" in body
+
+
+def test_digest_sends_at_six_berlin_time():
+    from datetime import datetime, timezone
+    winter = datetime(2026, 11, 3, 5, 0, tzinfo=timezone.utc)
+    summer = datetime(2027, 6, 1, 4, 0, tzinfo=timezone.utc)
+    assert digest.due("0 5 * * 2", winter) and not digest.due("0 4 * * 2", winter)
+    assert digest.due("0 4 * * 2", summer) and not digest.due("0 5 * * 2", summer)
+    assert digest.due("", winter)
+
+
+def test_only_core_journals_without_japan():
+    import yaml
+    cfg = yaml.safe_load((Path(__file__).resolve().parent.parent / "config" / "journals.yaml").read_text())
+    for j in cfg["journals"]:
+        assert not re.search(r"[\u3040-\u30ff\u4e00-\u9fff]", j["name"]), j["name"]
+        if j["prioritaet"] != "hoch" and j["bereich"] != "japan":
+            assert "japan" in j["filter"], j["name"]
+    soil = art("Soil and settlers in Kansas", "Animal history of the prairie.")
+    assert decide(soil, {"name": "Environmental History", "bereich": "fach", "prioritaet": "hoch"}, F).keep
+    assert not decide(soil, {"name": "Society & Animals", "bereich": "fach", "prioritaet": "filter", "filter": "japan"}, F).keep
+    assert not decide({**soil, "language": "ja"}, {"name": "Environmental History", "bereich": "fach", "prioritaet": "hoch"}, F).keep
 
 
 def test_junk_entries_are_dropped():

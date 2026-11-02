@@ -142,7 +142,7 @@ themen:
   Lehre: [teaching, pedagog*, curriculum, classroom, 歴史教育]
 
 # Nur Artikel in diesen Sprachen (OpenAlex-Sprachangabe; ohne Angabe bleibt ein Artikel drin).
-sprachen: [en, de, ja]
+sprachen: [en, de]
 
 # Titelmuster, an denen Buchbesprechungen erkannt werden. Zusätzlich gilt ein Titel
 # ohne Abstract, der auf "by Vorname Nachname" endet, als Rezension.

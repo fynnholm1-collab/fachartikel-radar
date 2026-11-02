@@ -19,24 +19,21 @@
 
 journals:
   # Auswahl von Fynn, 31.10.2026 (Liste "Zeitschriften zum Ankreuzen").
+  # Runde 3 (2.11.2026): japanischsprachige Zeitschriften entfernt. Nur Kernzeitschriften
+  # (prioritaet: hoch) erscheinen vollständig; alle übrigen und die Themensuche nur mit Japanbezug.
 
   # ---------------- Japan ----------------
   - {name: Monumenta Nipponica, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Journal of Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japan Review, quelle: cinii, bereich: japan, prioritaet: hoch, thema: Japan, hinweis: Nichibunken}
-  - {name: Harvard Journal of Asiatic Studies, bereich: japan, prioritaet: hoch, thema: Japan, filter: japan}
+  - {name: Harvard Journal of Asiatic Studies, bereich: japan, prioritaet: filter, thema: Japan, filter: japan}
   - {name: Japan Forum, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japanese Journal of Religious Studies, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan}
-  - {name: 日本史研究, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan, quelle: cinii, hinweis: Nihonshi kenkyū}
-  - {name: 日本歴史, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan, quelle: cinii, hinweis: Nihon rekishi}
-  - {name: 史学雑誌, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan, quelle: cinii, hinweis: Shigaku zasshi}
-  - {name: 歴史学研究, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan, quelle: cinii, hinweis: Rekishigaku kenkyū}
-  - {name: 日本研究, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan, quelle: cinii, hinweis: Nihon kenkyū (Nichibunken)}
-  - {name: Journal of Asian Studies, bereich: japan, prioritaet: filter, filter: japan_und_geschichte_oder_thema, thema: Japan}
+  - {name: Journal of Asian Studies, bereich: japan, prioritaet: filter, filter: japan, thema: Japan}
   - {name: Review of Japanese Culture and Society, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan}
   - {name: "The Asia-Pacific Journal: Japan Focus", issn: 1557-4660, quelle: crossref, bereich: japan, prioritaet: filter, filter: ab_edo_oder_thema, thema: Japan}
-  - {name: Asiatische Studien, bereich: japan, prioritaet: filter, filter: japan_und_geschichte_oder_thema, thema: Japan}
+  - {name: Asiatische Studien, bereich: japan, prioritaet: filter, filter: japan, thema: Japan}
 
   # ---------------- Geschichte allgemein ----------------
   - {name: American Historical Review, bereich: fach, prioritaet: hoch, thema: Globalgeschichte, hervorheben: [History Lab, Special Issue, Forum, Roundtable], hinweis: setzt oft die Richtung für das Feld}
@@ -49,19 +46,19 @@ journals:
   - {name: Rethinking History, bereich: fach, prioritaet: hoch, thema: Theorie und Lehre}
   - {name: Journal of Digital History, bereich: fach, prioritaet: hoch, thema: Digitale Geschichte}
   - {name: Current Research in Digital History, bereich: fach, prioritaet: hoch, thema: Digitale Geschichte}
-  - {name: Comparative Studies in Society and History, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Globalgeschichte}
-  - {name: Geschichte und Gesellschaft, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Theorie und Lehre}
-  - {name: Historische Zeitschrift, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Theorie und Lehre}
-  - {name: Journal of the Philosophy of History, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Theorie und Lehre}
-  - {name: Public History Weekly, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Theorie und Lehre}
-  - {name: Arts and Humanities in Higher Education, bereich: fach, prioritaet: filter, filter: geschichte, thema: Theorie und Lehre}
-  - {name: Global Environment, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Umwelt- und Tiergeschichte}
-  - {name: Journal for the History of Environment and Society, bereich: fach, prioritaet: filter, filter: japan_oder_thema, thema: Umwelt- und Tiergeschichte}
-  - {name: Environmental Humanities, bereich: fach, prioritaet: filter, filter: environmental_humanities, thema: Umwelt- und Tiergeschichte}
-  - {name: Society & Animals, bereich: fach, prioritaet: filter, filter: geschichte_oder_japan, thema: Umwelt- und Tiergeschichte}
-  - {name: Humanimalia, bereich: fach, prioritaet: filter, filter: geschichte_oder_japan, thema: Umwelt- und Tiergeschichte}
-  - {name: Digital Humanities Quarterly, bereich: fach, prioritaet: filter, filter: geschichte, thema: Digitale Geschichte}
-  - {name: Digital Scholarship in the Humanities, bereich: fach, prioritaet: filter, filter: geschichte, thema: Digitale Geschichte}
+  - {name: Comparative Studies in Society and History, bereich: fach, prioritaet: filter, filter: japan, thema: Globalgeschichte}
+  - {name: Geschichte und Gesellschaft, bereich: fach, prioritaet: filter, filter: japan, thema: Theorie und Lehre}
+  - {name: Historische Zeitschrift, bereich: fach, prioritaet: filter, filter: japan, thema: Theorie und Lehre}
+  - {name: Journal of the Philosophy of History, bereich: fach, prioritaet: filter, filter: japan, thema: Theorie und Lehre}
+  - {name: Public History Weekly, bereich: fach, prioritaet: filter, filter: japan, thema: Theorie und Lehre}
+  - {name: Arts and Humanities in Higher Education, bereich: fach, prioritaet: filter, filter: japan, thema: Theorie und Lehre}
+  - {name: Global Environment, bereich: fach, prioritaet: filter, filter: japan, thema: Umwelt- und Tiergeschichte}
+  - {name: Journal for the History of Environment and Society, bereich: fach, prioritaet: filter, filter: japan, thema: Umwelt- und Tiergeschichte}
+  - {name: Environmental Humanities, bereich: fach, prioritaet: filter, filter: japan, thema: Umwelt- und Tiergeschichte}
+  - {name: Society & Animals, bereich: fach, prioritaet: filter, filter: japan, thema: Umwelt- und Tiergeschichte}
+  - {name: Humanimalia, bereich: fach, prioritaet: filter, filter: japan, thema: Umwelt- und Tiergeschichte}
+  - {name: Digital Humanities Quarterly, bereich: fach, prioritaet: filter, filter: japan, thema: Digitale Geschichte}
+  - {name: Digital Scholarship in the Humanities, bereich: fach, prioritaet: filter, filter: japan, thema: Digitale Geschichte}
 
   # ---------------- Asien und Nachbarfächer: nur mit Japan- und Geschichtsbezug ----------------
   - {name: Itinerario, bereich: rand, prioritaet: filter, filter: japan_und_geschichte_oder_thema, thema: Globalgeschichte}
@@ -80,6 +77,7 @@ journals:
   - {name: Journal of Korean Studies, bereich: rand, prioritaet: filter, filter: japan_und_geschichte_oder_thema, thema: Japan}
 
 # Fachweite Themensuche (OpenAlex, nur Fachgebiet Geschichte), unabhängig vom Journal.
+# Treffer erscheinen nur mit Japanbezug (Feld "filter", Standard japan).
 themensuche:
   - {suche: '"animal history"', thema: Umwelt- und Tiergeschichte}
   - {suche: '"more-than-human"', thema: Umwelt- und Tiergeschichte}

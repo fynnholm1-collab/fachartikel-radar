@@ -6,7 +6,7 @@ Ein persönlicher Überblick über neue Artikel aus Japanologie und Geschichtswi
 - **Die Web-App** (`docs/`) zeigt sie in Reitern: Posteingang, Fach, Rand mit Japan-Bezug, Rezensionen, Gemerkt, Bücher bestellen.
 - **Wichtige Artikel** gehen mit Ihrem Kommentar als Notiz nach Zotero, in die Sammlung `_Eingang Fachliteratur/<Thema>`.
 - **Rezensionen** werden gegen den Bestand der UB Tübingen (Verbundkatalog K10plus) geprüft. Vorgemerkte Bücher landen in `_Anschaffungswünsche`.
-- **Freitags** kommt eine Mail mit den Highlights der Woche.
+- **Dienstags um 6 Uhr** kommt eine Mail mit den Highlights der Woche (neue Artikel mit Japanbezug, AHR-Formate).
 
 Alles läuft kostenlos und ohne KI.
 
