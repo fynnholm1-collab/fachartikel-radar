@@ -79,7 +79,7 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
                 items = sources.cinii_articles(j["name"], since, issn=j.get("issn"))
                 note = ""
                 if j.get("jstage"):
-                    note = jstage_redirect(items, j["jstage"], since)
+                    note = jstage_redirect(items, j["jstage"], since, j.get("verlag"))
                 pairs += [(a, j) for a in items]
                 status[j["name"]] = f"{len(items)} über CiNii{note}"
             except Exception as exc:  # noqa: BLE001
@@ -132,14 +132,20 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
     return pairs, status
 
 
-def jstage_redirect(items: list[dict], cdjournal: str, since: date) -> str:
+def jstage_redirect(items: list[dict], cdjournal: str, since: date, publishers: list[str] | None = None) -> str:
     """Links von CiNii auf den passenden J-STAGE-Artikel umstellen.
 
     CiNii liefert manche Aufsätze doppelt (Repositorium mit Untertitel und Monatsdatum,
     J-STAGE mit DOI und nur Jahr). Abgleich über den Haupttitel; Dubletten werden
     zusammengeführt (DOI und J-STAGE-Link, genaueres Datum, längerer Titel/Abstract).
     """
-    browse = f"https://www.jstage.jst.go.jp/browse/{cdjournal}/-char/en"
+    from urllib.parse import quote
+
+    if publishers:
+        # CiNii mischt gleichnamige Zeitschriften (z. B. "Japan Review" des JIIA) unter.
+        wanted = [p.lower() for p in publishers]
+        items[:] = [a for a in items if not a.get("publisher")
+                    or any(w in a["publisher"].lower() for w in wanted)]
     try:
         links = sources.jstage_links(cdjournal, since)
     except Exception as exc:  # noqa: BLE001
@@ -154,20 +160,20 @@ def jstage_redirect(items: list[dict], cdjournal: str, since: date) -> str:
             a["doi"] = a.get("doi") or hit["doi"]
         elif a.get("doi"):
             a["url"] = f"https://doi.org/{a['doi']}"
-        groups.setdefault(a.get("doi") or f"ohne:{a.get('id')}", []).append(a)
+        groups.setdefault(a.get("doi") or f"ohne:{key}", []).append(a)
     merged, unmatched = [], []
     for key, grp in groups.items():
-        if key.startswith("ohne:"):
-            a = grp[0]
-            a["url"] = browse
-            unmatched.append(a)
-            merged.append(a)
-            continue
         base = dict(max(grp, key=lambda x: len(x.get("published") or "")))
         base["title"] = max((x.get("title", "") for x in grp), key=len)
         base["abstract"] = max((x.get("abstract", "") for x in grp), key=len)
         base["authors"] = max((x.get("authors", []) for x in grp), key=len)
-        base["doi"], base["id"], base["url"] = key, key, grp[0]["url"]
+        if key.startswith("ohne:"):
+            # Noch nicht auf J-STAGE: Titelsuche auf J-STAGE statt CiNii-Seite.
+            main = re.split(r"\s*[:：]\s", base["title"] + " ", maxsplit=1)[0].strip()
+            base["url"] = f"https://www.jstage.jst.go.jp/result/global/-char/en?globalSearchKey={quote(main)}"
+            unmatched.append(base)
+        else:
+            base["doi"], base["id"], base["url"] = key, key, grp[0]["url"]
         merged.append(base)
     items[:] = merged
     for a in unmatched[:15]:

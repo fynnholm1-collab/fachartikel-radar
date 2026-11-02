@@ -264,12 +264,20 @@ def test_jstage_redirect(monkeypatch):
          "url": "https://cir.nii.ac.jp/crid/1", "doi": "", "published": "2026-03", "abstract": "", "authors": ["A"]},
         {"id": "10.69307/japanreview.2026.nagahara", "title": "Engineering Elites", "doi": "10.69307/japanreview.2026.nagahara",
          "url": "https://doi.org/10.69307/japanreview.2026.nagahara", "published": "2026", "abstract": "Long abstract", "authors": ["A"]},
-        {"id": "https://cir.nii.ac.jp/crid/2", "title": "Something else", "url": "https://cir.nii.ac.jp/crid/2", "doi": ""},
+        {"id": "https://cir.nii.ac.jp/crid/2", "title": "Global Samurai : Warriors", "url": "https://cir.nii.ac.jp/crid/2", "doi": "",
+         "published": "2026-03", "publisher": "International Research Center for Japanese Studies"},
+        {"id": "https://cir.nii.ac.jp/crid/3", "title": "Global Samurai", "url": "https://cir.nii.ac.jp/crid/3", "doi": "",
+         "published": "2026", "publisher": "国際日本文化研究センター"},
+        {"id": "https://cir.nii.ac.jp/crid/4", "title": "Military Alliances", "url": "https://cir.nii.ac.jp/crid/4", "doi": "",
+         "published": "2026-03", "publisher": "日本国際問題研究所"},
     ]
-    note = fetch.jstage_redirect(items, "japanreview", date(2023, 1, 1))
+    for a in items[:2]:
+        a["publisher"] = "International Research Center for Japanese Studies"
+    note = fetch.jstage_redirect(items, "japanreview", date(2023, 1, 1),
+                                 ["International Research Center for Japanese Studies", "国際日本文化研究センター"])
     assert len(items) == 2
     a = items[0]
     assert a["url"].endswith("41_2026.NAGAHARA/_article") and a["id"] == "10.69307/japanreview.2026.nagahara"
     assert a["published"] == "2026-03" and a["title"].startswith("Engineering Elites :") and a["abstract"] == "Long abstract"
-    assert items[1]["url"] == "https://www.jstage.jst.go.jp/browse/japanreview/-char/en"
+    assert items[1]["url"].endswith("globalSearchKey=Global%20Samurai") and items[1]["published"] == "2026-03"
     assert "1 mit J-STAGE-Link" in note
