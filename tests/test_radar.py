@@ -240,3 +240,29 @@ def test_catalog_book_title(monkeypatch):
     assert catalog.is_book_title("Dissecting the Danchi: Inside Japan's Largest Housing Experiment", {"sru_url": "x"}) is True
     monkeypatch.setattr(catalog, "sru_search", lambda base, cql, max_records=5: (1, rec.format(bbg="Asu")))
     assert catalog.is_book_title("Dissecting the Danchi", {"sru_url": "x"}) is False
+
+
+def test_open_access_only_journals():
+    j = {"name": "Positions: Asia Critique", "bereich": "rand", "prioritaet": "filter", "nur_open_access": True}
+    assert not decide(art("Meiji Japan and the world"), j, F).keep
+    assert decide({**art("Meiji Japan and the world"), "oa": True}, j, F).keep
+
+
+def test_jstage_redirect(monkeypatch):
+    from radar import fetch, sources
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/">
+ <entry>
+  <article_title><en>The Nuclear Beautiful: The Ethics and Aesthetics of the Bomb</en><ja/></article_title>
+  <article_link><en>https://www.jstage.jst.go.jp/article/japanreview/40/0/40_1/_article/-char/en</en></article_link>
+  <prism:doi>10.15055/0002000001</prism:doi>
+ </entry>
+</feed>"""
+    monkeypatch.setattr(sources, "jstage_links", lambda c, s: sources.parse_jstage(xml))
+    items = [{"title": "The Nuclear Beautiful : The Ethics and Aesthetics of the Bomb", "url": "https://cir.nii.ac.jp/crid/1", "doi": ""},
+             {"title": "Something else", "url": "https://cir.nii.ac.jp/crid/2", "doi": ""}]
+    note = fetch.jstage_redirect(items, "japanreview", date(2023, 1, 1))
+    assert items[0]["url"].startswith("https://www.jstage.jst.go.jp/article/japanreview/")
+    assert items[0]["doi"] == "10.15055/0002000001"
+    assert items[1]["url"] == "https://www.jstage.jst.go.jp/browse/japanreview/-char/en"
+    assert "1 mit J-STAGE-Link" in note
