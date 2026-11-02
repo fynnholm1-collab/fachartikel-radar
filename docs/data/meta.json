@@ -1,18 +1,18 @@
 {
- "stand": "2026-11-01T05:18+00:00",
+ "stand": "2026-11-02T05:31+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 2,
  "rezensionen_nach_grund": {
   "Titel mit Autor": 20,
-  "keine": 408,
+  "keine": 407,
   "Buch im Katalog": 3,
   "kurz ohne Abstract": 228,
   "Titelmuster": 48
  },
  "posteingang_monate": 6,
- "artikel": 707,
- "backlog": 4610,
- "neu_heute": 33,
+ "artikel": 706,
+ "backlog": 4611,
+ "neu_heute": 0,
  "verworfen": {
   "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 13,
   "Filter 'ab_edo_oder_thema' nicht erfüllt": 51,
@@ -149,7 +149,7 @@
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "9 über OpenAlex",
   "Themensuche multispecies": "6 über OpenAlex",
-  "Themensuche \"teaching history\" university": "7 über OpenAlex",
+  "Themensuche \"teaching history\" university": "6 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "1 über OpenAlex"
  },
  "katalog": {
