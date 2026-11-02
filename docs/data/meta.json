@@ -1,27 +1,28 @@
 {
- "stand": "2026-11-02T13:52+00:00",
+ "stand": "2026-11-02T15:32+00:00",
  "abruf_ab": "2023-01-01",
- "datenstand": 3,
+ "datenstand": 4,
  "neuabrufe": [
   "2026-10-31",
   "2026-11-02"
  ],
  "rezensionen_nach_grund": {
-  "keine": 255,
-  "Buch im Katalog": 5,
-  "kurz ohne Abstract": 215,
+  "keine": 214,
+  "kurz ohne Abstract": 202,
+  "Buch im Katalog": 2,
   "Titelmuster": 13,
   "Titel mit Autor": 2
  },
  "posteingang_monate": 6,
- "artikel": 490,
- "backlog": 3603,
- "neu_heute": 816,
+ "artikel": 433,
+ "backlog": 3354,
+ "neu_heute": 738,
  "verworfen": {
-  "vor der Edo-Zeit ohne zusätzliches Thema": 29,
+  "vor der Edo-Zeit ohne zusätzliches Thema": 28,
   "Filter 'ab_edo_oder_thema' nicht erfüllt": 162,
   "vor 2023-01-01": 2,
-  "Filter 'japan' nicht erfüllt": 4262,
+  "kein Open Access (kein Uni-Zugang)": 1120,
+  "Filter 'japan' nicht erfüllt": 3676,
   "Sprache fr": 49,
   "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 440,
   "Sprache pl": 5,
@@ -30,7 +31,7 @@
   "Sprache fi": 2,
   "Sprache it": 11,
   "Sprache nl": 2,
-  "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 1571,
+  "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 1417,
   "Sprache ilo": 12,
   "Sprache pt": 16,
   "Sprache zh": 1,
@@ -105,7 +106,7 @@
   "Weitere Geschichte"
  ],
  "journals": {
-  "Japan Review": "152 über CiNii",
+  "Japan Review": "152 über CiNii, davon 70 mit J-STAGE-Link (J-STAGE kennt 68)",
   "The Asia-Pacific Journal: Japan Focus": "183 über Crossref",
   "Monumenta Nipponica": "102 über OpenAlex",
   "Journal of Japanese Studies": "194 über OpenAlex",
