@@ -17,6 +17,7 @@
 #   hinweis    freier Text, wird in der App angezeigt
 #   hervorheben optional: Liste von Wörtern, bei denen ein Artikel markiert wird
 #   nur_open_access  true = nur Open-Access-Artikel (Zeitschriften ohne Uni-Zugang)
+#   verlag     optional (CiNii): nur Treffer dieser Verlage, gegen gleichnamige Zeitschriften
 #   jstage     optional: J-STAGE-Kürzel; Links von CiNii-Treffern werden auf J-STAGE umgestellt
 
 journals:
@@ -27,7 +28,7 @@ journals:
   # ---------------- Japan ----------------
   - {name: Monumenta Nipponica, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Journal of Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}
-  - {name: Japan Review, quelle: cinii, jstage: japanreview, bereich: japan, prioritaet: hoch, thema: Japan, hinweis: Nichibunken; Volltext über J-STAGE}
+  - {name: Japan Review, quelle: cinii, jstage: japanreview, verlag: [International Research Center for Japanese Studies, 国際日本文化研究センター], bereich: japan, prioritaet: hoch, thema: Japan, hinweis: Nichibunken; Volltext über J-STAGE}
   - {name: Harvard Journal of Asiatic Studies, bereich: japan, prioritaet: filter, thema: Japan, filter: japan}
   - {name: Japan Forum, bereich: japan, prioritaet: hoch, thema: Japan}
   - {name: Japanese Studies, bereich: japan, prioritaet: hoch, thema: Japan}

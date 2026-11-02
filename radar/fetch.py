@@ -79,7 +79,7 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
                 items = sources.cinii_articles(j["name"], since, issn=j.get("issn"))
                 note = ""
                 if j.get("jstage"):
-                    note = jstage_redirect(items, j["jstage"], since)
+                    note = jstage_redirect(items, j["jstage"], since, j.get("verlag"))
                 pairs += [(a, j) for a in items]
                 status[j["name"]] = f"{len(items)} über CiNii{note}"
             except Exception as exc:  # noqa: BLE001
@@ -132,24 +132,56 @@ def collect(journals, searches, resolved, since) -> tuple[list[tuple[dict, dict]
     return pairs, status
 
 
-def jstage_redirect(items: list[dict], cdjournal: str, since: date) -> str:
-    """Links von CiNii auf J-STAGE umstellen (Zugang über J-STAGE statt Repositorium)."""
-    browse = f"https://www.jstage.jst.go.jp/browse/{cdjournal}/-char/en"
+def jstage_redirect(items: list[dict], cdjournal: str, since: date, publishers: list[str] | None = None) -> str:
+    """Links von CiNii auf den passenden J-STAGE-Artikel umstellen.
+
+    CiNii liefert manche Aufsätze doppelt (Repositorium mit Untertitel und Monatsdatum,
+    J-STAGE mit DOI und nur Jahr). Abgleich über den Haupttitel; Dubletten werden
+    zusammengeführt (DOI und J-STAGE-Link, genaueres Datum, längerer Titel/Abstract).
+    """
+    from urllib.parse import quote
+
+    if publishers:
+        # CiNii mischt gleichnamige Zeitschriften (z. B. "Japan Review" des JIIA) unter.
+        wanted = [p.lower() for p in publishers]
+        # Ohne Verlagsangabe nur Einträge mit DOI (die kommen von J-STAGE).
+        items[:] = [a for a in items if (a.get("doi") if not a.get("publisher")
+                                         else any(w in a["publisher"].lower() for w in wanted))]
     try:
         links = sources.jstage_links(cdjournal, since)
     except Exception as exc:  # noqa: BLE001
         links = {}
         log.warning("J-STAGE %s: %s", cdjournal, exc)
-    hits = 0
+    groups: dict[str, list[dict]] = {}
     for a in items:
-        hit = links.get(sources._norm_title(a.get("title", "")))
+        key = sources._norm_title(a.get("title", ""))
+        hit = links.get(key)
         if hit:
-            hits += 1
             a["url"] = hit["url"]
             a["doi"] = a.get("doi") or hit["doi"]
-        elif not a.get("doi"):
-            a["url"] = browse
-    return f", davon {hits} mit J-STAGE-Link (J-STAGE kennt {len(links)})"
+        elif a.get("doi"):
+            a["url"] = f"https://doi.org/{a['doi']}"
+        groups.setdefault(a.get("doi") or f"ohne:{key}", []).append(a)
+    merged, unmatched = [], []
+    for key, grp in groups.items():
+        base = dict(max(grp, key=lambda x: len(x.get("published") or "")))
+        base["title"] = max((x.get("title", "") for x in grp), key=len)
+        base["abstract"] = max((x.get("abstract", "") for x in grp), key=len)
+        base["authors"] = max((x.get("authors", []) for x in grp), key=len)
+        if key.startswith("ohne:"):
+            # Noch nicht auf J-STAGE: Titelsuche auf J-STAGE statt CiNii-Seite.
+            main = re.split(r"\s*[:：]\s", base["title"] + " ", maxsplit=1)[0].strip()
+            base["url"] = f"https://www.jstage.jst.go.jp/result/global/-char/en?globalSearchKey={quote(main)}"
+            unmatched.append(base)
+        else:
+            base["doi"], base["id"], base["url"] = key, key, grp[0]["url"]
+        merged.append(base)
+    items[:] = merged
+    for a in unmatched[:15]:
+        log.info("J-STAGE ohne Treffer: %s | %s | %s | %s", a.get("published"), a.get("title", "")[:70],
+                 a.get("publisher"), a.get("issn"))
+    hits = len(merged) - len(unmatched)
+    return f", davon {hits} mit J-STAGE-Link, {len(unmatched)} ohne (J-STAGE kennt {len(links)})"
 
 
 def build_record(a: dict, j: dict, d, filters: Filters, today: str, abstract_len: int) -> dict:
