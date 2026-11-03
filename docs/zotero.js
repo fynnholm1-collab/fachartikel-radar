@@ -120,5 +120,63 @@ const Zotero = (() => {
     return key;
   }
 
-  return { creds, test, ensureCollection, saveArticle, saveBook };
+  // ---------------------------------------------------------- Sichtungsstand geräteübergreifend
+  // Der Stand liegt als eigenständige Notiz (Tag "radar-sichtung") in der Zotero-Bibliothek,
+  // gepackt (gzip, base64), damit Computer und iPad denselben Stand sehen.
+  const SYNC_TAG = "radar-sichtung";
+
+  async function request(path, { method = "GET", body, headers = {} } = {}) {
+    const c = creds();
+    if (!c) throw new Error("Zotero ist noch nicht eingerichtet.");
+    return fetch(`${API}/users/${c.uid}${path}`, {
+      method,
+      headers: { "Zotero-API-Key": c.key, "Zotero-API-Version": "3", ...(body ? { "Content-Type": "application/json" } : {}), ...headers },
+      body: body ? JSON.stringify(body) : undefined,
+      cache: "no-store",
+    });
+  }
+
+  const b64 = (bytes) => { let s = ""; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode(...bytes.subarray(i, i + 0x8000)); return btoa(s); };
+  const unb64 = (str) => Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
+  async function pipe(bytes, stream) { return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer()); }
+
+  async function pack(obj) {
+    const raw = new TextEncoder().encode(JSON.stringify(obj));
+    if (typeof CompressionStream === "function") return "gz:" + b64(await pipe(raw, new CompressionStream("gzip")));
+    return "js:" + b64(raw);
+  }
+
+  async function unpack(text) {
+    const [kind, data] = [text.slice(0, 3), text.slice(3)];
+    let bytes = unb64(data);
+    if (kind === "gz:") bytes = await pipe(bytes, new DecompressionStream("gzip"));
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  async function loadSync() {
+    const res = await request(`/items?tag=${SYNC_TAG}&itemType=note&limit=10`);
+    if (!res.ok) throw new Error(`Zotero antwortet mit ${res.status}`);
+    const items = await res.json();
+    if (!items.length) return { key: null, version: 0, data: {} };
+    const it = items.sort((x, y) => y.version - x.version)[0];
+    const m = /<pre>([^<]*)<\/pre>/.exec(it.data.note || "");
+    let data = {};
+    try { data = m ? await unpack(m[1].trim()) : {}; } catch { data = {}; }
+    return { key: it.key, version: it.version, data };
+  }
+
+  // Liefert die neue Version, oder null bei Konflikt (anderes Gerät hat inzwischen gespeichert).
+  async function saveSync(data, key, version) {
+    const note = `<p>Fachartikel-Radar: Sichtungsstand (wird von der App gepflegt, bitte nicht bearbeiten)</p><pre>${await pack(data)}</pre>`;
+    if (key) {
+      const res = await request(`/items/${key}`, { method: "PATCH", body: { note }, headers: { "If-Unmodified-Since-Version": String(version) } });
+      if (res.status === 412) return null;
+      if (!res.ok) throw new Error(`Zotero antwortet mit ${res.status}`);
+      return { key, version: Number(res.headers.get("Last-Modified-Version")) || version + 1 };
+    }
+    const [newKey] = await create("/items", [{ itemType: "note", note, tags: [{ tag: SYNC_TAG }] }]);
+    return { key: newKey, version: 0 };
+  }
+
+  return { creds, test, ensureCollection, saveArticle, saveBook, loadSync, saveSync };
 })();
