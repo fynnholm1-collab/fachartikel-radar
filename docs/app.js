@@ -13,7 +13,7 @@ let tab = localStorageGet("radar-tab") || "eingang";
 function localStorageGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
 function localStorageSet(k, v) { try { localStorage.setItem(k, v); } catch { /* privat/blockiert */ } }
 function loadStatus() { try { return JSON.parse(localStorage.getItem(STORE) || "{}"); } catch { return {}; } }
-function saveStatus() { localStorageSet(STORE, JSON.stringify(status)); }
+function saveStatus() { localStorageSet(STORE, JSON.stringify(status)); scheduleSync(); }
 function st(id) { return status[id] || {}; }
 function setSt(id, patch) { status[id] = { ...st(id), ...patch, t: new Date().toISOString() }; saveStatus(); }
 
@@ -424,7 +424,7 @@ $("#z-test").onclick = async () => {
   localStorageSet("z-uid", $("#z-uid").value.trim());
   localStorageSet("z-key", $("#z-key").value.trim());
   $("#z-status").textContent = "prüfe …";
-  try { $("#z-status").textContent = await Zotero.test(); } catch (e) { $("#z-status").textContent = e.message; }
+  try { $("#z-status").textContent = await Zotero.test(); syncNow(); } catch (e) { $("#z-status").textContent = e.message; }
 };
 $("#export").onclick = () => {
   const blob = new Blob([JSON.stringify(status, null, 1)], { type: "application/json" });
@@ -446,6 +446,49 @@ $("#import").onchange = async (e) => {
     toast("Sichtungsstand übernommen.");
   } catch { toast("Datei konnte nicht gelesen werden.", true); }
 };
+
+// ---------------------------------------------------------------- Abgleich zwischen Geräten (über Zotero)
+
+let syncTimer = null;
+let syncRunning = false;
+let syncInfo = { key: null, version: 0 };
+
+function mergeStatus(into, other) {
+  let changed = false;
+  for (const [id, v] of Object.entries(other || {})) {
+    if (!into[id] || (v.t || "") > (into[id].t || "")) { into[id] = v; changed = true; }
+  }
+  return changed;
+}
+
+function scheduleSync() {
+  if (!Zotero.creds()) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(syncNow, 3000);
+}
+
+async function syncNow() {
+  if (!Zotero.creds() || syncRunning) return;
+  syncRunning = true;
+  try {
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const remote = await Zotero.loadSync();
+      const gotNew = mergeStatus(status, remote.data);
+      if (gotNew) { localStorageSet(STORE, JSON.stringify(status)); render(); }
+      const needPush = !remote.key || Object.keys(status).some((id) => !remote.data[id] || (status[id].t || "") > (remote.data[id].t || ""));
+      if (!needPush) { syncInfo = remote; break; }
+      const saved = await Zotero.saveSync(status, remote.key, remote.version);
+      if (saved) { syncInfo = saved; break; }
+    }
+    $("#sync-status").textContent = `Abgeglichen ${new Date().toLocaleTimeString("de-DE", { timeStyle: "short" })}`;
+  } catch (e) {
+    $("#sync-status").textContent = `Abgleich fehlgeschlagen: ${e.message}`;
+  } finally {
+    syncRunning = false;
+  }
+}
+
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") syncNow(); });
 
 // ---------------------------------------------------------------- Start
 
@@ -476,5 +519,6 @@ async function load() {
     return;
   }
   show();
+  syncNow();
 }
 load();
