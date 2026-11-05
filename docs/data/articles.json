@@ -790,6 +790,41 @@
   }
  },
  {
+  "id": "10.1080/09555803.2026.2752628",
+  "doi": "10.1080/09555803.2026.2752628",
+  "title": "When the shoreline disappears: seawalls, nagisa , and the perceptual conditions of coastal knowing in post-3.11 Japan",
+  "authors": [
+   "David Chapman"
+  ],
+  "abstract": "Following the 2011 Great East Japan Earthquake and tsunami, extensive coastal defences transformed not only the physical shoreline of northeast Japan but also the everyday conditions through which the sea can be perceived and encountered. This article examines these transformations at three sites within Kesennuma City, Miyagi Prefecture: Koizumi Beach, Kesennuma Inner Bay, and Ōshima’s Tanakahama Beach. Drawing on fieldwork conducted in 2023 and 2024, a photographic archive of approximately 450 images, and reconstruction planning documents, the analysis compares five dimensions of coastal infrastructure: horizon visibility, access permeability, vertical dominance, aesthetic texture, and information mediation. It develops nagisa (渚), understood as a rhythmic interface between land and sea, as a historically grounded diagnostic analytic for examining how coastal defence reorganises perceptual access. Koizumi’s high seawall largely removes the sea from inland view; Kesennuma’s negotiated waterfront defences preserve but unevenly mediate harbour visibility; and Tanakahama’s forested embankment softens defensive infrastructure while partially naturalising its boundary. These differences demonstrate that the perceptual availability of the coast is an outcome of design and negotiation rather than merely an aesthetic consequence of engineering. The article proposes epistemic resilience as a framework concerned with maintaining multiple, mutually correcting ways of knowing …",
+  "url": "https://doi.org/10.1080/09555803.2026.2752628",
+  "oa_url": "https://www.tandfonline.com/doi/pdf/10.1080/09555803.2026.2752628?needAccess=true",
+  "oa": true,
+  "published": "2026-11-02",
+  "added": "2026-11-05",
+  "journal": "Japan Forum",
+  "bereich": "japan",
+  "prioritaet": "hoch",
+  "thema": "Japan",
+  "hinweis": "",
+  "seiten": 28,
+  "sprache": "en",
+  "rez_grund": "",
+  "rezension": false,
+  "buch": "",
+  "buchtitel": "",
+  "kategorie": "Japanische Geschichte",
+  "band": "",
+  "heft": "",
+  "seite": "1",
+  "hervorheben": false,
+  "themen": [
+   "Umweltgeschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex"
+ },
+ {
   "id": "10.1080/13642529.2026.2757389",
   "doi": "10.1080/13642529.2026.2757389",
   "title": "Time travel as wayfinding: assembling past and present in location-based games",
@@ -798,7 +833,7 @@
   ],
   "abstract": "Location-based games are games that incorporate the player’s physical location and/or actions into the play activity through media interfaces. In this article, I chart how relationships with the past can emerge through location-based games due to the ways their designers and players engage with place. Drawing on two location-based games I developed and tested as part of a practice-based research project, which both focus on historical events, I frame the concept of time travel as a process of wayfinding: a propositional and intersubjective form of embodied navigation through which people assemble impressions of a place (and its past). I show how designers and players of location-based games negotiate the contingency and multiplicity inherent in live, physical, everyday contexts of location-based gameplay to produce diverse, complex and insecure impressions of historical scenarios. Ultimately, I suggest that the significance of location-based games as media for connecting with the past is in the relationships between navigation and narrative that are performed by designers and players. These relationships do not enable mimetic representations or experiences of the past; rather, they create compelling opportunities for expanding and complicating notions of what went before, what exists today, and how both are interconnected in place.",
   "url": "https://doi.org/10.1080/13642529.2026.2757389",
-  "oa_url": "https://doi.org/10.1080/13642529.2026.2757389",
+  "oa_url": "https://www.tandfonline.com/doi/pdf/10.1080/13642529.2026.2757389?needAccess=true",
   "oa": true,
   "published": "2026-11-02",
   "added": "2026-11-04",
@@ -2284,6 +2319,41 @@
    "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=The+Teaching+and+Teachings+of+Temple+Buddhism+in+Contemporary+Japan%2C&type=allfields",
    "status": "wahrscheinlich"
   }
+ },
+ {
+  "id": "10.1093/pastj/gtag032",
+  "doi": "10.1093/pastj/gtag032",
+  "title": "The Quackery Question and Medical Authority in Imperial Germany",
+  "authors": [
+   "Albert Monshan Wu"
+  ],
+  "abstract": "Abstract In the late nineteenth and early twentieth centuries, German physicians, bureaucrats, and legislators became preoccupied with the ‘quackery question’ (Kurpfuscherfrage): the problem of how to distinguish legitimate healing from dangerous deception. Their anxiety registered a mounting mistrust of medical authority. Drawing on Prussian ministerial and Foreign Office archives, this article reconstructs a struggle over medical trust in Imperial Germany. Academic physicians held the credentials and the prestige of science, yet patients repeatedly placed their confidence elsewhere. Patient testimonials and direct petitions reveal working people and the educated middle classes alike deciding for themselves whom to trust. Meanwhile, transnational patent-medicine networks and itinerant practitioners operating across colonial medical regimes made credentials increasingly difficult to verify. Quacks flourished in conditions the period itself had created: a marketplace the state had opened but could not police, and a traffic in healers and remedies that crossed borders faster than any authority could check them. Their persistence marked the limits of expertise in a modern, mobile society.",
+  "url": "https://doi.org/10.1093/pastj/gtag032",
+  "oa_url": "https://doi.org/10.1093/pastj/gtag032",
+  "oa": true,
+  "published": "2026-09-25",
+  "added": "2026-11-05",
+  "journal": "Past & Present",
+  "bereich": "fach",
+  "prioritaet": "hoch",
+  "thema": "Globalgeschichte",
+  "hinweis": "",
+  "seiten": null,
+  "sprache": "en",
+  "rez_grund": "",
+  "rezension": false,
+  "buch": "",
+  "buchtitel": "",
+  "kategorie": "Globalgeschichte",
+  "band": "",
+  "heft": "",
+  "seite": "",
+  "hervorheben": false,
+  "themen": [
+   "Globalgeschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex"
  },
  {
   "id": "10.1017/s1740022826100655",
@@ -16751,74 +16821,6 @@
    "Tiergeschichte",
    "Umweltgeschichte"
   ],
-  "treffer": [],
-  "quelle": "openalex"
- },
- {
-  "id": "10.1080/09555803.2026.2664457",
-  "doi": "10.1080/09555803.2026.2664457",
-  "title": "Who declares the early modern transition in Japan? Language and subject in a historiographical literature",
-  "authors": [
-   "Eiji Okawa"
-  ],
-  "abstract": "The story of Japan’s early modern transition is well known. “Separation of the warriors and peasants” (heinō bunri) is one of the handful of cardinal propositions that lay at the heart of the narrative. Canonised in post-war Japan, these sayings contrive a break in chronology and establish the medieval and the early modern as separate domains of discourse and research activity. Yet we do not see this form of expression in the sources from the time. Who utters these, and why do they hold sway? This study offers a critique of the regime of knowing underlying these sayings by foregrounding the status of the narrator and the transformative or creative capacity of language. Drawing on selective works on early modern Japan as well as on the transition from the medieval to the early modern, it examines not so much the findings they posit but the way in which the past is framed. The thesis is that the narrator, produced in language, controls the past, takes over historical subjects, and binds time and literary outputs with a linear epistemology by way of a modern speech act. This effect derives from the enactment of the generic modern self that the standard discursive form seems to trigger. To relativise this effect, I offer an alternative by considering how we may use historical sources differently and rethink the idea of change.",
-  "url": "https://doi.org/10.1080/09555803.2026.2664457",
-  "oa_url": "",
-  "oa": false,
-  "published": "2026-05-05",
-  "added": "2026-10-31",
-  "journal": "Japan Forum",
-  "bereich": "japan",
-  "prioritaet": "hoch",
-  "thema": "Japan",
-  "hinweis": "",
-  "seiten": 20,
-  "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
-  "kategorie": "Japanische Geschichte",
-  "band": "",
-  "heft": "",
-  "seite": "1",
-  "hervorheben": false,
-  "themen": [
-   "Theorie"
-  ],
-  "treffer": [],
-  "quelle": "openalex"
- },
- {
-  "id": "10.1093/ahr/rhag100",
-  "doi": "10.1093/ahr/rhag100",
-  "title": "Revolutionary ObjectsIntroducing the “’76 Objects” Special Issue of the AHR",
-  "authors": [
-   "Sarah Jones Weicksel"
-  ],
-  "abstract": "It was 1861. Eighty-five years after thirteen North American British colonies declared their independence from Britain and seventy-two since the Constitution of the United States became law, a document written with the intent of forming “a more perfect Union.” But that union had proven an uneasy one from the start, marked by competing interests and unsatisfactory compromises. Now, intense, long fights over slavery, expansion, and sectionalism had led to secession, open rebellion, and civil war. Both sides of this bloody conflict invoked the Spirit of 1776 in their rhetoric; some in justification of secession, others in support of preserving the union. Northerners rejoiced “always to hear that our friends are patriotic—how the blood of ‘76 still courses through their veins.”1 Meanwhile, Georgia’s governor asserted that women sewing uniforms for Confederate soldiers proved that daughters of the revolutionary generation “have abated nothing of their patriotism and their devotion to the cause of freedom.”2 But it was not only the words and actions of Americans that offered evidence of a shared national culture rooted in the memory of the revolutionary experience. They also expressed it through the material world. George Washington’s likeness appeared both at the center of a Union cockade of red, white, and blue ribbons and on an 1862 Confederate seal made to commemorate the inauguration of Jefferson Davis as president of the Confederate states.3",
-  "url": "https://doi.org/10.1093/ahr/rhag100",
-  "oa_url": "",
-  "oa": false,
-  "published": "2026-05-05",
-  "added": "2026-10-31",
-  "journal": "American Historical Review",
-  "bereich": "fach",
-  "prioritaet": "hoch",
-  "thema": "Globalgeschichte",
-  "hinweis": "setzt oft die Richtung für das Feld",
-  "seiten": 7,
-  "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
-  "kategorie": "Globalgeschichte",
-  "band": "131",
-  "heft": "2",
-  "seite": "546",
-  "hervorheben": true,
-  "themen": [],
   "treffer": [],
   "quelle": "openalex"
  }
