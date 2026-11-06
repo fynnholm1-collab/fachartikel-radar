@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-05T03:53+00:00",
+ "stand": "2026-11-06T03:50+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -8,24 +8,24 @@
  ],
  "rezensionen_nach_grund": {
   "Titel mit Autor": 20,
-  "keine": 208,
+  "keine": 206,
   "kurz ohne Abstract": 202,
   "Buch im Katalog": 2,
   "Titelmuster": 13
  },
  "posteingang_monate": 6,
- "artikel": 445,
- "backlog": 3307,
- "neu_heute": 2,
+ "artikel": 443,
+ "backlog": 3309,
+ "neu_heute": 0,
  "verworfen": {
-  "Filter 'japan' nicht erfüllt": 134,
+  "Filter 'japan' nicht erfüllt": 136,
   "kein Open Access (kein Uni-Zugang)": 79,
   "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 12,
-  "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 55,
+  "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 56,
   "vor der Edo-Zeit ohne zusätzliches Thema": 1,
   "Sprache ar": 1,
-  "Sprache pt": 1,
-  "Sprache tr": 1,
+  "Sprache pt": 2,
+  "Sprache tr": 2,
   "Sprache kk": 1,
   "Sprache cy": 1
  },
@@ -107,8 +107,8 @@
   "Journal of Global History": "14 über OpenAlex",
   "Journal of World History": "0 über OpenAlex",
   "History and Theory": "0 über OpenAlex",
-  "Past & Present": "4 über OpenAlex",
-  "Rethinking History": "9 über OpenAlex",
+  "Past & Present": "3 über OpenAlex",
+  "Rethinking History": "8 über OpenAlex",
   "Journal of Digital History": "0 über OpenAlex",
   "Current Research in Digital History": "0 über OpenAlex",
   "Comparative Studies in Society and History": "13 über OpenAlex",
@@ -131,7 +131,7 @@
   "Journal of Asian History": "0 über OpenAlex",
   "Late Imperial China": "0 über OpenAlex",
   "Oriens Extremus": "0 über OpenAlex",
-  "Modern Asian Studies": "2 über OpenAlex",
+  "Modern Asian Studies": "3 über OpenAlex",
   "International Journal of Asian Studies": "9 über OpenAlex",
   "Positions: Asia Critique": "0 über OpenAlex",
   "History of Religions": "0 über OpenAlex",
@@ -140,9 +140,9 @@
   "Journal of Korean Studies": "16 über Crossref (OpenAlex leer)",
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "9 über OpenAlex",
-  "Themensuche multispecies": "6 über OpenAlex",
-  "Themensuche \"teaching history\" university": "5 über OpenAlex",
-  "Themensuche \"history education\" \"higher education\"": "Fehler: HTTP 429"
+  "Themensuche multispecies": "7 über OpenAlex",
+  "Themensuche \"teaching history\" university": "7 über OpenAlex",
+  "Themensuche \"history education\" \"higher education\"": "1 über OpenAlex"
  },
  "katalog": {
   "sru_url": "https://sru.k10plus.de/opac-de-627",
