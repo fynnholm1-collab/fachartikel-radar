@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-08T03:49+00:00",
+ "stand": "2026-11-09T03:53+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -16,7 +16,7 @@
  "posteingang_monate": 6,
  "artikel": 446,
  "backlog": 3312,
- "neu_heute": 2,
+ "neu_heute": 0,
  "verworfen": {
   "Filter 'japan' nicht erfüllt": 148,
   "kein Open Access (kein Uni-Zugang)": 79,
@@ -117,7 +117,7 @@
   "Historische Zeitschrift": "75 über OpenAlex",
   "Journal of the Philosophy of History": "0 über OpenAlex",
   "Public History Weekly": "0 über OpenAlex",
-  "Arts and Humanities in Higher Education": "4 über OpenAlex",
+  "Arts and Humanities in Higher Education": "3 über OpenAlex",
   "Global Environment": "5 über OpenAlex",
   "Journal for the History of Environment and Society": "0 über OpenAlex",
   "Environmental Humanities": "0 über OpenAlex",
@@ -141,9 +141,9 @@
   "Journal of Korean Studies": "16 über Crossref (OpenAlex leer)",
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "17 über OpenAlex",
-  "Themensuche multispecies": "11 über OpenAlex",
-  "Themensuche \"teaching history\" university": "7 über OpenAlex",
-  "Themensuche \"history education\" \"higher education\"": "3 über OpenAlex"
+  "Themensuche multispecies": "9 über OpenAlex",
+  "Themensuche \"teaching history\" university": "9 über OpenAlex",
+  "Themensuche \"history education\" \"higher education\"": "4 über OpenAlex"
  },
  "katalog": {
   "sru_url": "https://sru.k10plus.de/opac-de-627",
