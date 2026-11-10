@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-09T03:53+00:00",
+ "stand": "2026-11-10T03:50+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -18,17 +18,17 @@
  "backlog": 3312,
  "neu_heute": 0,
  "verworfen": {
-  "Filter 'japan' nicht erfüllt": 148,
+  "Filter 'japan' nicht erfüllt": 149,
   "kein Open Access (kein Uni-Zugang)": 79,
-  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 12,
+  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 13,
   "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 64,
   "vor der Edo-Zeit ohne zusätzliches Thema": 1,
   "Sprache ar": 1,
   "Sprache sl": 1,
   "Sprache pt": 2,
-  "Sprache tr": 2,
   "Sprache kk": 1,
-  "Sprache cy": 1
+  "Sprache cy": 1,
+  "Sprache tr": 1
  },
  "reihenfolge": [
   "Monumenta Nipponica",
@@ -102,7 +102,7 @@
   "Journal of Asian Studies": "47 über OpenAlex",
   "Review of Japanese Culture and Society": "0 über OpenAlex",
   "Asiatische Studien": "0 über OpenAlex",
-  "American Historical Review": "3 über OpenAlex",
+  "American Historical Review": "2 über OpenAlex",
   "Environmental History": "18 über OpenAlex",
   "Environment and History": "22 über OpenAlex",
   "Journal of Global History": "14 über OpenAlex",
@@ -142,7 +142,7 @@
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "17 über OpenAlex",
   "Themensuche multispecies": "9 über OpenAlex",
-  "Themensuche \"teaching history\" university": "9 über OpenAlex",
+  "Themensuche \"teaching history\" university": "10 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "4 über OpenAlex"
  },
  "katalog": {
