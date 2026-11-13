@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-12T03:52+00:00",
+ "stand": "2026-11-13T03:51+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -8,15 +8,15 @@
  ],
  "rezensionen_nach_grund": {
   "Titel mit Autor": 20,
-  "keine": 210,
+  "keine": 209,
   "kurz ohne Abstract": 202,
   "Buch im Katalog": 2,
   "Titelmuster": 13
  },
  "posteingang_monate": 6,
- "artikel": 447,
- "backlog": 3315,
- "neu_heute": 0,
+ "artikel": 446,
+ "backlog": 3318,
+ "neu_heute": 2,
  "verworfen": {
   "Filter 'japan' nicht erfüllt": 156,
   "kein Open Access (kein Uni-Zugang)": 79,
@@ -24,7 +24,6 @@
   "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 62,
   "vor der Edo-Zeit ohne zusätzliches Thema": 1,
   "Sprache ar": 1,
-  "Sprache sl": 1,
   "Sprache pt": 2,
   "Sprache kk": 1,
   "Sprache cy": 1,
@@ -97,7 +96,7 @@
   "Journal of Japanese Studies": "0 über OpenAlex",
   "Harvard Journal of Asiatic Studies": "0 über OpenAlex",
   "Japan Forum": "11 über OpenAlex",
-  "Japanese Studies": "8 über OpenAlex",
+  "Japanese Studies": "7 über OpenAlex",
   "Japanese Journal of Religious Studies": "0 über OpenAlex",
   "Journal of Asian Studies": "47 über OpenAlex",
   "Review of Japanese Culture and Society": "0 über OpenAlex",
@@ -107,7 +106,7 @@
   "Environment and History": "21 über OpenAlex",
   "Journal of Global History": "14 über OpenAlex",
   "Journal of World History": "0 über OpenAlex",
-  "History and Theory": "0 über OpenAlex",
+  "History and Theory": "2 über Crossref (OpenAlex leer)",
   "Past & Present": "2 über OpenAlex",
   "Rethinking History": "12 über OpenAlex",
   "Journal of Digital History": "0 über OpenAlex",
@@ -142,7 +141,7 @@
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "18 über OpenAlex",
   "Themensuche multispecies": "10 über OpenAlex",
-  "Themensuche \"teaching history\" university": "11 über OpenAlex",
+  "Themensuche \"teaching history\" university": "10 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "4 über OpenAlex"
  },
  "katalog": {
