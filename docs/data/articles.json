@@ -790,15 +790,92 @@
   }
  },
  {
+  "id": "10.1080/13642529.2026.2758006",
+  "doi": "10.1080/13642529.2026.2758006",
+  "title": "Winning Freedom! : Race, Education, and Reception in historical video games",
+  "authors": [
+   "Claudia Jones"
+  ],
+  "abstract": "While current research within the Black Humanities typically examines literature, cinema and art, historical video games offer a unique method of examining historic events through digital storytelling and immersive narratives. Despite this, there is a noticeable lack of consideration towards Black historical narratives in gamified settings. If historical video games are shaping the collective memories of the world’s history, why are Black historical narratives continuously marginalized in the industry? Is there educational value for players to time travel to painful events in history? I argue that historical video games act as counter archives representing collective memories. By omitting Black historical narratives, historical video games parallel the marginalization of Black history in traditional archives. However, I also argue that designing violent historical events, such as enslavement, in a video game merits additional user and cultural research to ensure that these digital spaces function as genuine counter archives rather than trivializing the histories of Black Americans in the pursuit of an immersive experience. This journal article consists of a critical examination and autoethnographic study of Freedom! (MECC). This particular title, centered within the educational gaming industry of the 1990s, offers a nuanced perspective on how to conceptualize history within gamified spaces and questions the ethics of gamifying enslavement and the Transatlantic Slave Trade.",
+  "url": "https://doi.org/10.1080/13642529.2026.2758006",
+  "oa_url": "https://doi.org/10.1080/13642529.2026.2758006",
+  "oa": true,
+  "published": "2026-11-13",
+  "added": "2026-11-15",
+  "journal": "Rethinking History",
+  "bereich": "fach",
+  "prioritaet": "hoch",
+  "thema": "Theorie und Lehre",
+  "hinweis": "",
+  "seiten": 27,
+  "sprache": "en",
+  "rez_grund": "",
+  "rezension": false,
+  "buch": "",
+  "buchtitel": "",
+  "kategorie": "Theorie und Lehre",
+  "band": "",
+  "heft": "",
+  "seite": "1",
+  "hervorheben": false,
+  "themen": [
+   "Digitale Geschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex"
+ },
+ {
+  "id": "10.1086/744099",
+  "doi": "10.1086/744099",
+  "title": "Two Decades of Nature Deficit Disorder: Environmental History and Richard Louv’s Last Child in the Woods",
+  "authors": [
+   "Phoebe S.K. Young"
+  ],
+  "abstract": "",
+  "url": "https://doi.org/10.1086/744099",
+  "oa_url": "",
+  "oa": false,
+  "published": "2026-11-13",
+  "added": "2026-11-15",
+  "journal": "Environmental History",
+  "bereich": "fach",
+  "prioritaet": "hoch",
+  "thema": "Umwelt- und Tiergeschichte",
+  "hinweis": "Volltext über ASEH-Mitgliedschaft",
+  "seiten": 1,
+  "sprache": "en",
+  "rez_grund": "kurz ohne Abstract",
+  "rezension": true,
+  "buch": "two decades of nature deficit disorder",
+  "buchtitel": "Two Decades of Nature Deficit Disorder: Environmental History and Richard Louvs Last",
+  "kategorie": "Umwelt- und Tiergeschichte",
+  "band": "",
+  "heft": "",
+  "seite": "000",
+  "hervorheben": false,
+  "themen": [
+   "Umweltgeschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex",
+  "katalog": {
+   "isbn": "",
+   "suche": "Two Decades of Nature Deficit Disorder: Environmental History and Richard Louvs Last",
+   "buchtitel": "Two Decades of Nature Deficit Disorder: Environmental History and Richard Louvs Last",
+   "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=Two+Decades+of+Nature+Deficit+Disorder%3A+Environmental+History+and+Richard+Louvs+Last&type=allfields",
+   "status": "wahrscheinlich"
+  }
+ },
+ {
   "id": "10.1080/13642529.2026.2758990",
   "doi": "10.1080/13642529.2026.2758990",
   "title": "‘The true lawgiver ought to have a heart full of sensibility … and to fear himself’: agency, complicity, and the remediation of Revolutionary despair in We. The Revolution (2019)",
   "authors": [
    "Jack Orchard"
   ],
-  "abstract": "",
+  "abstract": "This article focuses on We. The Revolution [WTR] (Polyslash, 2019). This game, which simulates the experiences of a judge from the outbreak of the French Revolution (1789) through to the Coup of 18 Brumaire (1799), presents a deeply nihilistic, conservative take on the French Revolution. This article argues that WTR provides a reading of the Revolution which deploys an affective framework which has informed conservative readings of the event from the eighteenth century onwards, but utilises the unique capabilities of the medium of video games. After introducing WTR, I offer a brief outline of the sub-genre of survival games to which it belongs, morally framed simulations such as Papers Please (Lucas Pope, 2013), Frostpunk (11bit, 2018) or This War of Mine (11bit, 2014). These games deploy temporally constituted moral frameworks to which the player is forced to adapt, providing a unique opportunity for practicing ‘historical empathy’. This article will close with close readings of several key texts in the cultural legacy of the French Revolution. To play WTR, I ultimately argue, is to experience on a viscerally affective level, the loss of self which conservative responses to the events of 1789–1799 conveyed in their own media forms.",
   "url": "https://doi.org/10.1080/13642529.2026.2758990",
-  "oa_url": "https://doi.org/10.1080/13642529.2026.2758990",
+  "oa_url": "https://www.tandfonline.com/doi/pdf/10.1080/13642529.2026.2758990?needAccess=true",
   "oa": true,
   "published": "2026-11-12",
   "added": "2026-11-14",
