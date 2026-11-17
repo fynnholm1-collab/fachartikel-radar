@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-16T04:08+00:00",
+ "stand": "2026-11-17T03:52+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -18,7 +18,7 @@
  "backlog": 3318,
  "neu_heute": 0,
  "verworfen": {
-  "Filter 'japan' nicht erfüllt": 156,
+  "Filter 'japan' nicht erfüllt": 157,
   "kein Open Access (kein Uni-Zugang)": 79,
   "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 11,
   "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 54,
@@ -139,7 +139,7 @@
   "East Asian Science, Technology and Society": "2 über OpenAlex",
   "Journal of Korean Studies": "16 über Crossref (OpenAlex leer)",
   "Themensuche \"animal history\"": "0 über OpenAlex",
-  "Themensuche \"more-than-human\"": "17 über OpenAlex",
+  "Themensuche \"more-than-human\"": "18 über OpenAlex",
   "Themensuche multispecies": "10 über OpenAlex",
   "Themensuche \"teaching history\" university": "11 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "5 über OpenAlex"
