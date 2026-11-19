@@ -790,13 +790,90 @@
   }
  },
  {
+  "id": "10.1080/09555803.2026.2762018",
+  "doi": "10.1080/09555803.2026.2762018",
+  "title": "Literary and Artistic Japan behind the Iron Curtain",
+  "authors": [
+   "Nadine Willems"
+  ],
+  "abstract": "Today, the dynamism of Japanese culture captivates audiences across borders, as attested by the global success of literary translations and reputation of Japanese art and design. Well into the post...",
+  "url": "https://doi.org/10.1080/09555803.2026.2762018",
+  "oa_url": "",
+  "oa": false,
+  "published": "2026-11-17",
+  "added": "2026-11-19",
+  "journal": "Japan Forum",
+  "bereich": "japan",
+  "prioritaet": "hoch",
+  "thema": "Japan",
+  "hinweis": "",
+  "seiten": 3,
+  "sprache": "en",
+  "rez_grund": "",
+  "rezension": false,
+  "buch": "",
+  "buchtitel": "",
+  "kategorie": "Japan allgemein",
+  "band": "",
+  "heft": "",
+  "seite": "1",
+  "hervorheben": false,
+  "themen": [
+   "Globalgeschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex"
+ },
+ {
+  "id": "10.1086/743924",
+  "doi": "10.1086/743924",
+  "title": "Death of the Ahuehuetes: Ecology, Society, and Governance in the Chapultepec Forest of Mexico City",
+  "authors": [
+   "Eugenio Fernandez-Vazquez"
+  ],
+  "abstract": "",
+  "url": "https://doi.org/10.1086/743924",
+  "oa_url": "",
+  "oa": false,
+  "published": "2026-11-17",
+  "added": "2026-11-19",
+  "journal": "Environmental History",
+  "bereich": "fach",
+  "prioritaet": "hoch",
+  "thema": "Umwelt- und Tiergeschichte",
+  "hinweis": "Volltext über ASEH-Mitgliedschaft",
+  "seiten": 1,
+  "sprache": "en",
+  "rez_grund": "kurz ohne Abstract",
+  "rezension": true,
+  "buch": "death of the ahuehuetes",
+  "buchtitel": "Death of the Ahuehuetes: Ecology, Society, and Governance in the Chapultepec Forest",
+  "kategorie": "Umwelt- und Tiergeschichte",
+  "band": "",
+  "heft": "",
+  "seite": "000",
+  "hervorheben": false,
+  "themen": [
+   "Umweltgeschichte"
+  ],
+  "treffer": [],
+  "quelle": "openalex",
+  "katalog": {
+   "isbn": "",
+   "suche": "Death of the Ahuehuetes: Ecology, Society, and Governance in the Chapultepec Forest",
+   "buchtitel": "Death of the Ahuehuetes: Ecology, Society, and Governance in the Chapultepec Forest",
+   "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=Death+of+the+Ahuehuetes%3A+Ecology%2C+Society%2C+and+Governance+in+the+Chapultepec+Forest&type=allfields",
+   "status": "unsicher"
+  }
+ },
+ {
   "id": "10.1080/09555803.2026.2759654",
   "doi": "10.1080/09555803.2026.2759654",
   "title": "Language of division: analyzing the semantics of ‘anti-Japanese’ and ‘treason’ in the rhetoric of the Japanese far right",
   "authors": [
    "Fabian Schäfer"
   ],
-  "abstract": "",
+  "abstract": "This paper investigates the strategic deployment of the exclusionary labels ‘anti-Japanese’ (反日, han’nichi) and ‘treason’ (売国, baikoku; 国賊, kokuzoku) in contemporary Japanese political discourse. Combining Critical Discourse Analysis with large-scale corpus linguistics, I examine parliamentary debates and Twitter across two periods (2012–2014; 2020–2022). This design goes beyond conventional close reading by quantifying diachronic shifts, domain-specific dispersion, and collocational neighborhoods, while grounding interpretation in concordance-based qualitative analysis. Findings show that han’nichi is predominantly tied to far-right discourse and has shifted from designating external adversaries (China, South Korea) to stigmatizing domestic opponents, especially liberal-left politicians and journalists. By contrast, baikoku/kokuzoku appear across the ideological spectrum but are used almost exclusively for internal targets, often to frame rivals as violating ‘national interest.’ Together, the results demonstrate that the terms are not semantically interchangeable; rather, they structure an exclusionary ‘language of division’ in different ways that normalizes nativist frames and intensifies polarization across online and offline arenas.",
   "url": "https://doi.org/10.1080/09555803.2026.2759654",
   "oa_url": "",
   "oa": false,
@@ -813,7 +890,7 @@
   "rezension": false,
   "buch": "",
   "buchtitel": "",
-  "kategorie": "Japan allgemein",
+  "kategorie": "Japanische Geschichte",
   "band": "",
   "heft": "",
   "seite": "1",
@@ -856,14 +933,14 @@
   ],
   "treffer": [],
   "quelle": "openalex",
-  "katalog_buch": true,
   "katalog": {
    "isbn": "",
    "suche": "Theorizing Post-Disaster Literature in Japan: Revisiting the Literary and Cultural Landscape After",
    "buchtitel": "Theorizing Post-Disaster Literature in Japan: Revisiting the Literary and Cultural Landscape After",
    "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=Theorizing+Post-Disaster+Literature+in+Japan%3A+Revisiting+the+Literary+and+Cultural+Landscape+After&type=allfields",
    "status": "wahrscheinlich"
-  }
+  },
+  "katalog_buch": true
  },
  {
   "id": "10.1080/13642529.2026.2758006",
@@ -1381,8 +1458,8 @@
   ],
   "abstract": "Abstract This article reexamines the 1872 Edict of the Abolition of the Shugen-shū ( shugen-shū haishi rei 修験宗廃止令) within the broader context of early Meiji religious policy. Scholarship has often interpreted the measure as a direct consequence of the Separation of Kami and Buddhas ( shinbutsu bunri ) and anti-Buddhist policies. Drawing on governmental communications, an internal directive issued by Shōgoin temple, and materials from the Dajō ruiten ( Grand council of state collected records ), this article instead examines the administrative debates and classification problems that preceded the edict. It argues that the measure was not primarily intended to suppress Shugendō practices, but formed part of broader efforts to reorganize religious institutions while resolving the ambiguous administrative status of Shugendō. This perspective complicates narratives that portray Shugendō as having simply been eradicated during the Meiji period and demonstrates how processes of administrative classification shaped the reorganization of religious traditions in modern Japan.",
   "url": "https://doi.org/10.1163/22118349-01502007",
-  "oa_url": "",
-  "oa": false,
+  "oa_url": "https://doi.org/10.1163/22118349-01502007",
+  "oa": true,
   "published": "2026-11-02",
   "added": "2026-11-07",
   "journal": "Journal of Religion in Japan",
@@ -2116,6 +2193,41 @@
   "treffer": [
    "japan*"
   ],
+  "quelle": "openalex"
+ },
+ {
+  "id": "10.3828/whpeh.63913571963678",
+  "doi": "10.3828/whpeh.63913571963678",
+  "title": "The Contribution of Environmental History to Understanding Fires in Landscapes: Exploring Analogies between Case Studies in South Africa and Portugal",
+  "authors": [
+   "Simon Pooley"
+  ],
+  "abstract": "ABSTRACT This article offers comparative environmental histories of wildfires in Portugal and South Africa from c .1860 to the 2010s, using a framework derived from Elinor Ostrom’s work on managing communal environmental systems and an emerging integrated approach to wildfire management. In doing so, it sets out ideas for writing more systematic comparative historical analyses of wildfires while also using the case studies to show how historical analysis enriches case study approaches usually focused on natural and social science data and perspectives. It considers the particular versus the general, investigating whether historical analyses of fire use, management and occurrence can generate more holistic apprehensions of wildfire scenarios.",
+  "url": "https://doi.org/10.3828/whpeh.63913571963678",
+  "oa_url": "https://eprints.bbk.ac.uk/id/eprint/56897/3/56897.pdf",
+  "oa": true,
+  "published": "2026-10-08",
+  "added": "2026-11-19",
+  "journal": "Environment and History",
+  "bereich": "fach",
+  "prioritaet": "hoch",
+  "thema": "Umwelt- und Tiergeschichte",
+  "hinweis": "kein Uni-Zugang; nur Open Access",
+  "seiten": 29,
+  "sprache": "en",
+  "rez_grund": "",
+  "rezension": false,
+  "buch": "",
+  "buchtitel": "",
+  "kategorie": "Umwelt- und Tiergeschichte",
+  "band": "32",
+  "heft": "4",
+  "seite": "561",
+  "hervorheben": false,
+  "themen": [
+   "Umweltgeschichte"
+  ],
+  "treffer": [],
   "quelle": "openalex"
  },
  {
@@ -16952,75 +17064,5 @@
    "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=Architectural+Drawing+of+the+Rotunda&type=allfields",
    "status": "wahrscheinlich"
   }
- },
- {
-  "id": "10.1086/741355",
-  "doi": "10.1086/741355",
-  "title": "Machines Writing Histories Using Insect Algorithms: Toward an Age of Environmental Historiography for Artificial Intelligence",
-  "authors": [
-   "Marnie Hughes‐Warrington"
-  ],
-  "abstract": "Insect-inspired algorithms have broad appeal in artificial intelligence (AI). They power the labeling, selection, and grouping of data from the past, including the human past. Insect-inspired AI is therefore of interest to historians and, in particular, environmental historians. On an almost separate track, global environmental histories have highlighted the shaping role of capital in driving extractive activities. AI as capital, though, is not the only lens available for seeing artificial insects. Work on green AI, as well as responsible AI more broadly, suggests that another future for the entangled management of data from the past is possible. At present, however, these approaches are largely separate, and they do not accommodate experiences beyond the Global North. In contrast, First Nations’ ontologies provide potential approaches to a nourishing AI in which the social and environmental impacts of algorithms and associated hardware, software and labor systems are considered together, dynamically.",
-  "url": "https://doi.org/10.1086/741355",
-  "oa_url": "",
-  "oa": false,
-  "published": "2026-05-19",
-  "added": "2026-10-31",
-  "journal": "Environmental History",
-  "bereich": "fach",
-  "prioritaet": "hoch",
-  "thema": "Umwelt- und Tiergeschichte",
-  "hinweis": "Volltext über ASEH-Mitgliedschaft",
-  "seiten": 19,
-  "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
-  "kategorie": "Umwelt- und Tiergeschichte",
-  "band": "31",
-  "heft": "3",
-  "seite": "552",
-  "hervorheben": false,
-  "themen": [
-   "Umweltgeschichte",
-   "Globalgeschichte",
-   "Theorie"
-  ],
-  "treffer": [],
-  "quelle": "openalex"
- },
- {
-  "id": "10.1080/09555803.2026.2671062",
-  "doi": "10.1080/09555803.2026.2671062",
-  "title": "Visa status and crime patterns among foreign residents in Japan: quantitative correlation and qualitative insights from Vietnamese migrants",
-  "authors": [
-   "Hoang Thanh Danh Nguyen"
-  ],
-  "abstract": "As the migrant population has grown, the relationship between immigration and crime has become a prominent topic in recent political debates in Japan. Yet despite abundant media and government reports, the issue has received little systematic academic analysis. I examine how visa status shapes patterns of criminal involvement among foreign residents and evaluate the relevance of migration regime theory in the context of Japan’s tightly regulated immigration system. Using data from the National Police Agency (NPA) and the Immigration Services Agency (ISA), I calculate suspect rates and offence composition across major visa categories. Fourteen interviews with Vietnamese migrants who had past encounters with law enforcement provide micro-level insights into offenders’ socio-economic backgrounds and lived experiences. The findings reveal a significant correlation between visa design and crime patterns. Visa statuses that provide stable employment opportunities and long-term migration benefits tend to deter criminal involvement, while restrictive statuses are more strongly associated with immigration-related violations. However, the relationship is not linear: visa leniency does not necessarily protect migrants from financial hardship or social marginalisation. Beyond institutional design, migrants’ limited knowledge of Japanese law and their perceptions of criminality also influence patterns of offending.",
-  "url": "https://doi.org/10.1080/09555803.2026.2671062",
-  "oa_url": "",
-  "oa": false,
-  "published": "2026-05-19",
-  "added": "2026-10-31",
-  "journal": "Japan Forum",
-  "bereich": "japan",
-  "prioritaet": "hoch",
-  "thema": "Japan",
-  "hinweis": "",
-  "seiten": 27,
-  "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
-  "kategorie": "Japanische Geschichte",
-  "band": "",
-  "heft": "",
-  "seite": "1",
-  "hervorheben": false,
-  "themen": [],
-  "treffer": [],
-  "quelle": "openalex"
  }
 ]
