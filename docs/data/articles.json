@@ -796,9 +796,9 @@
   "authors": [
    "Raji C Steineck"
   ],
-  "abstract": "",
+  "abstract": "The second volume of Ernst Cassirer’s Philosophy of Symbolic Forms establishes the idea that myth is a cultural domain of its own that comes with a particular way of object formation and a specific type of validity. However, Cassirer’s work is strongly informed by the colonialist cultural anthropology of the late 19th and early 20th century. As a consequence, Cassirer depicts myth as a primitive mode of thought that becomes obsolete in higher stages of cultural evolution, although the threat of regression remains. Imperial Japanese mythology, first documented in the Kojiki and Nihonshoki of the early 8th century, provides an opportunity for a more nuanced assessment: its myths were consciously crafted, and their plots create a well-differentiated world-view while exposing some features characteristic of mythological object formation. The example of their eponymous hero Yamato Takeru shows how the imperial myths create a sense of purpose and structure the world according to a framework that provides directions for actions, while at the same time limiting the choice of roles and self-understandings. Because such myths impart significance to contingent aspects of reality and suggest ways to move forward, the enlightenment strategy of ‘debunking’ myths by contrasting them with facts is bound to fail. Appreciating the particular validity inherent to the symbolic form of myth suggests an alternative strategy, namely that of confronting oppressive myths with alternative, …",
   "url": "https://doi.org/10.1080/09555803.2026.2755387",
-  "oa_url": "https://doi.org/10.1080/09555803.2026.2755387",
+  "oa_url": "https://www.tandfonline.com/doi/pdf/10.1080/09555803.2026.2755387?needAccess=true",
   "oa": true,
   "published": "2026-11-19",
   "added": "2026-11-21",
@@ -813,7 +813,7 @@
   "rezension": false,
   "buch": "",
   "buchtitel": "",
-  "kategorie": "Japan allgemein",
+  "kategorie": "Japanische Geschichte",
   "band": "",
   "heft": "",
   "seite": "1",
@@ -829,7 +829,7 @@
   "authors": [
    "Thomas G. Altura"
   ],
-  "abstract": "",
+  "abstract": "Japan launched a wave of corporate governance reforms in the mid-2010s initially aimed at promoting shareholder primacy. However, the reform agenda quickly evolved to also encompass new rules and expectations regarding corporate environmental and social practices, reflecting heightened global discourse on sustainability. While the compatibility of shareholder primacy and sustainability has long been contested, Japan’s dual-pronged policy package assumed these objectives were mutually reinforcing. This study examines corporate behavior through this reform process to determine whether the two policy objectives contradicted or cohered with each other in practice. The analysis focuses on the emergence and diffusion in Japan of sustainability-oriented debt issuances, such as ‘green bonds’, and the corporation-level drivers of adoption. The results show that green bond adoption was concentrated among corporations with a weaker shareholder orientation: traditional governance practices predict adoption, while internationalization and shareholder activism are inversely associated with adoption. In other words, domestically focused corporations adhering to Japan’s traditional stakeholder governance practices, and experiencing less market pressure, are more likely to adopt this imported financial innovation. These findings thus reveal a contradiction in Japan’s simultaneous push for shareholder primacy and sustainable corporate practices.",
   "url": "https://doi.org/10.1080/09555803.2026.2759653",
   "oa_url": "",
   "oa": false,
@@ -851,7 +851,10 @@
   "heft": "",
   "seite": "1",
   "hervorheben": false,
-  "themen": [],
+  "themen": [
+   "Umweltgeschichte",
+   "Globalgeschichte"
+  ],
   "treffer": [],
   "quelle": "openalex"
  },
@@ -1772,10 +1775,10 @@
   "authors": [
    "Chloe Pare-Anastasiadou"
   ],
-  "abstract": "Abstract This article examines how the materiality within art workshops fosters spaces for self-mapping, collective storytelling, and speculative futures. This is demonstrated through the autoethnographic narration of fantastic fields, a four-meeting workshop the author designed and cofacilitated as part of the Immigration Museum’s Tokyo Education Program at Ougi Junior High School in January 2024. Each participant received a kit of laser-cut paper objects inspired by igneous, sedimentary, and metamorphic rocks. Over four sessions, the objects were transformed to explore the concepts of self, environmental entanglements, and futurisms, concluding in a collective atlas. The project goal was to create imaginary landscapes and, in so doing, to facilitate interaction, creativity, and a sense of empowerment among participants. Grounded in Karen Barad’s agential realism, the article demonstrates how posthuman feminist theories are integrated and communicated in visual and tactile design choices during this workshop. This article demonstrates how materiality communicates complex theories with and beyond words, providing a methodological model for applied environmental humanities and cross-cultural and intergenerational pedagogies.",
+  "abstract": "This article examines how the materiality within art workshops fosters spaces for self-mapping, collective storytelling, and speculative futures. This is demonstrated through the autoethnographic narration of fantastic fields, a four-meeting workshop the author designed and cofacilitated as part of the Immigration Museum’s Tokyo Education Program at Ougi Junior High School in January 2024. Each participant received a kit of laser-cut paper objects inspired by igneous, sedimentary, and metamorphic rocks. Over four sessions, the objects were transformed to explore the concepts of self, environmental entanglements, and futurisms, concluding in a collective atlas. The project goal was to create imaginary landscapes and, in so doing, to facilitate interaction, creativity, and a sense of empowerment among participants. Grounded in Karen Barad’s agential realism, the article demonstrates how posthuman feminist theories are integrated and communicated in visual and tactile design choices during this workshop. This article demonstrates how materiality communicates complex theories with and beyond words, providing a methodological model for applied environmental humanities and cross-cultural and intergenerational pedagogies.",
   "url": "https://doi.org/10.1215/22011919-12609699",
-  "oa_url": "",
-  "oa": false,
+  "oa_url": "https://doi.org/10.1215/22011919-12609699",
+  "oa": true,
   "published": "2026-11-01",
   "added": "2026-11-21",
   "journal": "Environmental Humanities",
@@ -1784,7 +1787,7 @@
   "thema": "Umwelt- und Tiergeschichte",
   "hinweis": "",
   "seiten": 13,
-  "sprache": "",
+  "sprache": "en",
   "rez_grund": "",
   "rezension": false,
   "buch": "",
@@ -1802,7 +1805,7 @@
   "treffer": [
    "tokyo"
   ],
-  "quelle": "crossref"
+  "quelle": "openalex"
  },
  {
   "id": "10.1080/10371397.2026.2751946",
@@ -17172,39 +17175,5 @@
   ],
   "treffer": [],
   "quelle": "openalex"
- },
- {
-  "id": "10.1093/ahr/rhag053",
-  "doi": "10.1093/ahr/rhag053",
-  "title": "Broadside of an Act",
-  "authors": [
-   "Michelle Craig McDonald"
-  ],
-  "abstract": "",
-  "url": "https://doi.org/10.1093/ahr/rhag053",
-  "oa_url": "",
-  "oa": false,
-  "published": "2026-05-22",
-  "added": "2026-10-31",
-  "journal": "American Historical Review",
-  "bereich": "fach",
-  "prioritaet": "hoch",
-  "thema": "Globalgeschichte",
-  "hinweis": "setzt oft die Richtung für das Feld",
-  "seiten": 5,
-  "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
-  "kategorie": "Globalgeschichte",
-  "band": "131",
-  "heft": "2",
-  "seite": "578",
-  "hervorheben": false,
-  "themen": [],
-  "treffer": [],
-  "quelle": "openalex",
-  "katalog_buch": false
  }
 ]
