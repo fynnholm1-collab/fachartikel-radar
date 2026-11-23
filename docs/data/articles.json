@@ -975,7 +975,7 @@
   "authors": [
    "Nadine Willems"
   ],
-  "abstract": "Today, the dynamism of Japanese culture captivates audiences across borders, as attested by the global success of literary translations and reputation of Japanese art and design. Well into the post...",
+  "abstract": "",
   "url": "https://doi.org/10.1080/09555803.2026.2762018",
   "oa_url": "",
   "oa": false,
@@ -988,20 +988,25 @@
   "hinweis": "",
   "seiten": 3,
   "sprache": "en",
-  "rez_grund": "",
-  "rezension": false,
-  "buch": "",
-  "buchtitel": "",
+  "rez_grund": "kurz ohne Abstract",
+  "rezension": true,
+  "buch": "literary and artistic japan behind the iron curtain",
+  "buchtitel": "Literary and Artistic Japan behind the Iron Curtain",
   "kategorie": "Japan allgemein",
   "band": "",
   "heft": "",
   "seite": "1",
   "hervorheben": false,
-  "themen": [
-   "Globalgeschichte"
-  ],
+  "themen": [],
   "treffer": [],
-  "quelle": "openalex"
+  "quelle": "openalex",
+  "katalog": {
+   "isbn": "",
+   "suche": "Literary and Artistic Japan behind the Iron Curtain",
+   "buchtitel": "Literary and Artistic Japan behind the Iron Curtain",
+   "link": "https://rds-tue.ibs-bw.de/opac/RDSIndex/Search?lookfor=Literary+and+Artistic+Japan+behind+the+Iron+Curtain&type=allfields",
+   "status": "wahrscheinlich"
+  }
  },
  {
   "id": "10.1086/743924",
@@ -1880,7 +1885,7 @@
   "authors": [
    "Maximilian Klose"
   ],
-  "abstract": "The gender ideology of no other US president has elicited as much scholarly fascination as that of Theodore Roosevelt. Historians have closely analyzed his transformation from sickly child to big stick-wielding outdoorsman, highlighting how his overbearing father, frontier experience, and the societal transformations of the Gilded Age shaped an idiosyncratic gendered worldview that guided his political decisions.1 Neil Cogan even argues that manhood was Roosevelt’s central political organizing principle, linking progressivism and global power concerns over civilizational struggle within a common gendered vision.2 So far, this literature has treated this vision as a domestic construct rooted in US socialization and projected outward through political actions. Such a reading overlooks the realities of the United States in which Roosevelt came into political maturity: an ascending empire embedded in global networks of shared imperial knowledge, culture, and practice. An avid reader and passionate traveler, Roosevelt actively and enthusiastically participated in this global system. How did it impact his gendered formation? What does this tell us about the role of gendered knowledge circulation in shaping imperial diplomatic culture?",
+  "abstract": "",
   "url": "https://doi.org/10.1093/dh/dhag056",
   "oa_url": "",
   "oa": false,
@@ -3706,7 +3711,7 @@
   "authors": [
    "Alex Lichtenstein"
   ],
-  "abstract": "The standard by which the police operate is cruelly simple: every black man is a criminal suspect. In a technical sense, the police are not far off the mark to be so suspicious. The laws of apartheid are a far-reaching tangle of restrictions, reaching so deeply into everyday life that it is a rare African who does not violate some law. A policeman may at any time call upon any African who is sixteen or older to produce his reference book. If the African fails to produce it, or if his papers are not in order, he is committing a criminal offence and is liable to a fine or imprisonment. This is the nub of the infamous “pass laws,” a complex mesh of rules and regulations that restrict the freedom of movement of Africans. Compared to some of the other oppressive statutes of apartheid, the pass laws on paper seem modest enough. But in practice they are the keynote on which enforcement of the entire apartheid system is based.",
+  "abstract": "",
   "url": "https://doi.org/10.1093/ahr/rhag364",
   "oa_url": "",
   "oa": false,

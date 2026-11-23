@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-22T03:52+00:00",
+ "stand": "2026-11-23T04:00+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -8,9 +8,9 @@
  ],
  "rezensionen_nach_grund": {
   "Titel mit Autor": 20,
-  "keine": 215,
+  "keine": 214,
+  "kurz ohne Abstract": 204,
   "Buch im Katalog": 3,
-  "kurz ohne Abstract": 203,
   "Titelmuster": 13
  },
  "posteingang_monate": 6,
@@ -19,8 +19,8 @@
  "neu_heute": 0,
  "verworfen": {
   "kein Open Access (kein Uni-Zugang)": 82,
-  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 18,
-  "Filter 'japan' nicht erfüllt": 200,
+  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 19,
+  "Filter 'japan' nicht erfüllt": 198,
   "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 64,
   "vor der Edo-Zeit ohne zusätzliches Thema": 1,
   "Sprache ar": 1,
@@ -95,7 +95,7 @@
   "Monumenta Nipponica": "22 über Crossref (OpenAlex leer)",
   "Journal of Japanese Studies": "0 über OpenAlex",
   "Harvard Journal of Asiatic Studies": "0 über OpenAlex",
-  "Japan Forum": "12 über OpenAlex",
+  "Japan Forum": "11 über OpenAlex",
   "Japanese Studies": "0 über OpenAlex",
   "Japanese Journal of Religious Studies": "0 über OpenAlex",
   "Journal of Asian Studies": "54 über OpenAlex",
@@ -108,13 +108,13 @@
   "Journal of World History": "0 über OpenAlex",
   "History and Theory": "3 über OpenAlex",
   "Past & Present": "7 über OpenAlex",
-  "Rethinking History": "12 über OpenAlex",
+  "Rethinking History": "11 über OpenAlex",
   "Journal of Digital History": "0 über OpenAlex",
   "Current Research in Digital History": "0 über OpenAlex",
   "Comparative Studies in Society and History": "14 über OpenAlex",
   "Geschichte und Gesellschaft": "0 über OpenAlex",
   "Historische Zeitschrift": "75 über OpenAlex",
-  "Journal of the Philosophy of History": "6 über Crossref (OpenAlex leer)",
+  "Journal of the Philosophy of History": "6 über OpenAlex",
   "Public History Weekly": "0 über OpenAlex",
   "Arts and Humanities in Higher Education": "4 über OpenAlex",
   "Global Environment": "3 über OpenAlex",
@@ -123,7 +123,7 @@
   "Society & Animals": "15 über OpenAlex",
   "Humanimalia": "0 über OpenAlex",
   "Digital Humanities Quarterly": "3 über OpenAlex",
-  "Digital Scholarship in the Humanities": "26 über OpenAlex",
+  "Digital Scholarship in the Humanities": "25 über OpenAlex",
   "Itinerario": "12 über OpenAlex",
   "Journal of the Economic and Social History of the Orient": "6 über OpenAlex",
   "Diplomatic History": "30 über OpenAlex",
@@ -141,7 +141,7 @@
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "18 über OpenAlex",
   "Themensuche multispecies": "12 über OpenAlex",
-  "Themensuche \"teaching history\" university": "13 über OpenAlex",
+  "Themensuche \"teaching history\" university": "12 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "5 über OpenAlex"
  },
  "katalog": {
