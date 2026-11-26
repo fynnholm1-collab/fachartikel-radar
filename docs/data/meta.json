@@ -1,5 +1,5 @@
 {
- "stand": "2026-11-25T03:59+00:00",
+ "stand": "2026-11-26T03:57+00:00",
  "abruf_ab": "2023-01-01",
  "datenstand": 5,
  "neuabrufe": [
@@ -16,11 +16,11 @@
  "posteingang_monate": 6,
  "artikel": 458,
  "backlog": 3324,
- "neu_heute": 4,
+ "neu_heute": 0,
  "verworfen": {
   "kein Open Access (kein Uni-Zugang)": 87,
-  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 20,
-  "Filter 'japan' nicht erfüllt": 195,
+  "kein Artikel (Editorial, Inhaltsverzeichnis o. Ä.)": 21,
+  "Filter 'japan' nicht erfüllt": 199,
   "Filter 'japan_und_geschichte_oder_thema' nicht erfüllt": 61,
   "vor der Edo-Zeit ohne zusätzliches Thema": 1,
   "Sprache pt": 1,
@@ -103,7 +103,7 @@
   "American Historical Review": "2 über OpenAlex",
   "Environmental History": "23 über OpenAlex",
   "Environment and History": "21 über OpenAlex",
-  "Journal of Global History": "6 über OpenAlex",
+  "Journal of Global History": "7 über OpenAlex",
   "Journal of World History": "0 über OpenAlex",
   "History and Theory": "7 über OpenAlex",
   "Past & Present": "7 über OpenAlex",
@@ -122,7 +122,7 @@
   "Society & Animals": "15 über OpenAlex",
   "Humanimalia": "0 über OpenAlex",
   "Digital Humanities Quarterly": "2 über OpenAlex",
-  "Digital Scholarship in the Humanities": "24 über OpenAlex",
+  "Digital Scholarship in the Humanities": "26 über OpenAlex",
   "Itinerario": "9 über OpenAlex",
   "Journal of the Economic and Social History of the Orient": "6 über OpenAlex",
   "Diplomatic History": "30 über OpenAlex",
@@ -140,7 +140,7 @@
   "Themensuche \"animal history\"": "0 über OpenAlex",
   "Themensuche \"more-than-human\"": "16 über OpenAlex",
   "Themensuche multispecies": "11 über OpenAlex",
-  "Themensuche \"teaching history\" university": "13 über OpenAlex",
+  "Themensuche \"teaching history\" university": "15 über OpenAlex",
   "Themensuche \"history education\" \"higher education\"": "5 über OpenAlex"
  },
  "katalog": {
